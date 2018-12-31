@@ -1,5 +1,5 @@
 Variable names: lower_with_underscores NEVER camelCase
-Functions names: FirstLetterCapital() NEVER lower_with_underscores
+Functions names: camelCase() NEVER lower_with_underscores
 Loops and if's: 
 
 if(statement) { 
@@ -31,4 +31,4 @@ if(statement) {
  int E = pi * r * r // Calculate circle area
  
  AYTA ELPIZW NA MHN DW KATI DIAFORETIKO!
- (AN KANW EGW KATI DIAFORETIKO GAMAME (H BALE TON TAGARI POY EINAI PIO AKRAIO)
+ (AN KANW EGW KATI DIAFORETIKO GAMAME (H BALE TON TAGARI POY EINAI PIO AKRAIO))
