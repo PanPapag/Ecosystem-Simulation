@@ -1,0 +1,34 @@
+Variable names: lower_with_underscores NEVER camelCase
+Functions names: FirstLetterCapital() NEVER lower_with_underscores
+Loops and if's: 
+
+if(statement) { 
+  /* code */
+} else {
+  /* code */
+}
+
+for(int i = 0; i < N; i++) {
+
+}
+
+GENIKA MALAKA TA BRACKETS PANTA(!!!!) DIPLA ME KENO TO LEEI O POLIXRONIOY!
+
+Stoixisi: 1 TAB
+
+SHMANTIKO: den kollame tipota. px i=1; ama to dw tha soy gamisw alitheia. tha grafoyme panta: i = 10;
+GENIKA KENA NA DIABAZETE O KWDIKAS!
+
+COMMENTS:
+1) otan afora katigoriopoisi ta sxoleia apo panw apo to block kwdika etsi: 
+/* some comments */
+if(statement) {
+  /*malakies*/
+ }
+ 
+ 2) otan afora eksigisi se texniko zitima dipla ta comments me // :
+ 
+ int E = pi * r * r // Calculate circle area
+ 
+ AYTA ELPIZW NA MHN DW KATI DIAFORETIKO!
+ (AN KANW EGW KATI DIAFORETIKO GAMAME (H BALE TON TAGARI POY EINAI PIO AKRAIO)
