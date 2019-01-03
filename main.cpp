@@ -3,28 +3,36 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "EcosystemInterface.h"
+
 #define MIN_TERRAIN 10
 
 int main(void) {
 
+  srand(time(NULL));
+
   int terrain_size, cycles;
-  std::string season;
+  string season;
 
   do {
-  std::cout << "Give terrain size of at least 10 fields: ";
-  std::cin >> terrain_size;
+  cout << "Give terrain size of at least 10 fields: ";
+  cin >> terrain_size;
   } while(terrain_size < MIN_TERRAIN);
-  std::cout << std::endl;
+  cout << endl;
 
   do {
-  std::cout << "Give current season (Autumn, Winter, Spring, Summer): ";
-  std::cin >> season;
+  cout << "Give current season (Autumn, Winter, Spring, Summer): ";
+  cin >> season;
   } while(season != "Autumn" && season != "Winter" && season != "Spring" && season != "Summer");
-  std::cout << std::endl;
+  cout << endl;
 
-  std::cout << "Enter the number of simulation cycles: ";
-  std::cin >> cycles;
-  std::cout << std::endl;
+  cout << "Enter the number of simulation cycles: ";
+  cin >> cycles;
+  cout << endl;
 
+  Ecosystem *ecosystem = new Ecosystem(terrain_size,season);
+
+  delete ecosystem;
+  
   return 0;
 }
