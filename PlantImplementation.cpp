@@ -5,7 +5,7 @@
 using namespace std;
 
 bool RandomResult(int factor){
-  int res = rand()%100;
+  int res = rand() % 100;
   if (res > factor) return true;
   else return false;
 }
@@ -14,7 +14,7 @@ bool RandomResult(int factor){
 
 Plant::Plant(char* nam, int xx, int yy, char tok, int breeding, int illness, int life_var, int life_fact)
   :token(tok), breeding_prob(breeding), illness_prob(illness), life(life_var), life_factor(life_fact){
-    name = new char[strlen(nam)+1];
+    name = new char[strlen(nam) + 1];
     strcpy(name, nam);
     coordinates = new point(xx,yy);
     cout << "I just constructed a " << name << endl;
@@ -37,7 +37,7 @@ Seedless::Seedless(char* nam, int xx, int yy, char tok, int breeding, int illnes
 void Seedless::LooseLife(){ life -= life_factor; }
 
 void Seedless::EatenByAnimal(int quantity){
-  if( quantity < life ) life -= quantity;
+  if(quantity < life) life -= quantity;
   else life = 0;
 }
 
@@ -48,7 +48,7 @@ void Seedless::Grow(void){
 }
 
 bool Seedless::Reproduced(void){ //otan katalaveis ti kanei tha entypwsiasteis
-  return (RandomResult(1-breeding_prob));
+  return (RandomResult(1 - breeding_prob));
 }
 /*Leaves functions */
 
@@ -75,7 +75,7 @@ void Seeded::EatenByAnimal(int quantity){
   else{
     seeds = 0;
     int remaining = quantity - seeds;
-    if( remaining < life ){
+    if(remaining < life){
       life -= remaining;
       if (foliage.GetNumber() > remaining) foliage.DecreaseNumber(remaining);
       else foliage.DecreaseNumber(foliage.GetNumber());
@@ -101,5 +101,5 @@ void Seeded::Grow(void){
 }
 
 bool Seeded::Reproduced(void){
-  return (RandomResult(1-breeding_prob));
+  return (RandomResult(1 - breeding_prob));
 }
