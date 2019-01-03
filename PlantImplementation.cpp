@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "plants.h"
+#include "PlantInterface.h"
 
 using namespace std;
 
