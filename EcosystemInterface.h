@@ -1,6 +1,8 @@
 #ifndef __ECOSYSTEM__
 #define __ECOSYSTEM__
 
+using namespace std;
+
 class Tile {
 
   public:
@@ -17,12 +19,12 @@ class Tile {
 class Ecosystem {
 
   public:
-    Ecosystem(int,std::string);
+    Ecosystem(int,string);
     ~Ecosystem();
 
   private:
     int terrain_size;
-    std::string current_season;
+    string current_season;
 
     class Tile **terrain_grid;
 
