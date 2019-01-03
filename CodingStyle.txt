@@ -21,7 +21,7 @@ GENIKA KENA NA DIABAZETE O KWDIKAS! //MHN. MOU GRI ZEIS.
 
 COMMENTS:
 1) otan afora katigoriopoisi ta sxoleia apo panw apo to block kwdika etsi: 
-/* some comments */ //entaksei
+/* some comments */ //entaksei  // MALAKA
 if(statement) {
   /*malakies*/
  }
