@@ -31,8 +31,7 @@ int main(void) {
   cout << endl;
 
   Ecosystem *ecosystem = new Ecosystem(terrain_size,season);
-
   delete ecosystem;
-  
+
   return 0;
 }

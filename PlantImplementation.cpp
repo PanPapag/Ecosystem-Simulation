@@ -1,12 +1,7 @@
 #include <iostream>
 #include <cstring>
-#include "PlantInterface.h"
 
-bool RandomResult(int factor){
-  int res = rand() % 101;
-  if (res > factor) return true;
-  else return false;
-}
+#include "PlantInterface.h"
 
 /* -------------------------------------- class Plant Implementation ------------------------------------- */
 
