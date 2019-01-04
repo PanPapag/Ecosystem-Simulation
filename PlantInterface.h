@@ -1,59 +1,98 @@
-struct point {
-  int x;
-  int y;
-  point(int xx, int yy):x(xx), y(yy){}
-};
+#ifndef __PLANT__
+#define __PLANT__
 
-class Plant{
+#include <cstring>
+
+using namespace std;
+
+#define GRASS_TOKEN 'G'
+#define GRASS_LIFE 5
+#define GRASS_BREEDING 15
+#define GRASS_ILLNESS 15
+#define GRASS_LIFE_FACTOR 4
+
+#define ALGAE_TOKEN 'A'
+#define ALGAE_LIFE 5
+#define ALGAE_BREEDING 25
+#define ALGAE_ILLNESS 25
+#define ALGAE_LIFE_FACTOR 2
+
+
+class Plant {
+
   public:
-    Plant(char*, int, int, char, int, int, int, int);
+    Plant(string, int, int, char, int, int, int, int);
     ~Plant();
+    bool Reproduced(void);
     bool IsDead(void);
     int GetLife(void);
-    virtual void EatenByAnimal(int);
-    virtual void Grow(void);
-    virtual bool Reproduced(void);
+    int GetCoordinateX(void);
+    int GetCoordinateY(void);
+    int GetBreedingProb(void);
+    int GetIllnessProb(void);
+    int GetLifeFactor(void);
+    char GetToken(void);
+    string GetName(void);
+    virtual void EatenByAnimal(int) = 0;
+    virtual void Grow(void) = 0;
 
   protected:
-    char* name;
-    point* coordinates;
+    string name;
     char token;
+    int life;
+    int coordinate_x;
+    int coordinate_y;
     int breeding_prob;
     int illness_prob;
-    unsigned int life;
     int life_factor;
 };
 
-class Seedless : public Plant{
+class Seedless : public Plant {
   public:
-    Seedless(char*, int, int, char, int, int, int, int);
-    void LooseLife(void);
+    Seedless(string, int, int, char, int, int, int, int);
+    ~Seedless();
+    void LoseLife(void);
     void EatenByAnimal(int);
     void Grow(void);
     bool Reproduced(void);
 };
 
-class Leaves{
-public:
-  Leaves(int);
-  int GetNumber();
-  void IncreaseSize(void);
-  void DecreaseSize(void);
-  void IncreaseNumber(int);
-  void DecreaseNumber(int);
+class Grass : public Seedless {
+  Grass(string, int, int, char, int, int, int, int);
+  ~Grass();
+};
 
-private:
-  unsigned int size;
-  unsigned int quantity;
+class Algae : public Seedless {
+  Algae(string, int, int, char, int, int, int, int);
+  ~Algae();
+};
+
+class Leaves {
+
+  public:
+    Leaves(int);
+    int GetNumber(void);
+    void IncreaseSize(void);
+    void DecreaseSize(void);
+    void IncreaseNumber(int);
+    void DecreaseNumber(int);
+
+  private:
+    unsigned int size;
+    unsigned int quantity;
 };
 
 class Seeded : public Plant{
+
   public:
-    Seeded(char*, int, int, char, int, int, int, int, int, int);
+    Seeded(string, int, int, char, int, int, int, int, int, int);
     void EatenByAnimal(int);
     void Grow(void);
     bool Reproduced(void);
+
   private:
     Leaves foliage;
     int seeds;
 };
+
+#endif

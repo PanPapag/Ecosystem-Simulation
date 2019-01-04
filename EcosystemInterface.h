@@ -6,8 +6,6 @@
 
 using namespace std;
 
-#define KBLU  "\x1B[34m"
-
 #define WATER_TILE '#'
 #define HILL_TILE '^'
 #define MEADOW_TILE '"'
@@ -43,6 +41,7 @@ class Ecosystem {
     string current_season;
 
     class Tile **terrain_grid;
+    class Plant **plant_array;
 
     void MapGenerator();
     int GenerateRiver();
