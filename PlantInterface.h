@@ -1,5 +1,4 @@
-#ifndef __PLANT__
-#define __PLANT__
+#pragma once
 
 #include <cstring>
 #include "Utilities.h"
@@ -144,4 +143,3 @@ class Pine : public Seeded {
   ~Pine();
 };
 
-#endif
