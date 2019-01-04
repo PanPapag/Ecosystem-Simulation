@@ -5,6 +5,7 @@
 
 #include "EcosystemInterface.h"
 #include "PlantInterface.h"
+#include "Utilities.h"
 
 /* -------------------------------------- class Tile Implementation ------------------------------------- */
 Tile::Tile() {
@@ -43,14 +44,9 @@ Ecosystem::Ecosystem(int size, string season) {
    }
 
    int total_points = terrain_size * terrain_size;
-   int index = 0;
    points = new coordinates[total_points];
    FillPoints(points,terrain_size);
    ShufflePoints(points,0,total_points);
-
-   for(int i = 0; i < total_points; i++) {
-     cout << "(" << points[i].x << "," << points[i].y << ")" << endl;
-   }
 
    max_no_of_plants = terrain_size * terrain_size;
    plant_array = new Plant *[max_no_of_plants];
@@ -85,13 +81,13 @@ void Ecosystem::MapGenerator() {
   int meadow_tiles = GenerateMeadow();
 
   no_of_grass = meadow_tiles / 3;
-  no_of_algae = (river_tiles + lake_tiles) / ((rand() % 3) + 1);
+  no_of_algae = (river_tiles + lake_tiles) / 3;
   no_of_maple = (hill_tiles + meadow_tiles) / 3;
   no_of_oak = meadow_tiles / 3;
   no_of_pine = hill_tiles / 2;
 
-  PlacePlants();
   PrintGrid();
+  PlacePlants();
 }
 
 int Ecosystem::GenerateRiver() {
@@ -245,17 +241,59 @@ int Ecosystem::GenerateMeadow() {
 }
 
 void Ecosystem::PlacePlants() {
-  int index = 0;
+  int plant_index = 0;
+  int points_index;
   int x,y;
+  int total_points = terrain_size * terrain_size;
 
+  /* Place Grass */
+  points_index = 0;
+  for(int i = 0; i < no_of_grass; i++) {
+    x = points[points_index++].x;
+    y = points[points_index++].y;
 
-  return;
+    while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].ExistPlant() == true) {
+      x = points[points_index++].x;
+      y = points[points_index++].y;
+    }
+
+    plant_array[plant_index] = new Grass("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
+    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+    plant_index++;
+  }
+  /* Place Algae */
+  points_index = 0;
+  for(int i = 0; i < no_of_algae; i++) {
+    x = points[points_index++].x;
+    y = points[points_index++].y;
+
+    while(terrain_grid[x][y].GetGround() != WATER_TILE || terrain_grid[x][y].ExistPlant() == true) {
+      x = points[points_index++].x;
+      y = points[points_index++].y;
+    }
+
+    plant_array[plant_index] = new Algae("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
+    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+    plant_index++;
+  }
+
+  //cout << "Grass in " << x << "," << y << endl;
+  /*for(int i = 0; i < total_points; i++) {
+    cout << "(" << points[i].x << "," << points[i].y << ")" << endl;
+  } */
+
 }
 
 void Ecosystem::PrintGrid(void) {
   for(int i = 0; i < terrain_size; i++) {
     for(int j = 0; j < terrain_size; j++) {
-      cout  << terrain_grid[i][j].GetGround();
+      if(terrain_grid[i][j].GetGround() == WATER_TILE){
+        cout << BLU << terrain_grid[i][j].GetGround() << RESET;
+      } else if(terrain_grid[i][j].GetGround() == HILL_TILE) {
+        cout << RED << terrain_grid[i][j].GetGround() << RESET;
+      } else if(terrain_grid[i][j].GetGround() == MEADOW_TILE) {
+        cout << GRN << terrain_grid[i][j].GetGround() << RESET;
+      }
     }
     cout << endl;
   }
