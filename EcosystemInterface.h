@@ -1,6 +1,4 @@
-#ifndef __ECOSYSTEM__
-#define __ECOSYSTEM__
-
+#pragma once
 #include <cstdlib>
 #include <ctime>
 
@@ -67,4 +65,3 @@ class Ecosystem {
     void PlacePlants(void);
 };
 
-#endif
