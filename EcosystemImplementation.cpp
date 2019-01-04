@@ -4,6 +4,7 @@
 #include <ctime>
 
 #include "EcosystemInterface.h"
+#include "PlantInterface.h"
 
 
 /* -------------------------------------- class Tile Implementation ------------------------------------- */
