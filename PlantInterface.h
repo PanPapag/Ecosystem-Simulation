@@ -86,18 +86,6 @@ class Seedless : public Plant {
     int life;
 };
 
-class Grass : public Seedless {
-  public:
-    Grass(string, int, int, char, int, int, bool, int, int);
-    ~Grass();
-};
-
-class Algae : public Seedless {
-  public:
-    Algae(string, int, int, char, int, int, bool, int, int);
-    ~Algae();
-};
-
 class Leaves {
 
   public:
@@ -128,22 +116,4 @@ class Seeded : public Plant{
   private:
     Leaves foliage;
     int seeds;
-};
-
-class Maple : public Seeded {
-  public:
-    Maple(string, int, int, char, int, int, bool, int, int, int);
-    ~Maple();
-};
-
-class Oak : public Seeded {
-  public:
-    Oak(string, int, int, char, int, int, bool, int, int, int);
-    ~Oak();
-};
-
-class Pine : public Seeded {
-  public:
-    Pine(string, int, int, char, int, int, bool, int, int, int);
-    ~Pine();
 };

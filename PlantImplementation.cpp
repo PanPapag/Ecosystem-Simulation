@@ -73,24 +73,6 @@ int Seedless::GetLife(void) {
   return life;
 }
 
-Grass::Grass(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int life_var)
-  : Seedless(name, x, y, token, breeding, illness, life_sit, life_fact, life_var) {
-    //cout << "I just constructed a grass plant" << endl;
-}
-
-Grass::~Grass() {
-  //cout << "Destructed a grass plant" << endl;
-}
-
-Algae::Algae(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int life_var)
-  : Seedless(name, x, y, token, breeding, illness, life_sit, life_fact, life_var) {
-    //cout << "I just constructed an Algae plant" << endl;
-}
-
-Algae::~Algae() {
-  //cout << "Destructed an Algae plant" << endl;
-}
-
 /* ---------------------------------------- Seeded Implementation --------------------------------------- */
 
 Leaves::Leaves(int no_of_leaves, int size): quantity(no_of_leaves), size(size) {}
@@ -118,6 +100,8 @@ Seeded::Seeded(string name, int x, int y, char token, int breeding, int illness,
 Seeded::~Seeded() {
   //cout << "Destructed a seeded plant" << endl;
 }
+
+int Seeded::GetSeeds(void) { return seeds; }
 
 void Seeded::EatenByAnimal(int quantity) {
 
@@ -156,33 +140,4 @@ void Seeded::Grow(void) {
   if(foliage.GetNumber() <= 0 ) {
     alive = false;
   }
-}
-
-int Seeded::GetSeeds(void) { return seeds; }
-
-Maple::Maple(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int fol, int seed)
-  : Seeded(name, x, y, token, breeding, illness, life_sit, life_fact, fol, seed, MAPLE_SIZE) {
-    //cout << "I just constructed an Algae plant" << endl;
-}
-
-Maple::~Maple() {
-  //cout << "Destructed a maple plant" << endl;
-}
-
-Oak::Oak(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int fol, int seed)
-  : Seeded(name, x, y, token, breeding, illness, life_sit, life_fact, fol, seed, OAK_SIZE) {
-    //cout << "I just constructed an Algae plant" << endl;
-}
-
-Oak::~Oak() {
-  //cout << "Destructed a maple plant" << endl;
-}
-
-Pine::Pine(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int fol, int seed)
-  : Seeded(name, x, y, token, breeding, illness, life_sit, life_fact, fol, seed, PINE_SIZE) {
-    //cout << "I just constructed an Algae plant" << endl;
-}
-
-Pine::~Pine() {
-  //cout << "Destructed a pine plant" << endl;
 }

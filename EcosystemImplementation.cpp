@@ -249,56 +249,110 @@ void Ecosystem::PlacePlants() {
   /* Place Grass */
   points_index = 0;
   for(int i = 0; i < no_of_grass; i++) {
-    x = points[points_index++].x;
-    y = points[points_index++].y;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
 
     while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].ExistPlant() == true) {
-      x = points[points_index++].x;
-      y = points[points_index++].y;
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
     }
 
-    plant_array[plant_index] = new Grass("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
+    plant_array[plant_index] = new Seedless("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
   /* Place Algae */
   points_index = 0;
   for(int i = 0; i < no_of_algae; i++) {
-    x = points[points_index++].x;
-    y = points[points_index++].y;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
 
     while(terrain_grid[x][y].GetGround() != WATER_TILE || terrain_grid[x][y].ExistPlant() == true) {
-      x = points[points_index++].x;
-      y = points[points_index++].y;
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
     }
 
-    plant_array[plant_index] = new Algae("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
+    plant_array[plant_index] = new Seedless("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
   /* Place Maple */
   points_index = 0;
   for(int i = 0; i < no_of_maple; i++) {
-    x = points[points_index++].x;
-    y = points[points_index++].y;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
 
     while(terrain_grid[x][y].GetGround() == WATER_TILE || terrain_grid[x][y].ExistPlant() == true) {
-      x = points[points_index++].x;
-      y = points[points_index++].y;
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
     }
 
-    plant_array[plant_index] = new Maple("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS);
+    plant_array[plant_index] = new Seeded("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS,MAPLE_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
-  //cout << "Grass in " << x << "," << y << endl;
-  /*for(int i = 0; i < total_points; i++) {
-    cout << "(" << points[i].x << "," << points[i].y << ")" << endl;
-  } */
+  /* Place Oak */
+  points_index = 0;
+  for(int i = 0; i < no_of_oak; i++) {
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
 
+    while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].ExistPlant() == true) {
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
+    }
+
+    plant_array[plant_index] = new Seeded("Oak",x,y,OAK_TOKEN,OAK_BREEDING,OAK_ILLNESS,ALIVE,OAK_LIFE_FACTOR,OAK_FOLIAGE,OAK_SEEDS,OAK_SIZE);
+    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+    plant_index++;
+  }
+  /* Place Pine */
+  points_index = 0;
+  for(int i = 0; i < no_of_pine; i++) {
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
+
+    while(terrain_grid[x][y].GetGround() != HILL_TILE || terrain_grid[x][y].ExistPlant() == true) {
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
+    }
+
+    plant_array[plant_index] = new Seeded("Pine",x,y,PINE_TOKEN,PINE_BREEDING,PINE_ILLNESS,ALIVE,PINE_LIFE_FACTOR,PINE_FOLIAGE,PINE_SEEDS,PINE_SIZE);
+    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+    plant_index++;
+  }
 }
 
-void Ecosystem::PrintGrid(void) {
+void Ecosystem::PrintPlantStatistics() {
+  cout << endl;
+  cout << "Total number of grasses: " << no_of_grass << endl;
+  cout << "Total number of algaes: " << no_of_algae << endl;
+  cout << "Total number of maples: " << no_of_maple << endl;
+  cout << "Total number of oaks: " << no_of_oak << endl;
+  cout << "Total number of pines: " << no_of_pine << endl;
+}
+
+void Ecosystem::PrintAnimalStatistics() {
+  cout << endl;
+  cout << "Total number of deers: " << no_of_deer << endl;
+  cout << "Total number of rabbits: " << no_of_rabbit << endl;
+  cout << "Total number of groundhogs: " << no_of_groundhog << endl;
+  cout << "Total number of salmons: " << no_of_salmon << endl;
+  cout << "Total number of foxes: " << no_of_fox << endl;
+  cout << "Total number of bears: " << no_of_wolf << endl;
+}
+
+void Ecosystem::PrintGrid() {
   for(int i = 0; i < terrain_size; i++) {
     for(int j = 0; j < terrain_size; j++) {
       if(terrain_grid[i][j].GetGround() == WATER_TILE){
