@@ -5,7 +5,21 @@
 class Animal {
 
   public:
-
+    Animal(string, char, int, int, int, int, int, bool);
+    ~Animal(void);
+    string GetName(void);
+    char GetToken(void);
+    int GetSize(void);
+    int GetHunger(void);
+    int GetEatCount(void);
+    int GetCoordinateX(void);
+    int GetCoordinateY(void);
+    bool Alive(void);
+    bool Hungry(void);
+    bool IsInHeat(void);
+    int GetSpeed(void);
+    bool Hibernates(void);
+    bool IsInHibernation(void);
   protected:
     string name;
     char token;
