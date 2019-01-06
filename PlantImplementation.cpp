@@ -93,7 +93,7 @@ Algae::~Algae() {
 
 /* ---------------------------------------- Seeded Implementation --------------------------------------- */
 
-Leaves::Leaves(int no_of_leaves): quantity(no_of_leaves), size(1) {}
+Leaves::Leaves(int no_of_leaves, int size): quantity(no_of_leaves), size(size) {}
 
 Leaves::~Leaves() {}
 
@@ -110,8 +110,8 @@ void Leaves::IncreaseNumber(int n) { quantity += n; }
 void Leaves::DecreaseNumber(int n) { quantity -= n; }
 
 
-Seeded::Seeded(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int fol, int seed)
-  :Plant(name, x, y, token, breeding, illness, life_sit, life_fact), foliage(fol), seeds(seed) {
+Seeded::Seeded(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int fol, int seed, int size)
+  :Plant(name, x, y, token, breeding, illness, life_sit, life_fact), foliage(fol,size), seeds(seed) {
     //cout << "I just constructed a seeded plant" << endl;
 }
 
@@ -161,7 +161,7 @@ void Seeded::Grow(void) {
 int Seeded::GetSeeds(void) { return seeds; }
 
 Maple::Maple(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int fol, int seed)
-  : Seeded(name, x, y, token, breeding, illness, life_sit, life_fact, fol, seed) {
+  : Seeded(name, x, y, token, breeding, illness, life_sit, life_fact, fol, seed, MAPLE_SIZE) {
     //cout << "I just constructed an Algae plant" << endl;
 }
 
@@ -170,7 +170,7 @@ Maple::~Maple() {
 }
 
 Oak::Oak(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int fol, int seed)
-  : Seeded(name, x, y, token, breeding, illness, life_sit, life_fact, fol, seed) {
+  : Seeded(name, x, y, token, breeding, illness, life_sit, life_fact, fol, seed, OAK_SIZE) {
     //cout << "I just constructed an Algae plant" << endl;
 }
 
@@ -179,7 +179,7 @@ Oak::~Oak() {
 }
 
 Pine::Pine(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int fol, int seed)
-  : Seeded(name, x, y, token, breeding, illness, life_sit, life_fact, fol, seed) {
+  : Seeded(name, x, y, token, breeding, illness, life_sit, life_fact, fol, seed, PINE_SIZE) {
     //cout << "I just constructed an Algae plant" << endl;
 }
 

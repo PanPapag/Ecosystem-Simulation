@@ -87,19 +87,21 @@ class Seedless : public Plant {
 };
 
 class Grass : public Seedless {
-  Grass(string, int, int, char, int, int, bool, int, int);
-  ~Grass();
+  public:
+    Grass(string, int, int, char, int, int, bool, int, int);
+    ~Grass();
 };
 
 class Algae : public Seedless {
-  Algae(string, int, int, char, int, int, bool, int, int);
-  ~Algae();
+  public:
+    Algae(string, int, int, char, int, int, bool, int, int);
+    ~Algae();
 };
 
 class Leaves {
 
   public:
-    Leaves(int);
+    Leaves(int,int);
     ~Leaves();
     int GetNumber(void);
     int GetSize(void);
@@ -116,7 +118,7 @@ class Leaves {
 class Seeded : public Plant{
 
   public:
-    Seeded(string, int, int, char, int, int, bool, int, int, int);
+    Seeded(string, int, int, char, int, int, bool, int, int, int, int);
     ~Seeded();
     void EatenByAnimal(int);
     void Grow(void);
@@ -129,17 +131,19 @@ class Seeded : public Plant{
 };
 
 class Maple : public Seeded {
-  Maple(string, int, int, char, int, int, bool, int, int, int);
-  ~Maple();
+  public:
+    Maple(string, int, int, char, int, int, bool, int, int, int);
+    ~Maple();
 };
 
 class Oak : public Seeded {
-  Oak(string, int, int, char, int, int, bool, int, int, int);
-  ~Oak();
+  public:
+    Oak(string, int, int, char, int, int, bool, int, int, int);
+    ~Oak();
 };
 
 class Pine : public Seeded {
-  Pine(string, int, int, char, int, int, bool, int, int, int);
-  ~Pine();
+  public:
+    Pine(string, int, int, char, int, int, bool, int, int, int);
+    ~Pine();
 };
-

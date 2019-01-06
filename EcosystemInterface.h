@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cstdlib>
 #include <ctime>
 
@@ -64,4 +65,3 @@ class Ecosystem {
     int GenerateMeadow(void);
     void PlacePlants(void);
 };
-

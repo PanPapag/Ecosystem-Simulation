@@ -276,7 +276,21 @@ void Ecosystem::PlacePlants() {
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
+  /* Place Maple */
+  points_index = 0;
+  for(int i = 0; i < no_of_maple; i++) {
+    x = points[points_index++].x;
+    y = points[points_index++].y;
 
+    while(terrain_grid[x][y].GetGround() == WATER_TILE || terrain_grid[x][y].ExistPlant() == true) {
+      x = points[points_index++].x;
+      y = points[points_index++].y;
+    }
+
+    plant_array[plant_index] = new Maple("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS);
+    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+    plant_index++;
+  }
   //cout << "Grass in " << x << "," << y << endl;
   /*for(int i = 0; i < total_points; i++) {
     cout << "(" << points[i].x << "," << points[i].y << ")" << endl;
