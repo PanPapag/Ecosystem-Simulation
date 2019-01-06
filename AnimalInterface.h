@@ -1,0 +1,43 @@
+#pragma once
+
+#include <cstring>
+
+class Animal {
+
+  public:
+
+  protected:
+    string name;
+    char token;
+    int size;
+    int hunger_count;
+    int eaten_food;
+    int eat_count;
+    int coordinate_x;
+    int coordinate_y;
+    bool is_alive;
+    bool is_hungry;
+    bool in_heat;
+    int speed;
+    bool hibernates;
+    bool in_hibernation;
+
+
+};
+
+class Herbivores : public Animal {
+
+  public:
+
+  private:
+    bool can_climb;
+    int needed_food;
+};
+
+class Carnivores : public Animal {
+  public:
+
+  private:
+    int attack;
+    int defence;
+};
