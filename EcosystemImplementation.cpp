@@ -484,6 +484,10 @@ void Ecosystem::PlaceAnimals(void) {
   }
 }
 
+void Ecosystem::RunEcosystem(int day) {
+  return;
+}
+
 void Ecosystem::PrintPlantStatistics(void) {
   cout << endl;
   cout << "Total number of grasses: " << no_of_grass << endl;
