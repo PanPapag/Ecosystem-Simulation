@@ -5,7 +5,7 @@
 
 using namespace std;
 
-/*---------------------------Class animal functions---------------------------*/
+/*-------------------------- Class Animal methods ----------------------------*/
 Animal::Animal(string nam, char token, int x, int y, int size, int speed, int needed_food, bool hibernates)
   :token(token), coordinate_x(x), coordinate_y(y), size(size), speed(speed), needed_food(needed_food) , hibernates(hibernates) {
      /* Initially, all animals are adult */
@@ -79,7 +79,7 @@ void Animal::Move(int x, int y) {
   coordinate_y = y;
 }
 
-/*-----------------------Class herbivores functions---------------------------*/
+/*----------------------- Class Herbivore methods ----------------------------*/
 
 Herbivore::Herbivore(string name, char token, int x, int y, int size, int speed, int needed_food, bool can_climb, bool hibernates)
         :Animal(name, token, x, y, size, speed, needed_food, hibernates), can_climb(can_climb) {
@@ -101,3 +101,17 @@ void Herbivore::Eat(Plant* plant) {
     plant -> EatenByAnimal(eat_count);
   }
 }
+
+/*---------------------------Class Carnivore methods -------------------------*/
+Carnivore::Carnivore(string name, char token, int x, int y, int size, int speed, int needed_food, int attack, int defence, bool hibernates)
+        :Animal(name, token, x, y, size, speed, needed_food, hibernates), attack(attack), defence(defence) {
+          //cout << "I just constructed a carnivore" << endl;
+}
+
+Carnivore::~Carnivore() {
+  // cout << "I just destructed a carnivore" << endl;
+}
+
+int Carnivore::GetAttack(void) { return attack; }
+
+int Carnivore::GetDefence(void) { return defence; }

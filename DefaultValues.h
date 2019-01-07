@@ -97,7 +97,7 @@
 #define Y_WOLF_DEFENCE 2
 #define A_WOLF_SIZE 7
 #define A_WOLF_SPEED 8
-#define A_WOFL_NEED_FOOD 8
+#define A_WOLF_NEED_FOOD 8
 #define A_WOLF_ATTACK 8
 #define A_WOLF_DEFENCE 6
 #define WOLF_HIBERNATION false

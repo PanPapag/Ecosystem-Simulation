@@ -381,7 +381,7 @@ void Ecosystem::PlaceAnimals(void) {
     animal_index++;
   }
   /* Place Rabbit */
-  for(int i = 0; i < no_of_deer; i++) {
+  for(int i = 0; i < no_of_rabbit; i++) {
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -398,7 +398,7 @@ void Ecosystem::PlaceAnimals(void) {
     animal_index++;
   }
   /* Place Groundhog */
-  for(int i = 0; i < no_of_deer; i++) {
+  for(int i = 0; i < no_of_groundhog; i++) {
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -415,7 +415,7 @@ void Ecosystem::PlaceAnimals(void) {
     animal_index++;
   }
   /* Place Salmon */
-  for(int i = 0; i < no_of_deer; i++) {
+  for(int i = 0; i < no_of_salmon; i++) {
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -431,7 +431,57 @@ void Ecosystem::PlaceAnimals(void) {
       A_SALMON_NEED_FOOD,SALMON_CLIMB,SALMON_HIBERNATION);
     animal_index++;
   }
+  /* Place Fox */
+  for(int i = 0; i < no_of_fox; i++) {
+    points_index = 0;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
 
+    while(terrain_grid[x][y].GetGround() != MEADOW_TILE) {
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
+    }
+
+    animal_array[animal_index] = new Carnivore("Fox",CARN_TOKEN,x,y,A_FOX_SIZE,A_FOX_SPEED,
+      A_FOX_NEED_FOOD,A_FOX_ATTACK,A_FOX_DEFENCE,FOX_HIBERNATION);
+    animal_index++;
+  }
+  /* Place Bear */
+  for(int i = 0; i < no_of_bear; i++) {
+    points_index = 0;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
+
+    while(terrain_grid[x][y].GetGround() != HILL_TILE) {
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
+    }
+
+    animal_array[animal_index] = new Carnivore("Bear",CARN_TOKEN,x,y,A_BEAR_SIZE,A_BEAR_SPEED,
+      A_BEAR_NEED_FOOD,A_BEAR_ATTACK,A_BEAR_DEFENCE,BEAR_HIBERNATION);
+    animal_index++;
+  }
+  /* Place Wolf */
+  for(int i = 0; i < no_of_wolf; i++) {
+    points_index = 0;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
+
+    while(terrain_grid[x][y].GetGround() == WATER_TILE) {
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
+    }
+
+    animal_array[animal_index] = new Carnivore("Wolf",CARN_TOKEN,x,y,A_WOLF_SIZE,A_WOLF_SPEED,
+      A_WOLF_NEED_FOOD,A_WOLF_ATTACK,A_WOLF_DEFENCE,WOLF_HIBERNATION);
+    animal_index++;
+  }
 }
 
 void Ecosystem::PrintPlantStatistics(void) {
