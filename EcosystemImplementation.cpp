@@ -279,7 +279,8 @@ void Ecosystem::PlacePlants(void) {
       points_index++;
     }
 
-    plant_array[plant_index] = new Seedless("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
+    plant_array[plant_index] = new Seedless("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,
+      ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
@@ -296,7 +297,8 @@ void Ecosystem::PlacePlants(void) {
       points_index++;
     }
 
-    plant_array[plant_index] = new Seedless("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
+    plant_array[plant_index] = new Seedless("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,
+      ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
@@ -313,7 +315,8 @@ void Ecosystem::PlacePlants(void) {
       points_index++;
     }
 
-    plant_array[plant_index] = new Seeded("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS,MAPLE_SIZE);
+    plant_array[plant_index] = new Seeded("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,
+      ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS,MAPLE_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
@@ -330,7 +333,8 @@ void Ecosystem::PlacePlants(void) {
       points_index++;
     }
 
-    plant_array[plant_index] = new Seeded("Oak",x,y,OAK_TOKEN,OAK_BREEDING,OAK_ILLNESS,ALIVE,OAK_LIFE_FACTOR,OAK_FOLIAGE,OAK_SEEDS,OAK_SIZE);
+    plant_array[plant_index] = new Seeded("Oak",x,y,OAK_TOKEN,OAK_BREEDING,OAK_ILLNESS,ALIVE,
+      OAK_LIFE_FACTOR,OAK_FOLIAGE,OAK_SEEDS,OAK_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
@@ -347,7 +351,8 @@ void Ecosystem::PlacePlants(void) {
       points_index++;
     }
 
-    plant_array[plant_index] = new Seeded("Pine",x,y,PINE_TOKEN,PINE_BREEDING,PINE_ILLNESS,ALIVE,PINE_LIFE_FACTOR,PINE_FOLIAGE,PINE_SEEDS,PINE_SIZE);
+    plant_array[plant_index] = new Seeded("Pine",x,y,PINE_TOKEN,PINE_BREEDING,PINE_ILLNESS,ALIVE,
+      PINE_LIFE_FACTOR,PINE_FOLIAGE,PINE_SEEDS,PINE_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
@@ -371,7 +376,59 @@ void Ecosystem::PlaceAnimals(void) {
       points_index++;
     }
 
-    //animal_array[plant_index] = new Herbivore()
+    animal_array[animal_index] = new Herbivore("Deer",HERB_TOKEN,x,y,A_DEER_SIZE,A_DEER_SPEED,A_DEER_NEED_FOOD,
+      DEER_CLIMB,DEER_HIBERNATION);
+    animal_index++;
+  }
+  /* Place Rabbit */
+  for(int i = 0; i < no_of_deer; i++) {
+    points_index = 0;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
+
+    while(terrain_grid[x][y].GetGround() != MEADOW_TILE) {
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
+    }
+
+    animal_array[animal_index] = new Herbivore("Rabbit",HERB_TOKEN,x,y,A_RABBIT_SIZE,A_RABBIT_SPEED,
+      A_RABBIT_NEED_FOOD,RABBIT_CLIMB,RABBIT_HIBERNATION);
+    animal_index++;
+  }
+  /* Place Groundhog */
+  for(int i = 0; i < no_of_deer; i++) {
+    points_index = 0;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
+
+    while(terrain_grid[x][y].GetGround() != MEADOW_TILE) {
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
+    }
+
+    animal_array[animal_index] = new Herbivore("Groundhog",HERB_TOKEN,x,y,A_GROUNDHOG_SIZE,A_GROUNDHOG_SPEED,
+      A_GROUNDHOG_NEED_FOOD,GROUNDHOG_CLIMB,GROUNDHOG_HIBERNATION);
+    animal_index++;
+  }
+  /* Place Salmon */
+  for(int i = 0; i < no_of_deer; i++) {
+    points_index = 0;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
+
+    while(terrain_grid[x][y].GetGround() != WATER_TILE) {
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
+    }
+
+    animal_array[animal_index] = new Herbivore("Salmon",HERB_TOKEN,x,y,A_SALMON_SIZE,A_SALMON_SPEED,
+      A_SALMON_NEED_FOOD,SALMON_CLIMB,SALMON_HIBERNATION);
     animal_index++;
   }
 
