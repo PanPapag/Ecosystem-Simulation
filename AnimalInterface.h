@@ -74,6 +74,10 @@ class Herbivore : public Animal {
 class Carnivore : public Animal {
 
   public:
+    Carnivore(string, char, int, int, int, int, int, int, int, bool);
+    ~Carnivore();
+    int GetAttack(void);
+    int GetDefence(void);
 
   private:
     int attack;

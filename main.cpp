@@ -31,6 +31,11 @@ int main(void) {
   cout << endl;
 
   Ecosystem *ecosystem = new Ecosystem(terrain_size,season);
+
+  for(int day = 1; day <= cycles; day++) {
+    ecosystem->RunEcosystem(day);
+  }
+
   delete ecosystem;
 
   return 0;
