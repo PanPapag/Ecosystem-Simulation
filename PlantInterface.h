@@ -1,47 +1,12 @@
 #pragma once
 
 #include <cstring>
+
+#include "DefaultValues.h"
+
 #include "Utilities.h"
 
 using namespace std;
-
-#define ALIVE true
-
-#define GRASS_TOKEN 'G'
-#define GRASS_LIFE 5
-#define GRASS_BREEDING 15
-#define GRASS_ILLNESS 15
-#define GRASS_LIFE_FACTOR 4
-
-#define ALGAE_TOKEN 'A'
-#define ALGAE_LIFE 5
-#define ALGAE_BREEDING 25
-#define ALGAE_ILLNESS 25
-#define ALGAE_LIFE_FACTOR 2
-
-#define MAPLE_TOKEN 'M'
-#define MAPLE_FOLIAGE 5
-#define MAPLE_SEEDS 10
-#define MAPLE_SIZE 2
-#define MAPLE_BREEDING 5
-#define MAPLE_ILLNESS 5
-#define MAPLE_LIFE_FACTOR 10
-
-#define OAK_TOKEN 'O'
-#define OAK_FOLIAGE 30
-#define OAK_SEEDS 15
-#define OAK_SIZE 5
-#define OAK_BREEDING 20
-#define OAK_ILLNESS 20
-#define OAK_LIFE_FACTOR 15
-
-#define PINE_TOKEN 'P'
-#define PINE_FOLIAGE 40
-#define PINE_SEEDS 20
-#define PINE_SIZE 5
-#define PINE_BREEDING 15
-#define PINE_ILLNESS 15
-#define PINE_LIFE_FACTOR 20
 
 class Plant {
 

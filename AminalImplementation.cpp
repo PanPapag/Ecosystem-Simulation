@@ -87,7 +87,7 @@ Herbivores::Herbivores(string name, char token, int x, int y, int size, int spee
 }
 
 Herbivores::~Herbivores() {
-  // cout << "I just destructed an herbivore" << endl;
+  // cout << "I just deleted an herbivore" << endl;
 }
 
 bool Herbivores::CanClimb(void) { return can_climb; }
@@ -101,3 +101,18 @@ void Herbivores::Eat(Plant* plant) {
     plant -> EatenByAnimal(eat_count);
   }
 }
+
+/*-----------------------Class Carnivores functions---------------------------*/
+
+Carnivores::Carnivores(string name, char token, int x, int y, int size, int speed, int needed_food, bool hibernates, int attack, int defence)
+        :Animal(name, token, x, y, size, speed, needed_food, hibernates), attack(attack), defence(defence) {
+        //cout << "I just constructed an carnivore" << endl;
+}
+
+Carnivores::~Carnivores(){
+  // cout << "I just deleted an herbivore" << endl;
+}
+
+int Carnivores::GetAttack(void){ return attack; }
+
+int Carnivores::GetDefence(void){ return defence; }
