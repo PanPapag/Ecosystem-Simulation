@@ -490,9 +490,7 @@ void Ecosystem::PlaceAnimals(void) {
 
 void Ecosystem::RunEcosystem(int day) {
   //DailyReset(day);
-  coordinates free_tile;
-  CheckDeadEntities();
-  free_tile = FindFreeTile(2,4,10);
+
 }
 
 void Ecosystem::DailyReset(int day) {
@@ -501,6 +499,8 @@ void Ecosystem::DailyReset(int day) {
 
 coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
   coordinates temp;
+  temp.x = -1;
+  temp.y = -1;
   /* Check the upper left corner (x = 0, y = 0) */
   if(x == 0 && y == 0) {
     if(plant_array[index]->GetName() == "Grass") {
@@ -511,7 +511,23 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
         temp.x = x;
         temp.y = y + 1;
       }
-    } else if(plant_array[index]->GetName() == "Grass") {
+    } else if(plant_array[index]->GetName() == "Algae") {
+      if(terrain_grid[x + 1][y].GetGround() == WATER_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == WATER_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else if(plant_array[index]->GetName() == "Maple") {
+      if(terrain_grid[x + 1][y].GetGround() != WATER_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else if(plant_array[index]->GetName() == "Oak") {
       if(terrain_grid[x + 1][y].GetGround() == MEADOW_TILE) {
         temp.x = x + 1;
         temp.y = y;
@@ -519,9 +535,222 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
         temp.x = x;
         temp.y = y + 1;
       }
+    } else {
+      if(terrain_grid[x + 1][y].GetGround() == HILL_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == HILL_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
     }
   }
-
+  /* Check the upper right corner (x = 0, y = terrain_size - 1) */
+  else if(x == 0 && y == terrain_size - 1) {
+    if(plant_array[index]->GetName() == "Grass") {
+      if(terrain_grid[x + 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    } else if(plant_array[index]->GetName() == "Algae") {
+      if(terrain_grid[x + 1][y].GetGround() == WATER_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == WATER_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    } else if(plant_array[index]->GetName() == "Maple") {
+      if(terrain_grid[x + 1][y].GetGround() != WATER_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() != WATER_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    } else if(plant_array[index]->GetName() == "Oak") {
+      if(terrain_grid[x + 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    } else {
+      if(terrain_grid[x + 1][y].GetGround() == HILL_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == HILL_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    }
+  }
+  /* Check the lower left corner (x = terrain_size - 1, y = 0) */
+  else if(x == terrain_size - 1 && y == 0) {
+    if(plant_array[index]->GetName() == "Grass") {
+      if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else if(plant_array[index]->GetName() == "Algae") {
+      if(terrain_grid[x - 1][y].GetGround() == WATER_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == WATER_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else if(plant_array[index]->GetName() == "Maple") {
+      if(terrain_grid[x - 1][y].GetGround() != WATER_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else if(plant_array[index]->GetName() == "Oak") {
+      if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else {
+      if(terrain_grid[x - 1][y].GetGround() == HILL_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == HILL_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    }
+  }
+  /* Check the lower right corner (x = terrain_size - 1, y = terrain_size -1) */
+  else if(x == terrain_size - 1 && y == terrain_size -1) {
+    if(plant_array[index]->GetName() == "Grass") {
+      if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    } else if(plant_array[index]->GetName() == "Algae") {
+      if(terrain_grid[x - 1][y].GetGround() == WATER_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == WATER_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    } else if(plant_array[index]->GetName() == "Maple") {
+      if(terrain_grid[x - 1][y].GetGround() != WATER_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() != WATER_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    } else if(plant_array[index]->GetName() == "Oak") {
+      if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    } else {
+      if(terrain_grid[x - 1][y].GetGround() == HILL_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == HILL_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      }
+    }
+  }
+  /* check a point in the middle of terrain_grid */
+  else {
+    if(plant_array[index]->GetName() == "Grass") {
+      if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      } else if(terrain_grid[x + 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else if(plant_array[index]->GetName() == "Algae") {
+      if(terrain_grid[x - 1][y].GetGround() == WATER_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == WATER_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      } else if(terrain_grid[x + 1][y].GetGround() == WATER_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == WATER_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else if(plant_array[index]->GetName() == "Maple") {
+      if(terrain_grid[x - 1][y].GetGround() != WATER_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() != WATER_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      } else if(terrain_grid[x + 1][y].GetGround() == WATER_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == WATER_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else if(plant_array[index]->GetName() == "Oak") {
+      if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      } else if(terrain_grid[x + 1][y].GetGround() == MEADOW_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == MEADOW_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    } else {
+      if(terrain_grid[x - 1][y].GetGround() == HILL_TILE) {
+        temp.x = x - 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y - 1].GetGround() == HILL_TILE) {
+        temp.x = x;
+        temp.y = y - 1;
+      } else if(terrain_grid[x + 1][y].GetGround() == HILL_TILE) {
+        temp.x = x + 1;
+        temp.y = y;
+      } else if(terrain_grid[x][y + 1].GetGround() == HILL_TILE) {
+        temp.x = x;
+        temp.y = y + 1;
+      }
+    }
+  }
   return temp;
 }
 
