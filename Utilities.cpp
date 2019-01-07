@@ -36,3 +36,10 @@ void ShufflePoints(coordinates *points_array, int start, int end) {
     swap(points_array[i], points_array[j]);
    }
 }
+
+void EraseSubStr(string & mainStr, const string & toErase){
+	size_t pos = std::string::npos;
+	while ((pos  = mainStr.find(toErase) )!= string::npos) {
+		mainStr.erase(pos, toErase.length());
+	}
+}
