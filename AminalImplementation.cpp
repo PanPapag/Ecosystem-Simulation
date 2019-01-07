@@ -8,7 +8,7 @@ using namespace std;
 /*---------------------------Class animal functions---------------------------*/
 Animal::Animal(string nam, char token, int x, int y, int size, int speed, int needed_food, bool hibernates)
   :token(token), coordinate_x(x), coordinate_y(y), size(size), speed(speed), needed_food(needed_food) , hibernates(hibernates) {
-     /*initially, all animals are adult*/
+     /* Initially, all animals are adult */
      string init = "Adult ";
      init.append(nam);
      name = init;
@@ -67,7 +67,7 @@ void Animal::SetHeat(bool condition) { this -> in_heat = condition; }
 
 void Animal::SetHunger(bool condition) { this -> is_hungry = condition; }
 
-void Animal::Hibernation(bool condition) {
+void Animal::SetHibernation(bool condition) {
   if(this -> hibernates) {
     in_hibernation = condition;
   }
