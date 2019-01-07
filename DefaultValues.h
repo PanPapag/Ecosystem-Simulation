@@ -1,5 +1,6 @@
 #pragma once
-/*------------------------- Default values for plants --------------------------*/
+
+/*------------------------- Default values for plants ------------------------*/
 
 #define ALIVE true
 
@@ -39,7 +40,7 @@
 #define PINE_ILLNESS 15
 #define PINE_LIFE_FACTOR 20
 
-/*------------------------- Default values for animals -------------------------*/
+/*------------------------- Default values for animals -----------------------*/
 
 #define HERB_TOKEN 'H'
 #define CARN_TOKEN 'C'
@@ -113,7 +114,7 @@
 #define A_BEAR_DEFENCE 10
 #define BEAR_HIBERNATION true
 
-/*------------------------- Default values for ecosystem -------------------------*/
+/*------------------------- Default values for ecosystem ---------------------*/
 
 #define WATER_TILE '#'
 #define HILL_TILE '^'
@@ -124,3 +125,14 @@
 
 #define LEFT 0
 #define RIGHT 1
+
+/*------------------------- Default values for colors ------------------------*/
+
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
