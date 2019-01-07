@@ -218,3 +218,53 @@ Carnivore::~Carnivore(){
 int Carnivore::GetAttack(void) { return attack; }
 
 int Carnivore::GetDefence(void) { return defence; }
+
+void Carnivore::Eat(Animal *a){
+  this -> is_hungry = false;
+  eaten_food = current_needed_food;
+
+  a -> Died();
+}
+
+/*----------------------------------------------------------------------------*/
+
+/*fight between a carnivore and a herbivore*/
+void Fight(Carnivore* a1, Herbivore* a2){
+  /*if the first animal is a fox or a wolf, we apply the same food chain rules to them*/
+  if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos)){
+    if((a1 -> GetSize() >= a2 -> GetSize()) && (a1 -> GetSpeed() >= a2 -> GetSpeed())){
+      if(! (a2->GetName().find("Salmon") != string::npos)){
+        a1 -> Eat(a2);
+      }
+    }
+  }
+  /*a bear eats every hervibore*/
+  else if(a1->GetName().find("Bear")!= string::npos){
+    a1 -> Eat(a2);
+  }
+}
+
+/*if the first animal is a herbivore and the second a carnivore, then we already have a function for this*/
+void Fight(Herbivore* a1, Carnivore* a2){
+  Fight(a2,a1);
+}
+
+/*if we have 2 herbivores, we do nothing*/
+void Fight(Herbivore* a1, Herbivore* a2){
+  return;
+}
+
+void Fight(Carnivore* a1, Carnivore* a2){
+  /*if the first animal is a fox, a wolf, or a young bear, we apply the same food chain rules to them*/
+  if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos) || (a1->GetName().find("Young Bear") != string::npos)){
+    if((a1 -> GetSize() > a2 ->GetSize()) || ((a1 -> GetAttack() > a2 -> GetDefence()) && (a1 -> GetSize() > a2 ->GetSize()) ) ){
+      a1 -> Eat(a2);
+    }
+  }
+  /*a bear eats every hervibore, except of another bear*/
+  else{
+    if (! (a2->GetName().find("Bear") != string::npos)){
+      a1 -> Eat(a2);
+    }
+  }
+}

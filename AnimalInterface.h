@@ -91,8 +91,14 @@ class Carnivore : public Animal {
 
     int GetAttack(void);
     int GetDefence(void);
+    void Eat(Animal*);
 
   private:
     int attack;
     int defence;
 };
+
+void Fight(Carnivore*, Herbivore*);
+void Fight(Herbivore*, Carnivore*);
+void Fight(Carnivore*, Carnivore*);
+void Fight(Herbivore*, Herbivore*);
