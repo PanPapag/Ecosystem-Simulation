@@ -1,22 +1,26 @@
 #include <iostream>
 #include <cstring>
+
 #include "AnimalInterface.h"
 
 using namespace std;
 
 /*---------------------------Class animal functions---------------------------*/
-Animal::Animal(string nam, char token, int size, int hunger, int eat_count, int x, int y, int speed, bool hibernates)
-  :token(token), size(size), hunger_count(hunger), eaten_food(0), eat_count(eat_count), coordinate_x(x),
-   coordinate_y(y), is_alive(true), is_hungry(true), in_heat(false), speed(speed), hibernates(hibernates), in_hibernation(false){
-     /*initially, all animals are young*/
-     string init = "Young ";
+Animal::Animal(string nam, char token, int x, int y, int size, int speed, int needed_food, bool hibernates)
+  :token(token), coordinate_x(x), coordinate_y(y), size(size), speed(speed), needed_food(needed_food) , hibernates(hibernates) {
+     /*initially, all animals are adult*/
+     string init = "Adult ";
      init.append(nam);
      name = init;
+     /* initialize the remaining data members */
+     hunger_count = 0;
+     eaten_food = 0;
+     eat_count = 0;
+     is_alive = true;
+     is_hungry = false;
+     in_heat = false;
+     in_hibernation = false;
      //cout << "I just constructed an animal" << endl;
-   }
-
-Animal::~Animal(void){
-  //cout << "I'm deleting an animal" << endl;
 }
 
 string Animal::GetName(void) { return name; }
@@ -24,6 +28,8 @@ string Animal::GetName(void) { return name; }
 char Animal::GetToken(void) { return token; }
 
 int Animal::GetSize(void) { return size; }
+
+int Animal::GetNeededFood(void) { return needed_food; }
 
 int Animal::GetHunger(void) { return hunger_count; }
 
@@ -43,52 +49,52 @@ int Animal::GetSpeed(void) { return speed; }
 
 bool Animal::Hibernates(void) { return hibernates; }
 
-bool Animal::IsInHibernation(void){ return in_hibernation; }
+bool Animal::IsInHibernation(void){  return in_hibernation; }
 
-bool Animal::IsHerbivore(void){ return (this -> token == 'H'); }
+bool Animal::IsHerbivore(void) { return (this -> token == HERB_TOKEN); }
 
-bool Animal::IsCarnivore(void){ return (this -> token == 'C'); }
+bool Animal::IsCarnivore(void) { return (this -> token == CARN_TOKEN); }
 
-void Animal::IncreaseSize(int s){ size+=s; }
+void Animal::IncreaseSize(int magnitude) { size += magnitude; }
 
-void Animal::SetName(string name){
+void Animal::SetName(string name) {
   this -> name = name;
 }
 
-void Animal::Died(void){ this -> is_alive = false; }
+void Animal::Died(void) { this -> is_alive = false; }
 
-void Animal::SetHeat(bool condition){ this -> in_heat = condition; }
+void Animal::SetHeat(bool condition) { this -> in_heat = condition; }
 
-void Animal::SetHunger(bool condition){ this -> is_hungry = condition; }
+void Animal::SetHunger(bool condition) { this -> is_hungry = condition; }
 
-void Animal::Hibernation(bool condition){
+void Animal::Hibernation(bool condition) {
   if(this -> hibernates) {
     in_hibernation = condition;
   }
 }
 
 
-void Animal::Move(int x, int y){
+void Animal::Move(int x, int y) {
   coordinate_x = x;
   coordinate_y = y;
 }
 
-
 /*-----------------------Class herbivores functions---------------------------*/
 
-Herbivores::Herbivores(string name, char token, int size, int hunger, int eat_count, int x, int y, int speed, bool hibernates, bool can_climb, int needed_food)
-        :Animal(name, token, size, hunger, eat_count, x, y, speed, hibernates),
-         can_climb(can_climb), needed_food(needed_food){
-           //cout << "I just constructed an herbivore" << endl;
-         }
+Herbivores::Herbivores(string name, char token, int x, int y, int size, int speed, int needed_food, bool can_climb, bool hibernates)
+        :Animal(name, token, x, y, size, speed, needed_food, hibernates), can_climb(can_climb) {
+        //cout << "I just constructed an herbivore" << endl;
+}
 
-bool Herbivores::CanClimb(void){ return can_climb; }
+Herbivores::~Herbivores() {
+  // cout << "I just destructed an herbivore" << endl;
+}
 
-int Herbivores::GetNeededFood(void){ return needed_food; }
+bool Herbivores::CanClimb(void) { return can_climb; }
 
-bool Herbivores::Pleased(void){ return (eaten_food == needed_food); }
+bool Herbivores::Pleased(void) { return (eaten_food == needed_food); }
 
-void Herbivores::Eat(Plant* plant){
+void Herbivores::Eat(Plant* plant) {
   /*the animal eats only if it hasn't yeat reached the desired amount of food for the day*/
   if(!Pleased()) {
     eaten_food += eat_count;
