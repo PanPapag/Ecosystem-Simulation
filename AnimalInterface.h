@@ -106,7 +106,7 @@ class Animal {
     void Died(void);
     void SetHeat(bool);
     void SetHunger(bool);
-    void Hibernation(bool);
+    void SetHibernation(bool);
 
     void Move(int, int);
 
