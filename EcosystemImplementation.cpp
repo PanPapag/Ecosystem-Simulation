@@ -4,8 +4,8 @@
 #include <ctime>
 
 #include "EcosystemInterface.h"
+#include "AnimalInterface.h"
 #include "PlantInterface.h"
-#include "Utilities.h"
 
 /* -------------------------------------- class Tile Implementation ------------------------------------- */
 Tile::Tile() {
@@ -54,6 +54,12 @@ Ecosystem::Ecosystem(int size, string season) {
      plant_array[i] = NULL;
    }
 
+   max_no_of_animals = terrain_size * terrain_size * ((rand() % (100 - 50 + 1)) + 50);
+   animal_array = new Animal *[max_no_of_animals];
+   for(int i = 0; i < max_no_of_animals; i++) {
+     animal_array[i] = NULL;
+   }
+
    MapGenerator();
 }
 
@@ -71,10 +77,15 @@ Ecosystem::~Ecosystem() {
    }
    delete [] plant_array;
 
+  for(int i = 0; i < max_no_of_animals; i++){
+        delete animal_array[i];
+  }
+  delete [] animal_array;
+
   cout << "Ecosystem destroyed. End of the simulation!" << endl;
 }
 
-void Ecosystem::MapGenerator() {
+void Ecosystem::MapGenerator(void) {
   int river_tiles = GenerateRiver();
   int lake_tiles = GenerateLake();
   int hill_tiles = GenerateHills();
@@ -86,11 +97,20 @@ void Ecosystem::MapGenerator() {
   no_of_oak = meadow_tiles / 3;
   no_of_pine = hill_tiles / 2;
 
+  no_of_deer = meadow_tiles / 5;
+  no_of_rabbit = meadow_tiles / 5;
+  no_of_groundhog = meadow_tiles / 5;
+  no_of_salmon = (river_tiles + lake_tiles) / 3;
+  no_of_fox = meadow_tiles / 5;
+  no_of_bear = hill_tiles / 2;
+  no_of_wolf = (hill_tiles + meadow_tiles) / 5;
+
   PrintGrid();
   PlacePlants();
+  PlaceAnimals();
 }
 
-int Ecosystem::GenerateRiver() {
+int Ecosystem::GenerateRiver(void) {
 
   unsigned int no_tiles = 0;
   bool stop = false;
@@ -147,7 +167,7 @@ int Ecosystem::GenerateRiver() {
   return no_tiles;
 }
 
-int Ecosystem::GenerateLake() {
+int Ecosystem::GenerateLake(void) {
   int no_tiles = 0;
   int start_x = rand() % (terrain_size - 1);
   int start_y = rand() % (terrain_size - 1);
@@ -182,7 +202,7 @@ int Ecosystem::GenerateLake() {
   return no_tiles;
 }
 
-int Ecosystem::GenerateHills() {
+int Ecosystem::GenerateHills(void) {
   int no_tiles = 0;
   int min_size = 2;
   int max_size = 4;
@@ -225,7 +245,7 @@ int Ecosystem::GenerateHills() {
   return no_tiles;
 }
 
-int Ecosystem::GenerateMeadow() {
+int Ecosystem::GenerateMeadow(void) {
   int no_tiles = 0;
 
   for(int x = 0; x < terrain_size; x++) {
@@ -240,15 +260,15 @@ int Ecosystem::GenerateMeadow() {
   return no_tiles;
 }
 
-void Ecosystem::PlacePlants() {
+void Ecosystem::PlacePlants(void) {
   int plant_index = 0;
   int points_index;
   int x,y;
   int total_points = terrain_size * terrain_size;
 
   /* Place Grass */
-  points_index = 0;
   for(int i = 0; i < no_of_grass; i++) {
+    points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
@@ -264,8 +284,8 @@ void Ecosystem::PlacePlants() {
     plant_index++;
   }
   /* Place Algae */
-  points_index = 0;
   for(int i = 0; i < no_of_algae; i++) {
+    points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
@@ -281,8 +301,8 @@ void Ecosystem::PlacePlants() {
     plant_index++;
   }
   /* Place Maple */
-  points_index = 0;
   for(int i = 0; i < no_of_maple; i++) {
+    points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
@@ -298,8 +318,8 @@ void Ecosystem::PlacePlants() {
     plant_index++;
   }
   /* Place Oak */
-  points_index = 0;
   for(int i = 0; i < no_of_oak; i++) {
+    points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
@@ -315,8 +335,8 @@ void Ecosystem::PlacePlants() {
     plant_index++;
   }
   /* Place Pine */
-  points_index = 0;
   for(int i = 0; i < no_of_pine; i++) {
+    points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
@@ -333,7 +353,31 @@ void Ecosystem::PlacePlants() {
   }
 }
 
-void Ecosystem::PrintPlantStatistics() {
+void Ecosystem::PlaceAnimals(void) {
+  int animal_index = 0;
+  int points_index;
+  int x,y;
+  int total_points = terrain_size * terrain_size;
+  /* Place Deer */
+  for(int i = 0; i < no_of_deer; i++) {
+    points_index = 0;
+    x = points[points_index].x;
+    y = points[points_index].y;
+    points_index++;
+
+    while(terrain_grid[x][y].GetGround() != MEADOW_TILE) {
+      x = points[points_index].x;
+      y = points[points_index].y;
+      points_index++;
+    }
+
+    //animal_array[plant_index] = new Herbivore()
+    animal_index++;
+  }
+
+}
+
+void Ecosystem::PrintPlantStatistics(void) {
   cout << endl;
   cout << "Total number of grasses: " << no_of_grass << endl;
   cout << "Total number of algaes: " << no_of_algae << endl;
@@ -342,7 +386,7 @@ void Ecosystem::PrintPlantStatistics() {
   cout << "Total number of pines: " << no_of_pine << endl;
 }
 
-void Ecosystem::PrintAnimalStatistics() {
+void Ecosystem::PrintAnimalStatistics(void) {
   cout << endl;
   cout << "Total number of deers: " << no_of_deer << endl;
   cout << "Total number of rabbits: " << no_of_rabbit << endl;
@@ -352,7 +396,7 @@ void Ecosystem::PrintAnimalStatistics() {
   cout << "Total number of bears: " << no_of_wolf << endl;
 }
 
-void Ecosystem::PrintGrid() {
+void Ecosystem::PrintGrid(void) {
   for(int i = 0; i < terrain_size; i++) {
     for(int j = 0; j < terrain_size; j++) {
       if(terrain_grid[i][j].GetGround() == WATER_TILE){

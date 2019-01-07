@@ -3,6 +3,7 @@
 #include <cstring>
 
 #include "PlantInterface.h"
+#include "DefaultValues.h"
 
 using namespace std;
 
@@ -57,11 +58,11 @@ class Animal {
     bool in_hibernation;
 };
 
-class Herbivores : public Animal {
+class Herbivore : public Animal {
 
   public:
-    Herbivores(string, char, int, int, int, int, int, bool, bool);
-    ~Herbivores();
+    Herbivore(string, char, int, int, int, int, int, bool, bool);
+    ~Herbivore();
     bool CanClimb(void);
     bool Pleased(void);
     void Eat(Plant*);
@@ -70,13 +71,10 @@ class Herbivores : public Animal {
     bool can_climb;
 };
 
-class Carnivores : public Animal {
+class Carnivore : public Animal {
 
   public:
-    Carnivores(string, char, int, int, int, int, int, bool,int, int);
-    ~Carnivores();
-    int GetAttack(void);
-    int GetDefence(void);
+
   private:
     int attack;
     int defence;

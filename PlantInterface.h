@@ -1,10 +1,8 @@
 #pragma once
 
 #include <cstring>
-
-#include "DefaultValues.h"
-
 #include "Utilities.h"
+#include "DefaultValues.h"
 
 using namespace std;
 
