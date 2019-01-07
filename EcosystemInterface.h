@@ -31,6 +31,7 @@ class Ecosystem {
   public:
     Ecosystem(int,string);
     ~Ecosystem();
+    void RunEcosystem(int);
 
   private:
     int terrain_size;
