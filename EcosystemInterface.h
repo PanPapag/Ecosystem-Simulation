@@ -34,11 +34,18 @@ class Ecosystem {
     void RunEcosystem(int);
 
   private:
+    string Seasons[4];
     int terrain_size;
     int max_no_of_plants;
     int max_no_of_animals;
     string current_season;
     coordinates *points;
+
+    int growth_period_plants;
+    int growth_period_animals;
+    int breeding_rep_period_plants;
+    int breeding_rep_period_herb;
+    int breeding_rep_period_carn;
 
     int no_of_grass;
     int no_of_algae;
@@ -58,6 +65,9 @@ class Ecosystem {
     class Plant **plant_array;
     class Animal **animal_array;
 
+    void DailyReset(int);
+    void CheckDeadEntities(void);
+    coordinates FindFreeTile(int,int,int);
     void PrintGrid(void);
     void PrintPlantStatistics(void);
     void PrintAnimalStatistics(void);

@@ -26,7 +26,7 @@ class Animal {
     int GetEatCount(void);
     int GetCoordinateX(void);
     int GetCoordinateY(void);
-    bool Alive(void);
+    bool IsAlive(void);
     bool IsAdult(void);
     bool Hungry(void);
     bool IsInHeat(void);
@@ -69,12 +69,12 @@ class Animal {
     bool in_hibernation;
 };
 
-class Herbivores : public Animal {
+class Herbivore : public Animal {
 
   public:
-    Herbivores(string, char, int, int, int, int, int, bool, bool);
-    Herbivores(string, char, int, int, int, int, int, int, int, int, bool, bool);
-    ~Herbivores();
+    Herbivore(string, char, int, int, int, int, int, bool, bool);
+    Herbivore(string, char, int, int, int, int, int, int, int, int, bool, bool);
+    ~Herbivore();
 
     bool CanClimb(void);
     void Eat(Plant*);
@@ -83,11 +83,11 @@ class Herbivores : public Animal {
     bool can_climb;
 };
 
-class Carnivores : public Animal {
+class Carnivore : public Animal {
 
   public:
-    Carnivores(string, char, int, int, int, int, int, bool,int, int);
-    ~Carnivores();
+    Carnivore(string, char, int, int, int, int, int, bool,int, int);
+    ~Carnivore();
 
     int GetAttack(void);
     int GetDefence(void);
