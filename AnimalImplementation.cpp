@@ -159,9 +159,6 @@ void Animal::Raise(void){
         IncreaseSpeed(2);
         IncreaseNeededFood(2);
     }
-    else {
-        cout << "Malaka Panteli kati paei strava me ta onomata" << endl;
-    }
   }
   else {
     if(name.find("Young") != string::npos){
