@@ -67,6 +67,7 @@ class Ecosystem {
 
     void DailyReset(int);
     void CheckDeadEntities(void);
+    void AnimalMovement(void);
     coordinates FindFreeTile(int,int,int);
     void PrintGrid(void);
     void PrintPlantStatistics(void);

@@ -490,11 +490,37 @@ void Ecosystem::PlaceAnimals(void) {
 
 void Ecosystem::RunEcosystem(int day) {
   //DailyReset(day);
-
 }
 
 void Ecosystem::DailyReset(int day) {
   return;
+}
+
+void Ecosystem::AnimalMovement(void) {
+  int x,y;
+
+  for(int i = 0; i < max_no_of_animals; i++) {
+    if(animal_array[i] != NULL) {
+      x = animal_array[i]->GetCoordinateX();
+      y = animal_array[i]->GetCoordinateY();
+      if(animal_array[i]->GetName() == "Young Deer" || animal_array[i]->GetName() == "Adult Deer") {
+        /* code here */
+      } else if(animal_array[i]->GetName() == "Young Rabbit" || animal_array[i]->GetName() == "Adult Rabbit") {
+        /* code here */
+      } else if(animal_array[i]->GetName() == "Young Groundhog" || animal_array[i]->GetName() == "Adult Groundhog") {
+        /* code here */
+      } else if(animal_array[i]->GetName() == "Adult Salmon") {
+        /* code here */
+      } else if(animal_array[i]->GetName() == "Young Fox" || animal_array[i]->GetName() == "Adult Fox") {
+        /* code here */
+      } else if(animal_array[i]->GetName() == "Young Bear" || animal_array[i]->GetName() == "Adult Bear") {
+        /* code here */
+      } else {
+        /* code here */
+      }
+    }
+  }
+
 }
 
 coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
