@@ -13,6 +13,7 @@ class Plant {
     virtual ~Plant(){};
     bool Reproduced(void);
     bool IsAlive(void);
+    bool IsSeeded(void);
     int GetCoordinateX(void);
     int GetCoordinateY(void);
     int GetBreedingProb(void);
@@ -27,6 +28,7 @@ class Plant {
     string name;
     char token;
     bool alive;
+    bool seeded;
     int coordinate_x;
     int coordinate_y;
     int breeding_prob;

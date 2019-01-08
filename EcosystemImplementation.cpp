@@ -91,7 +91,7 @@ Ecosystem::~Ecosystem() {
   }
   delete [] animal_array;
 
-  cout << "Ecosystem destroyed. End of the simulation!" << endl;
+  cout << endl << "Ecosystem destroyed. End of the simulation!" << endl;
 }
 
 void Ecosystem::MapGenerator(void) {
@@ -493,31 +493,72 @@ void Ecosystem::PlaceAnimals(void) {
 }
 
 void Ecosystem::RunEcosystem(int day) {
-  //DailyReset(day);
+
+  DailyReset(day);
 
   /*for (int i = 0; i < 24; i++){
     AnimalMovement();
     AnimalEating();
     CheckDeadEntities();
-  }
-  if(day % breeding_rep_period_carn == 0) {
+  } */
+  /*if(day % breeding_rep_period_carn == 0) {
     AnimalBreedingCarnivores();
   }
   if(day % breeding_rep_period_herb == 0) {
     AnimalBreedingHerbivores();
-  }
+  } */
   if (day % breeding_rep_period_plants == 0 && current_season != "Winter") {
     PlantBreeding();
-  } */
+  }
 
   PrintSystem(day);
   if(day % 90 == 0) {
     ApplySeason();
   }
+
 }
 
 void Ecosystem::DailyReset(int day) {
-  return;
+
+  for(int i = 0; i < max_no_of_animals; i++) {
+    if(animal_array[i] != NULL) {
+      /* here */
+    }
+  }
+
+  /* Plants growing */
+  if(current_season != "Autumn") {
+    if(day % growth_period_plants == 0) {
+      for(int i = 0; i < max_no_of_plants; i++) {
+        if(plant_array[i] != NULL) {
+          if(plant_array[i]->IsSeeded() == false) {
+            Seedless *seedless = (Seedless *) plant_array[i];
+            seedless->Grow();
+          } else if(plant_array[i]->IsSeeded() == true) {
+            Seeded *seeded = (Seeded *) plant_array[i];
+            seeded->Grow();
+          }
+        }
+      }
+    }
+  }
+  /* Animal Growing */
+  if (day %growth_period_animals == 0) {
+    for(int i = 0; i < max_no_of_animals; i++) {
+      if(animal_array[i] != NULL) {
+        if(animal_array[i]->IsAdult() == false) {
+          if(animal_array[i]->IsCarnivore() == true) {
+            Carnivore *carnivore = (Carnivore *) animal_array[i];
+            carnivore->Raise();
+          } else if(animal_array[i]->IsHerbivore() == true) {
+            Herbivore *herbivore = (Herbivore *) animal_array[i];
+            herbivore->Raise();
+          }
+        }
+      }
+    }
+  }
+
 }
 
 void Ecosystem::ApplySeason(void) {
@@ -577,7 +618,7 @@ void Ecosystem::AnimalBreedingCarnivores(void) {
     if(animal_array[i] != NULL) {
       if(animal_array[i]->IsAdult() == true && animal_array[i]->IsCarnivore() == true && animal_array[i]->Hibernates() == false) {
         flag = true;
-      } else {
+      } else if(animal_array[i]->IsAdult() == true && animal_array[i]->IsHerbivore() == true && animal_array[i]->Hibernates() == true) {
         if(animal_array[i]->IsInHibernation() == false) {
           flag = true;
         }
@@ -609,20 +650,20 @@ void Ecosystem::AnimalBreedingHerbivores(void) {
     if(animal_array[i] != NULL) {
       if(animal_array[i]->IsAdult() == true && animal_array[i]->IsHerbivore() == true && animal_array[i]->Hibernates() == false) {
         flag = true;
-      } else {
+      } else if(animal_array[i]->IsAdult() == true && animal_array[i]->IsHerbivore() == true && animal_array[i]->Hibernates() == true) {
         if(animal_array[i]->IsInHibernation() == false) {
           flag = true;
         }
       }
       if(flag == true && TotalAnimals() != max_no_of_animals) {
         for(int j = 0; j < max_no_of_animals; j++) {
-          if(animal_array[j] == NULL){
+          if(animal_array[j] == NULL) {
             animal_array[j] = animal_array[i]->Reproduct();
             break;
           }
           if(animal_array[i]->GetName() == "Adult Deer") {
             no_of_deer++;
-          } else if(animal_array[i]->GetName() == "Adult Rabbit"){
+          } else if(animal_array[i]->GetName() == "Adult Rabbit") {
             no_of_rabbit++;
           } else if(animal_array[i]->GetName() == "Adult Groundhog") {
             no_of_groundhog++;
@@ -1070,6 +1111,8 @@ void Ecosystem::PrintAnimalStatistics(void) {
 }
 
 void Ecosystem::PrintGrid(void) {
+
+  cout << endl;
 
   for(int i = 0; i < terrain_size; i++) {
     for(int j = 0; j < terrain_size; j++) {

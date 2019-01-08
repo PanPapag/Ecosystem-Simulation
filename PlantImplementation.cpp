@@ -15,6 +15,8 @@ bool Plant::Reproduced(void) { return (RandomResult(100 - breeding_prob)); }
 
 bool Plant::IsAlive(void) { return alive; }
 
+bool Plant::IsSeeded(void) { return seeded; }
+
 int Plant::GetCoordinateX(void) { return coordinate_x; }
 
 int Plant::GetCoordinateY(void) { return coordinate_y; }
@@ -34,6 +36,7 @@ string Plant::GetName(void) { return name; }
 
 Seedless::Seedless(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int life_var)
   : Plant(name, x, y, token, breeding, illness, life_sit, life_fact ), life(life_var) {
+    this -> seeded = false;
     //cout << "I just constructed a seedless plant" << endl;
 }
 
@@ -94,6 +97,7 @@ void Leaves::DecreaseNumber(int n) { quantity -= n; }
 
 Seeded::Seeded(string name, int x, int y, char token, int breeding, int illness, bool life_sit, int life_fact, int fol, int seed, int size)
   :Plant(name, x, y, token, breeding, illness, life_sit, life_fact), foliage(fol,size), seeds(seed) {
+    this -> seeded = true;
     //cout << "I just constructed a seeded plant" << endl;
 }
 
