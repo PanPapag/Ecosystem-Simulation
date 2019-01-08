@@ -92,7 +92,7 @@
 
 #define Y_WOLF_SIZE 1
 #define Y_WOLF_SPEED 2
-#define Y_WOFL_NEED_FOOD 2
+#define Y_WOLF_NEED_FOOD 2
 #define Y_WOLF_ATTACK 2
 #define Y_WOLF_DEFENCE 2
 #define A_WOLF_SIZE 7

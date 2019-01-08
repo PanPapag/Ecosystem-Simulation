@@ -78,6 +78,8 @@ bool Animal::IsAdult(void) {
 
 bool Animal::Hungry(void) { return is_hungry; }
 
+bool Animal::IsStarving(void) { return (hunger_count == 10); }
+
 bool Animal::IsInHeat(void) { return in_heat; }
 
 bool Animal::Hibernates(void) { return hibernates; }
@@ -170,6 +172,50 @@ void Animal::Raise(void){
   }
 }
 
+Animal* Animal::Reproduct(void){
+  string deer = "Adult Deer", rabbit = "Adult Rabbit", groundhog = "Adult Groundhog",
+  salmon = "Adult Salmon", fox = "Adult Fox", bear = "Adult Bear", wolf = "Adult Wolf";
+  Animal* child = NULL;
+
+  if(name == deer) {
+    child = new Herbivore("Deer", HERB_TOKEN, this->coordinate_x, this->coordinate_y,
+                                  Y_DEER_SIZE,A_DEER_SIZE,Y_DEER_SPEED,A_DEER_SPEED, Y_DEER_NEED_FOOD, A_DEER_NEED_FOOD
+                                  ,DEER_CLIMB,DEER_HIBERNATION);
+
+  } else if(name == rabbit) {
+    child = new Herbivore("Rabit", HERB_TOKEN, this->coordinate_x, this->coordinate_y,
+                                  Y_RABBIT_SIZE,A_RABBIT_SIZE,Y_RABBIT_SPEED,A_RABBIT_SPEED, Y_RABBIT_NEED_FOOD, A_RABBIT_NEED_FOOD
+                                  ,RABBIT_CLIMB,RABBIT_HIBERNATION);
+
+  } else if(name == groundhog) {
+    child = new Herbivore("Groundhog", HERB_TOKEN, this->coordinate_x, this->coordinate_y,
+                                  Y_GROUNDHOG_SIZE,A_GROUNDHOG_SIZE,Y_GROUNDHOG_SPEED,A_GROUNDHOG_SPEED, Y_GROUNDHOG_NEED_FOOD, A_GROUNDHOG_NEED_FOOD
+                                  ,GROUNDHOG_CLIMB,GROUNDHOG_HIBERNATION);
+
+  } else if(name == salmon) {
+    child = new Herbivore("Salmon", HERB_TOKEN, this->coordinate_x, this->coordinate_y,
+                                  A_SALMON_SIZE,A_SALMON_SPEED, A_SALMON_NEED_FOOD,
+                                  SALMON_CLIMB,SALMON_HIBERNATION);
+
+  } else if(name == fox) {
+    child = new Carnivore("Groundhog", CARN_TOKEN, this->coordinate_x, this->coordinate_y,
+                                Y_FOX_SIZE,A_FOX_SIZE,Y_FOX_SPEED,A_FOX_SPEED, Y_FOX_NEED_FOOD, A_FOX_NEED_FOOD
+                                  ,FOX_HIBERNATION,Y_FOX_ATTACK,A_FOX_ATTACK,Y_FOX_DEFENCE,A_FOX_DEFENCE);
+
+  } else if (name == bear) {
+    child = new Carnivore("Bear", CARN_TOKEN, this->coordinate_x, this->coordinate_y,
+                                Y_BEAR_SIZE,A_BEAR_SIZE,Y_BEAR_SPEED,A_BEAR_SPEED, Y_BEAR_NEED_FOOD, A_BEAR_NEED_FOOD
+                                  ,BEAR_HIBERNATION,Y_BEAR_ATTACK,A_BEAR_ATTACK,Y_BEAR_DEFENCE,A_BEAR_DEFENCE);
+
+  }else if (name == wolf) {
+    child = new Carnivore("Wolf", CARN_TOKEN, this->coordinate_x, this->coordinate_y,
+                                Y_WOLF_SIZE,A_WOLF_SIZE,Y_WOLF_SPEED,A_WOLF_SPEED, Y_WOLF_NEED_FOOD, A_WOLF_NEED_FOOD
+                                  ,WOLF_HIBERNATION,Y_WOLF_ATTACK,A_WOLF_ATTACK,Y_WOLF_DEFENCE,A_WOLF_DEFENCE);
+  }
+
+  return child;
+}
+
 /*-----------------------Class herbivores functions---------------------------*/
 
 /*constructor for adult herbivores*/
@@ -191,6 +237,34 @@ Herbivore::~Herbivore() {
 
 bool Herbivore::CanClimb(void) { return can_climb; }
 
+void Herbivore::Raise(void){
+  string deer = "Young Deer", rabbit = "Young Rabbit", groundhog = "Young Groundhog";
+  if(!IsAdult()) {
+    if(name == deer) {
+        IncreaseSize(1);
+        IncreaseSpeed(2);
+        IncreaseNeededFood(2);
+    }
+    else if(name == rabbit) {
+        IncreaseSize(1);
+        IncreaseSpeed(2);
+        IncreaseNeededFood(2);
+    }
+    else if(name == groundhog) {
+        IncreaseSize(1);
+        IncreaseSpeed(2);
+        IncreaseNeededFood(2);
+    }
+  }
+  else {
+    if(name.find("Young") != string::npos){
+      EraseSubStr(name,"Young ");
+      string adult = "Adult ";
+      adult.append(name);
+      name = adult;
+    }
+  }
+}
 
 void Herbivore::Eat(Plant* plant) {
   /*the animal eats only if it hasn't yeat reached the desired amount of food for the day*/
@@ -204,19 +278,76 @@ void Herbivore::Eat(Plant* plant) {
 
 /*-----------------------Class Carnivores functions---------------------------*/
 
+/*constructor for adult Carnivores*/
 Carnivore::Carnivore(string name, char token, int x, int y, int size, int speed, int needed_food, bool hibernates, int attack, int defence)
-        :Animal(name, token, x, y, size, speed, needed_food, hibernates), attack(attack), defence(defence) {
-        //cout << "I just constructed an carnivore" << endl;
-}
+        :Animal(name, token, x, y, size, speed, needed_food, hibernates),
+        current_attack(attack), current_defence(defence), max_attack(attack), max_defence(defence) {
+          //cout << "I just constructed an carnivore" << endl;
+        }
+
+/*constructor for young Carnivores*/
+Carnivore::Carnivore(string name, char token, int x, int y, int current_size, int max_size, int current_speed, int max_speed, int current_needed_food, int max_needed_food,
+          bool hibernates, int current_attack, int max_attack, int current_defence, int max_defence)
+            :Animal(name, token, x, y, current_size, max_size, current_speed, max_speed, current_needed_food, max_needed_food, hibernates),
+             current_attack(current_attack),current_defence(current_defence){
+              //cout << "I just constructed a young herbivore" << endl;
+            }
 
 Carnivore::~Carnivore(){
   // cout << "I just deleted an herbivore" << endl;
 }
 
-int Carnivore::GetAttack(void) { return attack; }
+int Carnivore::GetAttack(void) { return current_attack; }
 
-int Carnivore::GetDefence(void) { return defence; }
+int Carnivore::GetDefence(void) { return current_defence; }
 
+int Carnivore::GetMaxAttack(void) { return max_attack; }
+
+int Carnivore::GetMaxDefence(void) { return max_defence; }
+
+void Carnivore::IncreaseAttack(int magnitude) {
+  if(current_size + magnitude <= max_size) current_size += magnitude;
+  else current_size = max_size;
+}
+
+void Carnivore::IncreaseDefence(int magnitude) {
+  if(current_size + magnitude <= max_size) current_size += magnitude;
+  else current_size = max_size;
+}
+
+void Carnivore::Raise(void){
+  string fox = "Young Fox", bear = "Young Bear", wolf = "Young Wolf";
+  if(!IsAdult()) {
+    if(name == fox) {
+        IncreaseSize(1);
+        IncreaseSpeed(1);
+        IncreaseNeededFood(1);
+        IncreaseAttack(2);
+        IncreaseDefence(2);
+    }
+    else if(name == bear) {
+        IncreaseSize(2);
+        IncreaseNeededFood(2);
+        IncreaseAttack(2);
+        IncreaseDefence(2);
+    }
+    else if(name == wolf) {
+        IncreaseSize(1);
+        IncreaseSpeed(2);
+        IncreaseNeededFood(2);
+        IncreaseAttack(2);
+        IncreaseDefence(2);
+    }
+  }
+  else {
+    if(name.find("Young") != string::npos){
+      EraseSubStr(name,"Young ");
+      string adult = "Adult ";
+      adult.append(name);
+      name = adult;
+    }
+  }
+}
 void Carnivore::Eat(Animal *a){
   this -> is_hungry = false;
   eaten_food = current_needed_food;
@@ -253,16 +384,35 @@ void Fight(Herbivore* a1, Herbivore* a2){
 }
 
 void Fight(Carnivore* a1, Carnivore* a2){
+  bool eaten = false;
   /*if the first animal is a fox, a wolf, or a young bear, we apply the same food chain rules to them*/
   if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos) || (a1->GetName().find("Young Bear") != string::npos)){
     if((a1 -> GetSize() > a2 ->GetSize()) || ((a1 -> GetAttack() > a2 -> GetDefence()) && (a1 -> GetSize() > a2 ->GetSize()) ) ){
       a1 -> Eat(a2);
+      eaten = true;
     }
   }
   /*a bear eats every hervibore, except of another bear*/
-  else{
+  else {
     if (! (a2->GetName().find("Bear") != string::npos)){
       a1 -> Eat(a2);
+      eaten = true;
+    }
+  }
+  /*if the first has not eaten the second, check if the second can eat the first*/
+  if(eaten == false) {
+    if((a2->GetName().find("Fox") != string::npos) || (a2->GetName().find("Wolf") != string::npos) || (a2->GetName().find("Young Bear") != string::npos)){
+      if((a2 -> GetSize() > a1 ->GetSize()) || ((a2 -> GetAttack() > a1 -> GetDefence()) && (a2 -> GetSize() > a1 ->GetSize()) ) ){
+        a2 -> Eat(a1);
+        eaten = true;
+      }
+    }
+    /*a bear eats every hervibore, except of another bear*/
+    else {
+      if (! (a1->GetName().find("Bear") != string::npos)){
+        a2 -> Eat(a1);
+        eaten = true;
+      }
     }
   }
 }

@@ -29,6 +29,7 @@ class Animal {
     bool IsAlive(void);
     bool IsAdult(void);
     bool Hungry(void);
+    bool IsStarving(void);
     bool IsInHeat(void);
     bool Hibernates(void);
     bool IsInHibernation(void);
@@ -46,7 +47,8 @@ class Animal {
     void SetHibernation(bool);
 
     void Move(int, int);
-    void Raise(void);
+    virtual void Raise(void) = 0;
+    Animal* Reproduct(void);
   protected:
 
     string name;
@@ -77,6 +79,8 @@ class Herbivore : public Animal {
     ~Herbivore();
 
     bool CanClimb(void);
+
+    void Raise(void);
     void Eat(Plant*);
 
   private:
@@ -87,15 +91,24 @@ class Carnivore : public Animal {
 
   public:
     Carnivore(string, char, int, int, int, int, int, bool,int, int);
+    Carnivore(string, char, int, int, int, int, int, int, int, int, bool, int, int, int, int);
     ~Carnivore();
 
     int GetAttack(void);
     int GetDefence(void);
+    int GetMaxAttack(void);
+    int GetMaxDefence(void);
+    void IncreaseAttack(int);
+    void IncreaseDefence(int);
+
+    void Raise(void);
     void Eat(Animal*);
 
   private:
-    int attack;
-    int defence;
+    int current_attack;
+    int current_defence;
+    int max_attack;
+    int max_defence;
 };
 
 void Fight(Carnivore*, Herbivore*);
