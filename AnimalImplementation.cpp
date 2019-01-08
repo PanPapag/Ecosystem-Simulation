@@ -98,13 +98,13 @@ void Animal::IncreaseSize(int magnitude) {
 }
 
 void Animal::IncreaseSpeed(int magnitude) {
-  if(current_size + magnitude <= max_size) current_size += magnitude;
-  else current_size = max_size;
+  if(current_speed + magnitude <= max_speed) current_speed += magnitude;
+  else current_speed = max_speed;
 }
 
 void Animal::IncreaseNeededFood(int magnitude) {
-  if(current_size + magnitude <= max_size) current_size += magnitude;
-  else current_size = max_size;
+  if(current_needed_food + magnitude <= max_needed_food) current_needed_food += magnitude;
+  else current_needed_food = max_needed_food;
 }
 
 void Animal::SetName(string name) {
@@ -262,13 +262,13 @@ int Carnivore::GetMaxAttack(void) { return max_attack; }
 int Carnivore::GetMaxDefence(void) { return max_defence; }
 
 void Carnivore::IncreaseAttack(int magnitude) {
-  if(current_size + magnitude <= max_size) current_size += magnitude;
-  else current_size = max_size;
+  if(current_attack + magnitude <= max_attack) current_attack += magnitude;
+  else current_attack = max_attack;
 }
 
 void Carnivore::IncreaseDefence(int magnitude) {
-  if(current_size + magnitude <= max_size) current_size += magnitude;
-  else current_size = max_size;
+  if(current_defence + magnitude <= max_defence) current_defence += magnitude;
+  else current_defence = max_defence;
 }
 
 void Carnivore::Raise(void){
