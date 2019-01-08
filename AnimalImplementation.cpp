@@ -128,50 +128,6 @@ void Animal::Move(int x, int y) {
   coordinate_y = y;
 }
 
-void Animal::Raise(void){
-  string deer = "Young Deer", rabbit = "Young Rabbit", groundhog = "Young Groundhog",
-  salmon = "Young Salmon", fox = "Young Fox", bear = "Young Bear", wolf = "Young Wolf";
-  if(!IsAdult()) {
-    if(name == deer) {
-        IncreaseSize(1);
-        IncreaseSpeed(2);
-        IncreaseNeededFood(2);
-    }
-    else if(name == rabbit) {
-        IncreaseSize(1);
-        IncreaseSpeed(2);
-        IncreaseNeededFood(2);
-    }
-    else if(name == groundhog) {
-        IncreaseSize(1);
-        IncreaseSpeed(2);
-        IncreaseNeededFood(2);
-    }
-    else if(name == fox) {
-        IncreaseSize(1);
-        IncreaseSpeed(1);
-        IncreaseNeededFood(1);
-    }
-    else if(name == bear) {
-        IncreaseSize(2);
-        IncreaseNeededFood(2);
-    }
-    else if(name == wolf) {
-        IncreaseSize(1);
-        IncreaseSpeed(2);
-        IncreaseNeededFood(2);
-    }
-  }
-  else {
-    if(name.find("Young") != string::npos){
-      EraseSubStr(name,"Young ");
-      string adult = "Adult ";
-      adult.append(name);
-      name = adult;
-    }
-  }
-}
-
 Animal* Animal::Reproduct(void){
   string deer = "Adult Deer", rabbit = "Adult Rabbit", groundhog = "Adult Groundhog",
   salmon = "Adult Salmon", fox = "Adult Fox", bear = "Adult Bear", wolf = "Adult Wolf";
