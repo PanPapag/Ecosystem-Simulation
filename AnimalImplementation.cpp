@@ -202,6 +202,7 @@ void Herbivore::Eat(Plant* plant) {
     hunger_count -= eat_count;
     plant -> EatenByAnimal(eat_count);
   }
+  if(Pleased()) is_hungry = false;
 }
 
 /*-----------------------Class Carnivores functions---------------------------*/
