@@ -3,9 +3,9 @@
 #include <cstdlib>
 #include <ctime>
 
-using namespace std;
-
 #include "Utilities.h"
+
+using namespace std;
 
 bool RandomResult(int factor) {
   int res = rand() % 101;

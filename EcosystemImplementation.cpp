@@ -18,19 +18,15 @@ Tile::~Tile() {
   //cout << "Tile destructed" << endl;
 }
 
-char Tile::GetGround() { return ground; }
+char Tile::GetGround(void) { return ground; }
 
-char Tile::GetPlanthToken() { return plant_token; }
+char Tile::GetPlantToken(void) { return plant_token; }
 
-bool Tile::ExistPlant() { return exist_plant; }
+bool Tile::ExistPlant(void) { return exist_plant; }
 
-void Tile::SetGround(char category) {
-  ground = category;
-}
+void Tile::SetGround(char category) { ground = category; }
 
-void Tile::SetPlantToken(char category) {
-  plant_token = category;
-}
+void Tile::SetPlantToken(char category) { plant_token = category; }
 
 /* ----------------------------------- class Ecosystem Implementation ----------------------------------- */
 
@@ -38,10 +34,10 @@ Ecosystem::Ecosystem(int size, string season) {
   terrain_size = size;
   current_season = season;
 
-  Seasons[0] = "Winter";
-  Seasons[1] = "Spring";
-  Seasons[2] = "Summer";
-  Seasons[3] = "Autumn";
+  Seasons[0] = "Autumn";
+  Seasons[1] = "Winter";
+  Seasons[2] = "Spring";
+  Seasons[3] = "Summer";
 
   terrain_grid = new Tile *[terrain_size];
   for(int i = 0; i < terrain_size; i++) {
@@ -64,7 +60,16 @@ Ecosystem::Ecosystem(int size, string season) {
    for(int i = 0; i < max_no_of_animals; i++) {
      animal_array[i] = NULL;
    }
+
+   for(int i = 0; i < 4; i++) {
+     if(Seasons[i] == current_season) {
+       season_index = i;
+       break;
+     }
+   }
+
    MapGenerator();
+   ApplySeason();
 }
 
 Ecosystem::~Ecosystem() {
@@ -101,15 +106,14 @@ void Ecosystem::MapGenerator(void) {
   no_of_oak = meadow_tiles / 3;
   no_of_pine = hill_tiles / 2;
 
-  no_of_deer = meadow_tiles / 5;
-  no_of_rabbit = meadow_tiles / 5;
-  no_of_groundhog = meadow_tiles / 5;
-  no_of_salmon = (river_tiles + lake_tiles) / 3;
-  no_of_fox = meadow_tiles / 5;
-  no_of_bear = hill_tiles / 2;
-  no_of_wolf = (hill_tiles + meadow_tiles) / 5;
+  no_of_deer = meadow_tiles / 6;
+  no_of_rabbit = meadow_tiles / 6;
+  no_of_groundhog = meadow_tiles / 6;
+  no_of_salmon = (river_tiles + lake_tiles) / 4;
+  no_of_fox = meadow_tiles / 6;
+  no_of_bear = hill_tiles / 4;
+  no_of_wolf = (hill_tiles + meadow_tiles) / 6;
 
-  PrintGrid();
   PlacePlants();
   PlaceAnimals();
 }
@@ -121,7 +125,7 @@ int Ecosystem::GenerateRiver(void) {
   int x, y, start_y;
 
   x = 0;
-  y = (rand() % (terrain_size - 5 )) + 5;
+  y = (rand() % (terrain_size - 5)) + 5;
   start_y = y;
   terrain_grid[x][y].SetGround(WATER_TILE);
   no_tiles++;
@@ -490,10 +494,196 @@ void Ecosystem::PlaceAnimals(void) {
 
 void Ecosystem::RunEcosystem(int day) {
   //DailyReset(day);
+
+  /*for (int i = 0; i < 24; i++){
+    AnimalMovement();
+    AnimalEating();
+    CheckDeadEntities();
+  }
+  if(day % breeding_rep_period_carn == 0) {
+    AnimalBreedingCarnivores();
+  }
+  if(day % breeding_rep_period_herb == 0) {
+    AnimalBreedingHerbivores();
+  }
+  if (day % breeding_rep_period_plants == 0 && current_season != "Winter") {
+    PlantBreeding();
+  } */
+
+  PrintSystem(day);
+  if(day % 90) {
+    ApplySeason();
+  }
 }
 
 void Ecosystem::DailyReset(int day) {
   return;
+}
+
+void Ecosystem::ApplySeason(void) {
+  season_index = (season_index + 1) % 4;
+  current_season = Seasons[season_index];
+
+  if(current_season == "Autumn") {
+    growth_period_plants = 0;
+    growth_period_animals = 15;
+    breeding_rep_period_plants = 20;
+    breeding_rep_period_herb = 5;
+    breeding_rep_period_carn = 9;
+  } else if(current_season == "Winter") {
+    /* During winter some animals hibernate */
+    for(int i = 0; i < max_no_of_animals; i++) {
+      if(animal_array[i] != NULL) {
+        if(animal_array[i]->Hibernates() == true) {
+          animal_array[i]->SetHibernation(true);
+        }
+      }
+    }
+    /* Change values */
+    growth_period_plants = 10;
+    growth_period_animals = 30;
+    breeding_rep_period_plants = 0;
+    breeding_rep_period_herb = 18;
+    breeding_rep_period_carn = 10;
+  } else if(current_season == "Spring") {
+    /* During sprint some animals wake up from hibernation */
+    for(int i = 0; i < max_no_of_animals; i++) {
+      if(animal_array[i] != NULL) {
+        if(animal_array[i]->IsInHibernation() == true ) {
+          animal_array[i]->SetHibernation(false);
+        }
+      }
+    }
+    /* Change values */
+    growth_period_plants = 5;
+    growth_period_animals = 20;
+    breeding_rep_period_plants = 10;
+    breeding_rep_period_herb = 12;
+    breeding_rep_period_carn = 11;
+  } else if(current_season == "Summer") {
+    growth_period_plants = 10;
+    growth_period_animals = 30;
+    breeding_rep_period_plants = 10;
+    breeding_rep_period_herb = 8;
+    breeding_rep_period_carn = 9;
+  }
+
+}
+
+void Ecosystem::AnimalBreedingCarnivores(void) {
+
+  for(int i = 0; i < max_no_of_animals; i++) {
+    bool flag = false;
+    if(animal_array[i] != NULL) {
+      if(animal_array[i]->IsAdult() == true && animal_array[i]->IsCarnivore() == true && animal_array[i]->Hibernates() == false) {
+        flag = true;
+      } else {
+        if(animal_array[i]->IsInHibernation() == false) {
+          flag = true;
+        }
+      }
+      if(flag == true && TotalAnimals() != max_no_of_animals) {
+        for(int j = 0; j < max_no_of_animals; j++) {
+          if(animal_array[j] == NULL){
+            animal_array[j] = animal_array[i]->Reproduct();
+            break;
+          }
+          if(animal_array[i]->GetName() == "Adult Fox") {
+            no_of_fox++;
+          } else if(animal_array[i]->GetName() == "Adult Wolf") {
+            no_of_wolf++;
+          } else if(animal_array[i]->GetName() == "Adult Bear") {
+            no_of_bear++;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+void Ecosystem::AnimalBreedingHerbivores(void) {
+
+  for(int i = 0; i < max_no_of_animals; i++) {
+    bool flag = false;
+    if(animal_array[i] != NULL) {
+      if(animal_array[i]->IsAdult() == true && animal_array[i]->IsHerbivore() == true && animal_array[i]->Hibernates() == false) {
+        flag = true;
+      } else {
+        if(animal_array[i]->IsInHibernation() == false) {
+          flag = true;
+        }
+      }
+      if(flag == true && TotalAnimals() != max_no_of_animals) {
+        for(int j = 0; j < max_no_of_animals; j++) {
+          if(animal_array[j] == NULL){
+            animal_array[j] = animal_array[i]->Reproduct();
+            break;
+          }
+          if(animal_array[i]->GetName() == "Adult Deer") {
+            no_of_deer++;
+          } else if(animal_array[i]->GetName() == "Adult Rabbit"){
+            no_of_rabbit++;
+          } else if(animal_array[i]->GetName() == "Adult Groundhog") {
+            no_of_groundhog++;
+          } else if(animal_array[i]->GetName() == "Adult Salmon") {
+            no_of_salmon++;
+          }
+        }
+      }
+    }
+  }
+}
+
+void Ecosystem::PlantBreeding(void) {
+  coordinates temp;
+
+  for(int i = 0; i < max_no_of_plants; i++) {
+    if(plant_array[i] != NULL) {
+      int propability = rand() % 101;
+      if(plant_array[i]->GetBreedingProb() >= propability) {
+        temp = FindFreeTile(plant_array[i]->GetCoordinateX(),plant_array[i]->GetCoordinateY(),i);
+        if(temp.x != -1 && temp.y != -1) {
+          for(int j = 0; j < max_no_of_plants; j++) {
+            if(plant_array[j] == NULL) {
+              if(plant_array[i]->GetName() == "Grass") {
+                plant_array[j] = new Seedless("Grass",temp.x,temp.y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,
+                  ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
+                terrain_grid[temp.x][temp.y].SetPlantToken(plant_array[i]->GetToken());
+                no_of_grass++;
+                break;
+              } else if(plant_array[i]->GetName() == "Algae") {
+                plant_array[j] = new Seedless("Algae",temp.x,temp.y,ALGAE_TOKEN,ALGAE_BREEDING,
+                  ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
+                terrain_grid[temp.x][temp.y].SetPlantToken(plant_array[i]->GetToken());
+                no_of_grass++;
+                break;
+              } else if(plant_array[i]->GetName() == "Maple") {
+                plant_array[j] =  new Seeded("Maple",temp.x,temp.y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,
+                  ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS,MAPLE_SIZE);
+                terrain_grid[temp.x][temp.y].SetPlantToken(plant_array[i]->GetToken());
+                no_of_grass++;
+                break;
+              } else if(plant_array[i]->GetName() == "Oak") {
+                plant_array[j] =  new Seeded("Oak",temp.x,temp.y,OAK_TOKEN,OAK_BREEDING,OAK_ILLNESS,ALIVE,
+                  OAK_LIFE_FACTOR,OAK_FOLIAGE,OAK_SEEDS,OAK_SIZE);
+                terrain_grid[temp.x][temp.y].SetPlantToken(plant_array[i]->GetToken());
+                no_of_grass++;
+                break;
+              } else if(plant_array[i]->GetName() == "Pine") {
+                plant_array[j] =  new Seeded("Pine",temp.x,temp.y,PINE_TOKEN,PINE_BREEDING,PINE_ILLNESS,ALIVE,
+                  PINE_LIFE_FACTOR,PINE_FOLIAGE,PINE_SEEDS,PINE_SIZE);
+                terrain_grid[temp.x][temp.y].SetPlantToken(plant_array[i]->GetToken());
+                no_of_grass++;
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
 }
 
 void Ecosystem::AnimalMovement(void) {
@@ -798,7 +988,7 @@ void Ecosystem::CheckDeadEntities(void) {
         }
         int x = plant_array[i]->GetCoordinateX();
         int y = plant_array[i]->GetCoordinateY();
-        terrain_grid[x][y].SetPlantToken(terrain_grid[x][y].GetGround());
+        terrain_grid[x][y].SetPlantToken(EMPTY);
         delete plant_array[i];
         plant_array[i] = NULL;
       }
@@ -830,6 +1020,35 @@ void Ecosystem::CheckDeadEntities(void) {
   }
 }
 
+void Ecosystem::PrintSystem(int day) {
+
+  PrintGrid();
+  cout << endl;
+
+  cout << "Day: " << day << endl;
+  cout << "Season: " << current_season << endl;
+  cout << "Total number of plants: " << TotalPlants() << endl;
+  cout << "Total number of animals: " << TotalAnimals() << endl;
+  cout << "Total number of carnivores: " << TotalCarnivores() << endl;
+  cout << "Total number of herbivores: " << TotalHerbivores() << endl;
+}
+
+int Ecosystem::TotalAnimals(void) {
+  return no_of_deer + no_of_rabbit + no_of_groundhog + no_of_salmon + no_of_fox + no_of_bear + no_of_wolf;
+}
+
+int Ecosystem::TotalCarnivores(void) {
+  return no_of_fox + no_of_bear + no_of_wolf;
+}
+
+int Ecosystem::TotalHerbivores(void) {
+  return no_of_deer + no_of_rabbit + no_of_groundhog + no_of_salmon;
+}
+
+int Ecosystem::TotalPlants(void) {
+  return no_of_grass + no_of_algae + no_of_maple + no_of_pine + no_of_oak;
+}
+
 void Ecosystem::PrintPlantStatistics(void) {
   cout << endl;
   cout << "Total number of grasses: " << no_of_grass << endl;
@@ -846,10 +1065,12 @@ void Ecosystem::PrintAnimalStatistics(void) {
   cout << "Total number of groundhogs: " << no_of_groundhog << endl;
   cout << "Total number of salmons: " << no_of_salmon << endl;
   cout << "Total number of foxes: " << no_of_fox << endl;
-  cout << "Total number of bears: " << no_of_wolf << endl;
+  cout << "Total number of bears: " << no_of_bear << endl;
+  cout << "Total number of wolfs: " << no_of_wolf << endl;
 }
 
 void Ecosystem::PrintGrid(void) {
+
   for(int i = 0; i < terrain_size; i++) {
     for(int j = 0; j < terrain_size; j++) {
       if(terrain_grid[i][j].GetGround() == WATER_TILE){
@@ -862,4 +1083,20 @@ void Ecosystem::PrintGrid(void) {
     }
     cout << endl;
   }
+
+  cout << endl << endl;
+
+  for(int i = 0; i < terrain_size; i++) {
+    for(int j = 0; j < terrain_size; j++) {
+      if(terrain_grid[i][j].GetGround() == WATER_TILE){
+        cout << BLU << terrain_grid[i][j].GetPlantToken() << RESET;
+      } else if(terrain_grid[i][j].GetGround() == HILL_TILE) {
+        cout << RED << terrain_grid[i][j].GetPlantToken() << RESET;
+      } else if(terrain_grid[i][j].GetGround() == MEADOW_TILE) {
+        cout << GRN << terrain_grid[i][j].GetPlantToken() << RESET;
+      }
+    }
+    cout << endl;
+  }
+
 }

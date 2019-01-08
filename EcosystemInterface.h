@@ -16,7 +16,7 @@ class Tile {
     void SetGround(char);
     void SetPlantToken(char);
     char GetGround(void);
-    char GetPlanthToken(void);
+    char GetPlantToken(void);
     bool ExistPlant(void);
 
   private:
@@ -35,6 +35,7 @@ class Ecosystem {
 
   private:
     string Seasons[4];
+    int season_index;
     int terrain_size;
     int max_no_of_plants;
     int max_no_of_animals;
@@ -69,9 +70,21 @@ class Ecosystem {
     void CheckDeadEntities(void);
     void AnimalMovement(void);
     coordinates FindFreeTile(int,int,int);
+    void ApplySeason(void);
+
+    void AnimalBreedingCarnivores(void);
+    void AnimalBreedingHerbivores(void);
+    void PlantBreeding(void);
+
+    void PrintSystem(int);
     void PrintGrid(void);
     void PrintPlantStatistics(void);
     void PrintAnimalStatistics(void);
+
+    int TotalAnimals(void);
+    int TotalCarnivores(void);
+    int TotalHerbivores(void);
+    int TotalPlants(void);
 
     void MapGenerator(void);
     int GenerateRiver(void);
