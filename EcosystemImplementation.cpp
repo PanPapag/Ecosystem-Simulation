@@ -511,7 +511,7 @@ void Ecosystem::RunEcosystem(int day) {
   } */
 
   PrintSystem(day);
-  if(day % 90) {
+  if(day % 90 == 0) {
     ApplySeason();
   }
 }
