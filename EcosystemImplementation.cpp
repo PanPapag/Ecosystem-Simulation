@@ -46,6 +46,8 @@ Ecosystem::Ecosystem(int size, string season) {
 
    int total_points = terrain_size * terrain_size;
    points = new coordinates[total_points];
+   for(int i = 0; i < total_points; i++)
+     points[i].used = false;
    FillPoints(points,terrain_size);
    ShufflePoints(points,0,total_points);
 
@@ -55,7 +57,7 @@ Ecosystem::Ecosystem(int size, string season) {
      plant_array[i] = NULL;
    }
 
-   max_no_of_animals = terrain_size * terrain_size * ((rand() % (100 - 50 + 1)) + 50);
+   max_no_of_animals = terrain_size * terrain_size * 6;
    animal_array = new Animal *[max_no_of_animals];
    for(int i = 0; i < max_no_of_animals; i++) {
      animal_array[i] = NULL;
@@ -282,11 +284,15 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].ExistPlant() == true) {
+      if(points[points_index - 1].used == true) {
+  	continue;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
+    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seedless("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,
       ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
@@ -300,11 +306,15 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != WATER_TILE || terrain_grid[x][y].ExistPlant() == true) {
+       if(points[points_index - 1].used == true) {
+  	continue;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
+    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seedless("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,
       ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
@@ -318,11 +328,15 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() == WATER_TILE || terrain_grid[x][y].ExistPlant() == true) {
+      if(points[points_index - 1].used == true) {
+  	continue;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
+    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seeded("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,
       ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS,MAPLE_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
@@ -336,11 +350,15 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].ExistPlant() == true) {
+      if(points[points_index - 1].used == true) {
+  	continue;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
+    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seeded("Oak",x,y,OAK_TOKEN,OAK_BREEDING,OAK_ILLNESS,ALIVE,
       OAK_LIFE_FACTOR,OAK_FOLIAGE,OAK_SEEDS,OAK_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
@@ -354,11 +372,15 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != HILL_TILE || terrain_grid[x][y].ExistPlant() == true) {
+      if(points[points_index - 1].used == true) {
+  	continue;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
+    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seeded("Pine",x,y,PINE_TOKEN,PINE_BREEDING,PINE_ILLNESS,ALIVE,
       PINE_LIFE_FACTOR,PINE_FOLIAGE,PINE_SEEDS,PINE_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
@@ -453,7 +475,7 @@ void Ecosystem::PlaceAnimals(void) {
     }
 
     animal_array[animal_index] = new Carnivore("Fox",CARN_TOKEN,x,y,A_FOX_SIZE,A_FOX_SPEED,
-      A_FOX_NEED_FOOD,A_FOX_ATTACK,A_FOX_DEFENCE,FOX_HIBERNATION);
+      A_FOX_NEED_FOOD,FOX_HIBERNATION,A_FOX_ATTACK,A_FOX_DEFENCE);
     animal_index++;
   }
   /* Place Bear */
@@ -470,7 +492,7 @@ void Ecosystem::PlaceAnimals(void) {
     }
 
     animal_array[animal_index] = new Carnivore("Bear",CARN_TOKEN,x,y,A_BEAR_SIZE,A_BEAR_SPEED,
-      A_BEAR_NEED_FOOD,A_BEAR_ATTACK,A_BEAR_DEFENCE,BEAR_HIBERNATION);
+      A_BEAR_NEED_FOOD,BEAR_HIBERNATION,A_BEAR_ATTACK,A_BEAR_DEFENCE);
     animal_index++;
   }
   /* Place Wolf */
@@ -487,7 +509,7 @@ void Ecosystem::PlaceAnimals(void) {
     }
 
     animal_array[animal_index] = new Carnivore("Wolf",CARN_TOKEN,x,y,A_WOLF_SIZE,A_WOLF_SPEED,
-      A_WOLF_NEED_FOOD,A_WOLF_ATTACK,A_WOLF_DEFENCE,WOLF_HIBERNATION);
+      A_WOLF_NEED_FOOD,WOLF_HIBERNATION,A_WOLF_ATTACK,A_WOLF_DEFENCE);
     animal_index++;
   }
 }
@@ -501,15 +523,16 @@ void Ecosystem::RunEcosystem(int day) {
     AnimalEating();
     CheckDeadEntities();
   } */
-  /*if(day % breeding_rep_period_carn == 0) {
+  if(day % breeding_rep_period_carn == 0) {
     AnimalBreedingCarnivores();
   }
+
   if(day % breeding_rep_period_herb == 0) {
     AnimalBreedingHerbivores();
-  } */
-  if (day % breeding_rep_period_plants == 0 && current_season != "Winter") {
+  } 
+  /*if (day % breeding_rep_period_plants == 0 && current_season != "Winter") {
     PlantBreeding();
-  }
+  } */
 
   PrintSystem(day);
   if(day % 90 == 0) {
@@ -618,7 +641,7 @@ void Ecosystem::AnimalBreedingCarnivores(void) {
     if(animal_array[i] != NULL) {
       if(animal_array[i]->IsAdult() == true && animal_array[i]->IsCarnivore() == true && animal_array[i]->Hibernates() == false) {
         flag = true;
-      } else if(animal_array[i]->IsAdult() == true && animal_array[i]->IsHerbivore() == true && animal_array[i]->Hibernates() == true) {
+      } else if(animal_array[i]->IsAdult() == true && animal_array[i]->IsCarnivore() == true && animal_array[i]->Hibernates() == true) {
         if(animal_array[i]->IsInHibernation() == false) {
           flag = true;
         }
@@ -627,6 +650,7 @@ void Ecosystem::AnimalBreedingCarnivores(void) {
         for(int j = 0; j < max_no_of_animals; j++) {
           if(animal_array[j] == NULL){
             animal_array[j] = animal_array[i]->Reproduct();
+	    flag = false;
             break;
           }
           if(animal_array[i]->GetName() == "Adult Fox") {
@@ -659,6 +683,7 @@ void Ecosystem::AnimalBreedingHerbivores(void) {
         for(int j = 0; j < max_no_of_animals; j++) {
           if(animal_array[j] == NULL) {
             animal_array[j] = animal_array[i]->Reproduct();
+	    flag = false;
             break;
           }
           if(animal_array[i]->GetName() == "Adult Deer") {

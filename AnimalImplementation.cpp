@@ -41,7 +41,8 @@ Animal::Animal(string nam, char token, int x, int y, int current_size, int max_s
      eaten_food = 0;
      eat_count = 0;
      is_alive = true;
-     is_adult = false;
+     if(nam == "Salmon") is_adult = true;
+     else {is_adult = false;}
      is_hungry = false;
      in_heat = false;
      in_hibernation = false;
@@ -150,11 +151,11 @@ Animal* Animal::Reproduct(void){
 
   } else if(name == salmon) {
     child = new Herbivore("Salmon", HERB_TOKEN, this->coordinate_x, this->coordinate_y,
-                                  A_SALMON_SIZE,A_SALMON_SPEED, A_SALMON_NEED_FOOD,
+                                  A_SALMON_SIZE,A_SALMON_SIZE,A_SALMON_SPEED,A_SALMON_SPEED, A_SALMON_NEED_FOOD, A_SALMON_NEED_FOOD,
                                   SALMON_CLIMB,SALMON_HIBERNATION);
 
   } else if(name == fox) {
-    child = new Carnivore("Groundhog", CARN_TOKEN, this->coordinate_x, this->coordinate_y,
+    child = new Carnivore("Fox", CARN_TOKEN, this->coordinate_x, this->coordinate_y,
                                 Y_FOX_SIZE,A_FOX_SIZE,Y_FOX_SPEED,A_FOX_SPEED, Y_FOX_NEED_FOOD, A_FOX_NEED_FOOD
                                   ,FOX_HIBERNATION,Y_FOX_ATTACK,A_FOX_ATTACK,Y_FOX_DEFENCE,A_FOX_DEFENCE);
 
@@ -168,7 +169,7 @@ Animal* Animal::Reproduct(void){
                                 Y_WOLF_SIZE,A_WOLF_SIZE,Y_WOLF_SPEED,A_WOLF_SPEED, Y_WOLF_NEED_FOOD, A_WOLF_NEED_FOOD
                                   ,WOLF_HIBERNATION,Y_WOLF_ATTACK,A_WOLF_ATTACK,Y_WOLF_DEFENCE,A_WOLF_DEFENCE);
   } else {
-    cout << name << " " << current_size << " " << " " << current_speed << endl;
+    //cout << name << " " << current_size << " " << " " << current_speed << endl;
   }
 
   return child;
@@ -195,9 +196,11 @@ Herbivore::~Herbivore() {
 
 bool Herbivore::CanClimb(void) { return can_climb; }
 
-void Herbivore::CheckIfAdult(void) {
-  if(((current_size == max_size) && (current_speed == max_speed) && (current_needed_food == max_needed_food)))
+bool Herbivore::CheckIfAdult(void) {
+  if(((current_size == max_size) && (current_speed == max_speed) && (current_needed_food == max_needed_food))) {
     is_adult = true;
+  }
+  return is_adult;
 }
 
 void Herbivore::Raise(void){
@@ -218,7 +221,14 @@ void Herbivore::Raise(void){
         IncreaseSpeed(2);
         IncreaseNeededFood(2);
     }
-    CheckIfAdult();
+    if(CheckIfAdult()) {
+     if(name.find("Young") != string::npos){
+      EraseSubStr(name,"Young ");
+      string adult = "Adult ";
+      adult.append(name);
+      name = adult;
+    }
+   }
   }
   else {
     if(name.find("Young") != string::npos){
@@ -279,9 +289,11 @@ void Carnivore::IncreaseDefence(int magnitude) {
   else current_defence = max_defence;
 }
 
-void Carnivore::CheckIfAdult(void) {
-  if((current_size == max_size) && (current_speed == max_speed) && (current_needed_food == max_needed_food) && (current_attack == max_attack) && (current_defence == max_defence))
+bool Carnivore::CheckIfAdult(void) {
+  if((current_size == max_size) && (current_speed == max_speed) && (current_needed_food == max_needed_food) && (current_attack == max_attack) && (current_defence == max_defence)) {
     is_adult = true;
+  }
+  return is_adult;
 }
 
 void Carnivore::Raise(void){
@@ -307,7 +319,14 @@ void Carnivore::Raise(void){
         IncreaseAttack(2);
         IncreaseDefence(2);
     }
-    CheckIfAdult();
+    if(CheckIfAdult()) {
+     if(name.find("Young") != string::npos){
+      EraseSubStr(name,"Young ");
+      string adult = "Adult ";
+      adult.append(name);
+      name = adult;
+    }
+   }
   }
   else {
     is_adult = true;

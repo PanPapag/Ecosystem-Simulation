@@ -35,7 +35,7 @@ class Animal {
     bool Pleased(void);
     bool IsHerbivore(void);
     bool IsCarnivore(void);
-    virtual void CheckIfAdult(void) = 0;
+    virtual bool CheckIfAdult(void) = 0;
     bool IsAdult();
 
     void IncreaseSize(int);
@@ -83,7 +83,7 @@ class Herbivore : public Animal {
     bool CanClimb(void);
     void Raise(void);
     void Eat(Plant*);
-    void CheckIfAdult(void);
+    bool CheckIfAdult(void);
 
 
   private:
@@ -103,7 +103,7 @@ class Carnivore : public Animal {
     int GetMaxDefence(void);
     void IncreaseAttack(int);
     void IncreaseDefence(int);
-    void CheckIfAdult(void);
+    bool CheckIfAdult(void);
 
     void Raise(void);
     void Eat(Animal*);
