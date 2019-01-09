@@ -27,7 +27,6 @@ class Animal {
     int GetCoordinateX(void);
     int GetCoordinateY(void);
     bool IsAlive(void);
-    bool IsAdult(void);
     bool Hungry(void);
     bool IsStarving(void);
     bool IsInHeat(void);
@@ -36,6 +35,8 @@ class Animal {
     bool Pleased(void);
     bool IsHerbivore(void);
     bool IsCarnivore(void);
+    virtual void CheckIfAdult(void) = 0;
+    bool IsAdult();
 
     void IncreaseSize(int);
     void IncreaseSpeed(int);
@@ -65,6 +66,7 @@ class Animal {
     int coordinate_x;
     int coordinate_y;
     bool is_alive;
+    bool is_adult;
     bool is_hungry;
     bool in_heat;
     bool hibernates;
@@ -79,9 +81,10 @@ class Herbivore : public Animal {
     ~Herbivore();
 
     bool CanClimb(void);
-
     void Raise(void);
     void Eat(Plant*);
+    void CheckIfAdult(void);
+
 
   private:
     bool can_climb;
@@ -100,6 +103,7 @@ class Carnivore : public Animal {
     int GetMaxDefence(void);
     void IncreaseAttack(int);
     void IncreaseDefence(int);
+    void CheckIfAdult(void);
 
     void Raise(void);
     void Eat(Animal*);
