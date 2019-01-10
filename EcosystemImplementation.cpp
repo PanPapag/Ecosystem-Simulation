@@ -2,6 +2,10 @@
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
+#include <list>
+#include <iterator>
+#include <map>
+#include <utility>
 
 #include "EcosystemInterface.h"
 #include "AnimalInterface.h"
@@ -417,6 +421,10 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Herbivore("Deer",HERB_TOKEN,x,y,A_DEER_SIZE,A_DEER_SPEED,A_DEER_NEED_FOOD,
       DEER_CLIMB,DEER_HIBERNATION);
+
+    deers_in_tile.push_back(animal_array[animal_index]);
+    animals_per_tile[{x,y}] = deers_in_tile;
+
     animal_index++;
   }
   /* Place Rabbit */
@@ -434,6 +442,10 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Herbivore("Rabbit",HERB_TOKEN,x,y,A_RABBIT_SIZE,A_RABBIT_SPEED,
       A_RABBIT_NEED_FOOD,RABBIT_CLIMB,RABBIT_HIBERNATION);
+
+    rabbits_in_tile.push_back(animal_array[animal_index]);
+    animals_per_tile[{x,y}] = rabbits_in_tile;
+
     animal_index++;
   }
   /* Place Groundhog */
@@ -451,6 +463,10 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Herbivore("Groundhog",HERB_TOKEN,x,y,A_GROUNDHOG_SIZE,A_GROUNDHOG_SPEED,
       A_GROUNDHOG_NEED_FOOD,GROUNDHOG_CLIMB,GROUNDHOG_HIBERNATION);
+
+    groundhogs_in_tile.push_back(animal_array[animal_index]);
+    animals_per_tile[{x,y}] = groundhogs_in_tile;
+
     animal_index++;
   }
   /* Place Salmon */
@@ -468,6 +484,10 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Herbivore("Salmon",HERB_TOKEN,x,y,A_SALMON_SIZE,A_SALMON_SPEED,
       A_SALMON_NEED_FOOD,SALMON_CLIMB,SALMON_HIBERNATION);
+
+    salmons_in_tile.push_back(animal_array[animal_index]);
+    animals_per_tile[{x,y}] = salmons_in_tile;
+
     animal_index++;
   }
   /* Place Fox */
@@ -485,6 +505,10 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Carnivore("Fox",CARN_TOKEN,x,y,A_FOX_SIZE,A_FOX_SPEED,
       A_FOX_NEED_FOOD,FOX_HIBERNATION,A_FOX_ATTACK,A_FOX_DEFENCE);
+
+    foxes_in_tile.push_back(animal_array[animal_index]);
+    animals_per_tile[{x,y}] = foxes_in_tile;
+
     animal_index++;
   }
   /* Place Bear */
@@ -502,6 +526,10 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Carnivore("Bear",CARN_TOKEN,x,y,A_BEAR_SIZE,A_BEAR_SPEED,
       A_BEAR_NEED_FOOD,BEAR_HIBERNATION,A_BEAR_ATTACK,A_BEAR_DEFENCE);
+
+    bears_in_tile.push_back(animal_array[animal_index]);
+    animals_per_tile[{x,y}] = bears_in_tile;
+
     animal_index++;
   }
   /* Place Wolf */
@@ -519,6 +547,10 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Carnivore("Wolf",CARN_TOKEN,x,y,A_WOLF_SIZE,A_WOLF_SPEED,
       A_WOLF_NEED_FOOD,WOLF_HIBERNATION,A_WOLF_ATTACK,A_WOLF_DEFENCE);
+
+    wolves_in_tile.push_back(animal_array[animal_index]);
+    animals_per_tile[{x,y}] = wolves_in_tile;
+
     animal_index++;
   }
 }
@@ -541,7 +573,7 @@ void Ecosystem::RunEcosystem(int day) {
   }
   /*if (day % breeding_rep_period_plants == 0 && current_season != "Winter") {
     PlantBreeding();
-  }*/
+  } */
 
   PrintSystem(day);
   if(day % 90 == 0) {
@@ -1212,7 +1244,7 @@ void Ecosystem::PrintAnimalStatistics(void) {
   cout << "Total number of salmons: " << no_of_salmon << endl;
   cout << "Total number of foxes: " << no_of_fox << endl;
   cout << "Total number of bears: " << no_of_bear << endl;
-  cout << "Total number of wolfs: " << no_of_wolf << endl;
+  cout << "Total number of wolves: " << no_of_wolf << endl;
 }
 
 void Ecosystem::PrintGrid(void) {

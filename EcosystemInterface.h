@@ -2,6 +2,9 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <list>
+#include <map>
+#include <utility>
 
 #include "DefaultValues.h"
 #include "Utilities.h"
@@ -65,9 +68,19 @@ class Ecosystem {
     class Plant **plant_array;
     class Animal **animal_array;
 
+    list <Animal*> deers_in_tile;
+    list <Animal*> rabbits_in_tile;
+    list <Animal*> groundhogs_in_tile;
+    list <Animal*> salmons_in_tile;
+    list <Animal*> foxes_in_tile;
+    list <Animal*> bears_in_tile;
+    list <Animal*> wolves_in_tile;
+    map <pair<int,int>, list <Animal *> > animals_per_tile;
+
     void DailyReset(int);
     void CheckDeadEntities(void);
     void AnimalMovement(void);
+    void AnimalEating(void);
     coordinates FindFreeTile(int,int,int);
     void ApplySeason(void);
 
