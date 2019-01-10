@@ -283,7 +283,7 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
-      if(points_index > total_points) {
+      if(points_index >= total_points) {
         flag = false;
         break;
       }
@@ -307,7 +307,7 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != WATER_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
-      if(points_index > total_points) {
+      if(points_index >= total_points) {
         flag = false;
         break;
       }
@@ -331,7 +331,7 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() == WATER_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
-      if(points_index > total_points) {
+      if(points_index >= total_points) {
         flag = false;
         break;
       }
@@ -355,7 +355,7 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
-      if(points_index > total_points) {
+      if(points_index >= total_points) {
         flag = false;
         break;
       }
@@ -379,7 +379,7 @@ void Ecosystem::PlacePlants(void) {
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != HILL_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
-      if(points_index > total_points) {
+      if(points_index >= total_points) {
         flag = false;
         break;
       }
@@ -527,11 +527,11 @@ void Ecosystem::RunEcosystem(int day) {
 
   DailyReset(day);
 
-  /*for (int i = 0; i < 24; i++){
+  for(int i = 0; i < 24; i++){
     AnimalMovement();
-    AnimalEating();
+    //AnimalEating();
     CheckDeadEntities();
-  } */
+  }
   if(day % breeding_rep_period_carn == 0) {
     AnimalBreedingCarnivores();
   }
@@ -660,14 +660,14 @@ void Ecosystem::AnimalBreedingCarnivores(void) {
           if(animal_array[j] == NULL){
             animal_array[j] = animal_array[i]->Reproduct();
 	          flag = false;
+            if(animal_array[i]->GetName() == "Adult Fox") {
+              no_of_fox++;
+            } else if(animal_array[i]->GetName() == "Adult Wolf") {
+              no_of_wolf++;
+            } else if(animal_array[i]->GetName() == "Adult Bear") {
+              no_of_bear++;
+            }
             break;
-          }
-          if(animal_array[i]->GetName() == "Adult Fox") {
-            no_of_fox++;
-          } else if(animal_array[i]->GetName() == "Adult Wolf") {
-            no_of_wolf++;
-          } else if(animal_array[i]->GetName() == "Adult Bear") {
-            no_of_bear++;
           }
         }
       }
@@ -693,16 +693,16 @@ void Ecosystem::AnimalBreedingHerbivores(void) {
           if(animal_array[j] == NULL) {
             animal_array[j] = animal_array[i]->Reproduct();
 	          flag = false;
+            if(animal_array[i]->GetName() == "Adult Deer") {
+              no_of_deer++;
+            } else if(animal_array[i]->GetName() == "Adult Rabbit") {
+              no_of_rabbit++;
+            } else if(animal_array[i]->GetName() == "Adult Groundhog") {
+              no_of_groundhog++;
+            } else if(animal_array[i]->GetName() == "Adult Salmon") {
+              no_of_salmon++;
+            }
             break;
-          }
-          if(animal_array[i]->GetName() == "Adult Deer") {
-            no_of_deer++;
-          } else if(animal_array[i]->GetName() == "Adult Rabbit") {
-            no_of_rabbit++;
-          } else if(animal_array[i]->GetName() == "Adult Groundhog") {
-            no_of_groundhog++;
-          } else if(animal_array[i]->GetName() == "Adult Salmon") {
-            no_of_salmon++;
           }
         }
       }
@@ -828,6 +828,31 @@ void Ecosystem::AnimalMovement(void) {
       } else {
         /*  All possible moves are eight */
         int movement = rand() % 8;
+        if(movement == 0) {
+          /* go down */
+          animal_array[i]->Move(x + 1,y);
+        } else if(movement == 1) {
+          /* go left */
+          animal_array[i]->Move(x,y - 1);
+        } else if(movement == 2) {
+          /* go right */
+          animal_array[i]->Move(x,y + 1);
+        } else if(movement == 3) {
+          /* go up */
+          animal_array[i]->Move(x + 1,y);
+        } else if(movement == 4) {
+          /* go up and left */
+          animal_array[i]->Move(x - 1,y - 1);
+        } else if(movement == 5) {
+          /* go up and right */
+          animal_array[i]->Move(x - 1,y + 1);
+        } else if(movement == 6) {
+          /* go down and left */
+          animal_array[i]->Move(x + 1,y - 1);
+        } else {
+          /* go down and right */
+          animal_array[i]->Move(x + 1,y + 1);
+        }
       }
     }
   }
@@ -1197,11 +1222,11 @@ void Ecosystem::PrintGrid(void) {
   for(int i = 0; i < terrain_size; i++) {
     for(int j = 0; j < terrain_size; j++) {
       if(terrain_grid[i][j].GetGround() == WATER_TILE){
-        cout << BLU << terrain_grid[i][j].GetGround() << RESET;
+        cout << BLU << terrain_grid[i][j].GetGround() << " " << RESET;
       } else if(terrain_grid[i][j].GetGround() == HILL_TILE) {
-        cout << RED << terrain_grid[i][j].GetGround() << RESET;
+        cout << RED << terrain_grid[i][j].GetGround() << " " << RESET;
       } else if(terrain_grid[i][j].GetGround() == MEADOW_TILE) {
-        cout << GRN << terrain_grid[i][j].GetGround() << RESET;
+        cout << GRN << terrain_grid[i][j].GetGround() << " " << RESET;
       }
     }
     cout << endl;
@@ -1212,11 +1237,11 @@ void Ecosystem::PrintGrid(void) {
   for(int i = 0; i < terrain_size; i++) {
     for(int j = 0; j < terrain_size; j++) {
       if(terrain_grid[i][j].GetGround() == WATER_TILE){
-        cout << BLU << terrain_grid[i][j].GetPlantToken() << RESET;
+        cout << BLU << terrain_grid[i][j].GetPlantToken() << " " << RESET;
       } else if(terrain_grid[i][j].GetGround() == HILL_TILE) {
-        cout << RED << terrain_grid[i][j].GetPlantToken() << RESET;
+        cout << RED << terrain_grid[i][j].GetPlantToken() << " " << RESET;
       } else if(terrain_grid[i][j].GetGround() == MEADOW_TILE) {
-        cout << GRN << terrain_grid[i][j].GetPlantToken() << RESET;
+        cout << GRN << terrain_grid[i][j].GetPlantToken() << " " << RESET;
       }
     }
     cout << endl;
