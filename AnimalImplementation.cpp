@@ -263,7 +263,7 @@ Carnivore::Carnivore(string name, char token, int x, int y, int size, int speed,
 Carnivore::Carnivore(string name, char token, int x, int y, int current_size, int max_size, int current_speed, int max_speed, int current_needed_food, int max_needed_food,
           bool hibernates, int current_attack, int max_attack, int current_defence, int max_defence)
             :Animal(name, token, x, y, current_size, max_size, current_speed, max_speed, current_needed_food, max_needed_food, hibernates),
-             current_attack(current_attack),current_defence(current_defence){
+             current_attack(current_attack),max_attack(max_attack),current_defence(current_defence),max_defence(max_defence){
               //cout << "I just constructed a young herbivore" << endl;
             }
 
