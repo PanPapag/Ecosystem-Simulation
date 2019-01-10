@@ -11,7 +11,7 @@ Plant::Plant(string name, int x, int y, char token, int breeding, int illness, b
       //cout << "I just constructed a plant" << endl;
 }
 
-bool Plant::Reproduced(void) { return (RandomResult(100 - breeding_prob)); }
+bool Plant::Reproduced(void) { return (RandomResult(breeding_prob)); }
 
 bool Plant::IsAlive(void) { return alive; }
 

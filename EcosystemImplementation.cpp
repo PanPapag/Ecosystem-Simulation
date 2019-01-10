@@ -268,6 +268,7 @@ int Ecosystem::GenerateMeadow(void) {
 }
 
 void Ecosystem::PlacePlants(void) {
+  bool flag;
   int plant_index = 0;
   int points_index;
   int x,y;
@@ -275,93 +276,123 @@ void Ecosystem::PlacePlants(void) {
 
   /* Place Grass */
   for(int i = 0; i < no_of_grass; i++) {
+    flag = true;
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
+      if(points_index > total_points) {
+        flag = false;
+        break;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
-
-    plant_array[plant_index] = new Seedless("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,
-      ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
-    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
-    plant_index++;
+    if(flag == true) {
+      plant_array[plant_index] = new Seedless("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,
+        ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
+      terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+      plant_index++;
+    }
   }
   /* Place Algae */
   for(int i = 0; i < no_of_algae; i++) {
+    flag = true;
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != WATER_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
+      if(points_index > total_points) {
+        flag = false;
+        break;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
-
-    plant_array[plant_index] = new Seedless("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,
-      ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
-    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
-    plant_index++;
+    if(flag == true) {
+      plant_array[plant_index] = new Seedless("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,
+        ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
+      terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+      plant_index++;
+    }
   }
   /* Place Maple */
   for(int i = 0; i < no_of_maple; i++) {
+    flag = true;
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
 
     while(terrain_grid[x][y].GetGround() == WATER_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
+      if(points_index > total_points) {
+        flag = false;
+        break;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
-
-    plant_array[plant_index] = new Seeded("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,
-      ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS,MAPLE_SIZE);
-    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
-    plant_index++;
+    if(flag == true) {
+      plant_array[plant_index] = new Seeded("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,
+        ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS,MAPLE_SIZE);
+      terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+      plant_index++;
+    }
   }
   /* Place Oak */
   for(int i = 0; i < no_of_oak; i++) {
+    flag = true;
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
+      if(points_index > total_points) {
+        flag = false;
+        break;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
-
-    plant_array[plant_index] = new Seeded("Oak",x,y,OAK_TOKEN,OAK_BREEDING,OAK_ILLNESS,ALIVE,
-      OAK_LIFE_FACTOR,OAK_FOLIAGE,OAK_SEEDS,OAK_SIZE);
-    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
-    plant_index++;
+    if(flag == true) {
+      plant_array[plant_index] = new Seeded("Oak",x,y,OAK_TOKEN,OAK_BREEDING,OAK_ILLNESS,ALIVE,
+        OAK_LIFE_FACTOR,OAK_FOLIAGE,OAK_SEEDS,OAK_SIZE);
+      terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+      plant_index++;
+    }
   }
   /* Place Pine */
   for(int i = 0; i < no_of_pine; i++) {
+    flag = true;
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
     points_index++;
 
     while(terrain_grid[x][y].GetGround() != HILL_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
+      if(points_index > total_points) {
+        flag = false;
+        break;
+      }
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
-
-    plant_array[plant_index] = new Seeded("Pine",x,y,PINE_TOKEN,PINE_BREEDING,PINE_ILLNESS,ALIVE,
-      PINE_LIFE_FACTOR,PINE_FOLIAGE,PINE_SEEDS,PINE_SIZE);
-    terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
-    plant_index++;
+    if(flag == true) {
+      plant_array[plant_index] = new Seeded("Pine",x,y,PINE_TOKEN,PINE_BREEDING,PINE_ILLNESS,ALIVE,
+        PINE_LIFE_FACTOR,PINE_FOLIAGE,PINE_SEEDS,PINE_SIZE);
+      terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+      plant_index++;
+    }
   }
 }
 
@@ -510,7 +541,7 @@ void Ecosystem::RunEcosystem(int day) {
   }
   /*if (day % breeding_rep_period_plants == 0 && current_season != "Winter") {
     PlantBreeding();
-  } */
+  }*/
 
   PrintSystem(day);
   if(day % 90 == 0) {
@@ -628,7 +659,7 @@ void Ecosystem::AnimalBreedingCarnivores(void) {
         for(int j = 0; j < max_no_of_animals; j++) {
           if(animal_array[j] == NULL){
             animal_array[j] = animal_array[i]->Reproduct();
-	    flag = false;
+	          flag = false;
             break;
           }
           if(animal_array[i]->GetName() == "Adult Fox") {
@@ -661,7 +692,7 @@ void Ecosystem::AnimalBreedingHerbivores(void) {
         for(int j = 0; j < max_no_of_animals; j++) {
           if(animal_array[j] == NULL) {
             animal_array[j] = animal_array[i]->Reproduct();
-	    flag = false;
+	          flag = false;
             break;
           }
           if(animal_array[i]->GetName() == "Adult Deer") {
@@ -737,20 +768,66 @@ void Ecosystem::AnimalMovement(void) {
     if(animal_array[i] != NULL) {
       x = animal_array[i]->GetCoordinateX();
       y = animal_array[i]->GetCoordinateY();
-      if(animal_array[i]->GetName() == "Young Deer" || animal_array[i]->GetName() == "Adult Deer") {
-        /* code here */
-      } else if(animal_array[i]->GetName() == "Young Rabbit" || animal_array[i]->GetName() == "Adult Rabbit") {
-        /* code here */
-      } else if(animal_array[i]->GetName() == "Young Groundhog" || animal_array[i]->GetName() == "Adult Groundhog") {
-        /* code here */
-      } else if(animal_array[i]->GetName() == "Adult Salmon") {
-        /* code here */
-      } else if(animal_array[i]->GetName() == "Young Fox" || animal_array[i]->GetName() == "Adult Fox") {
-        /* code here */
-      } else if(animal_array[i]->GetName() == "Young Bear" || animal_array[i]->GetName() == "Adult Bear") {
-        /* code here */
+      /* Check the upper left corner (x = 0, y = 0) */
+      if(x == 0 && y == 0) {
+        /* You have three choices to go either down or right. Alternatevily go down and right */
+        int movement = rand() % 3;
+        if(movement == 0) {
+          /* go down */
+          animal_array[i]->Move(x + 1,y);
+        } else if(movement == 1) {
+          /* go right */
+          animal_array[i]->Move(x,y + 1);
+        } else {
+          /* go down and right */
+          animal_array[i]->Move(x + 1,y + 1);
+        }
+        /* Check the upper right corner (x = 0, y = terrain_size - 1) */
+      } else if(x == 0 && y == terrain_size - 1) {
+        /* You have three choices to go either down or left. Alternatevily go down and left */
+        int movement = rand() % 3;
+        if(movement == 0) {
+          /* go down */
+          animal_array[i]->Move(x + 1,y);
+        } else if(movement == 1) {
+          /* go left */
+          animal_array[i]->Move(x,y - 1);
+        } else {
+          /* go down and left */
+          animal_array[i]->Move(x + 1,y - 1);
+        }
+        /* Check the lower left corner (x = terrain_size - 1, y = 0) */
+      } else if(x == terrain_size - 1 && y == 0) {
+        /* You have three choices to go either up or right. Alternatevily go up and right */
+        int movement = rand() % 3;
+        if(movement == 0) {
+          /* go up */
+          animal_array[i]->Move(x - 1,y);
+        } else if(movement == 1) {
+          /* go right */
+          animal_array[i]->Move(x,y + 1);
+        } else {
+          /* go up and right */
+          animal_array[i]->Move(x - 1,y + 1);
+        }
+        /* Check the lower right corner (x = terrain_size - 1, y = terrain_size -1) */
+      } else if(x == terrain_size - 1 && y == terrain_size - 1) {
+        /* You have three choices to go either up or left. Alternatevily go up and left */
+        int movement = rand() % 3;
+        if(movement == 0) {
+          /* go up */
+          animal_array[i]->Move(x - 1,y);
+        } else if(movement == 1) {
+          /* go left */
+          animal_array[i]->Move(x,y - 1);
+        } else {
+          /* go up and left */
+          animal_array[i]->Move(x - 1,y - 1);
+        }
+        /* check a point in the middle of terrain_grid */
       } else {
-        /* code here */
+        /*  All possible moves are eight */
+        int movement = rand() % 8;
       }
     }
   }
