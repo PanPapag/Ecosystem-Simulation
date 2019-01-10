@@ -10,7 +10,6 @@
 /* -------------------------------------- class Tile Implementation ------------------------------------- */
 Tile::Tile() {
   ground = EMPTY;
-  exist_plant = false;
   plant_token = EMPTY;
 }
 
@@ -22,7 +21,7 @@ char Tile::GetGround(void) { return ground; }
 
 char Tile::GetPlantToken(void) { return plant_token; }
 
-bool Tile::ExistPlant(void) { return exist_plant; }
+bool Tile::ExistPlant(void) { return plant_token; }
 
 void Tile::SetGround(char category) { ground = category; }
 
@@ -46,8 +45,6 @@ Ecosystem::Ecosystem(int size, string season) {
 
    int total_points = terrain_size * terrain_size;
    points = new coordinates[total_points];
-   for(int i = 0; i < total_points; i++)
-     points[i].used = false;
    FillPoints(points,terrain_size);
    ShufflePoints(points,0,total_points);
 
@@ -57,7 +54,7 @@ Ecosystem::Ecosystem(int size, string season) {
      plant_array[i] = NULL;
    }
 
-   max_no_of_animals = terrain_size * terrain_size * 6;
+   max_no_of_animals = terrain_size * terrain_size * ((rand() % (100 - 50 + 1)) + 50);
    animal_array = new Animal *[max_no_of_animals];
    for(int i = 0; i < max_no_of_animals; i++) {
      animal_array[i] = NULL;
@@ -283,16 +280,12 @@ void Ecosystem::PlacePlants(void) {
     y = points[points_index].y;
     points_index++;
 
-    while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].ExistPlant() == true) {
-      if(points[points_index - 1].used == true) {
-  	continue;
-      }
+    while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
-    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seedless("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,
       ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
@@ -305,16 +298,12 @@ void Ecosystem::PlacePlants(void) {
     y = points[points_index].y;
     points_index++;
 
-    while(terrain_grid[x][y].GetGround() != WATER_TILE || terrain_grid[x][y].ExistPlant() == true) {
-       if(points[points_index - 1].used == true) {
-  	continue;
-      }
+    while(terrain_grid[x][y].GetGround() != WATER_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
-    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seedless("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,
       ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
@@ -327,16 +316,12 @@ void Ecosystem::PlacePlants(void) {
     y = points[points_index].y;
     points_index++;
 
-    while(terrain_grid[x][y].GetGround() == WATER_TILE || terrain_grid[x][y].ExistPlant() == true) {
-      if(points[points_index - 1].used == true) {
-  	continue;
-      }
+    while(terrain_grid[x][y].GetGround() == WATER_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
-    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seeded("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,
       ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS,MAPLE_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
@@ -349,16 +334,12 @@ void Ecosystem::PlacePlants(void) {
     y = points[points_index].y;
     points_index++;
 
-    while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].ExistPlant() == true) {
-      if(points[points_index - 1].used == true) {
-  	continue;
-      }
+    while(terrain_grid[x][y].GetGround() != MEADOW_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
-    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seeded("Oak",x,y,OAK_TOKEN,OAK_BREEDING,OAK_ILLNESS,ALIVE,
       OAK_LIFE_FACTOR,OAK_FOLIAGE,OAK_SEEDS,OAK_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
@@ -371,22 +352,19 @@ void Ecosystem::PlacePlants(void) {
     y = points[points_index].y;
     points_index++;
 
-    while(terrain_grid[x][y].GetGround() != HILL_TILE || terrain_grid[x][y].ExistPlant() == true) {
-      if(points[points_index - 1].used == true) {
-  	continue;
-      }
+    while(terrain_grid[x][y].GetGround() != HILL_TILE || terrain_grid[x][y].GetPlantToken() != EMPTY) {
       x = points[points_index].x;
       y = points[points_index].y;
       points_index++;
     }
 
-    points[points_index - 1].used = true;
     plant_array[plant_index] = new Seeded("Pine",x,y,PINE_TOKEN,PINE_BREEDING,PINE_ILLNESS,ALIVE,
       PINE_LIFE_FACTOR,PINE_FOLIAGE,PINE_SEEDS,PINE_SIZE);
     terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
     plant_index++;
   }
 }
+
 
 void Ecosystem::PlaceAnimals(void) {
   int animal_index = 0;
@@ -529,7 +507,7 @@ void Ecosystem::RunEcosystem(int day) {
 
   if(day % breeding_rep_period_herb == 0) {
     AnimalBreedingHerbivores();
-  } 
+  }
   /*if (day % breeding_rep_period_plants == 0 && current_season != "Winter") {
     PlantBreeding();
   } */

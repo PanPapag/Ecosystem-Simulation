@@ -22,7 +22,6 @@ class Tile {
   private:
     char ground;
     char plant_token;
-    bool exist_plant;
 
 };
 

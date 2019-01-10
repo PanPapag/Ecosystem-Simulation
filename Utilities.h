@@ -5,7 +5,6 @@ using namespace std;
 typedef struct {
   int x;
   int y;
-  bool used;
 } coordinates;
 
 bool RandomResult(int);
