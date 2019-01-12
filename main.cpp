@@ -32,9 +32,13 @@ int main(void) {
 
   Ecosystem *ecosystem = new Ecosystem(terrain_size,season);
 
+  ecosystem->PrintSystem(0);
+
   for(int day = 1; day <= cycles; day++) {
     ecosystem->RunEcosystem(day);
   }
+  
+  ecosystem->PrintSystem(cycles);
 
   delete ecosystem;
 
