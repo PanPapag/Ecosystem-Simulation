@@ -136,3 +136,9 @@
 #define CYN   "\x1B[36m"
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
+
+/*------------------ Default values for animal fighting ---------------------*/
+
+#define NOBODY_DIED 0
+#define FIRST_DIED 1
+#define SECOND_DIED 2

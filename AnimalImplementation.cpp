@@ -116,6 +116,14 @@ void Animal::Died(void) { this -> is_alive = false; }
 
 void Animal::SetHeat(bool condition) { this -> in_heat = condition; }
 
+void Animal::IncreaseHunger(void) {
+  if(++hunger_count == 10){
+    Died();
+  }
+}
+
+void Animal::ResetHunger(void) { hunger_count = 0; is_hungry = false; }
+
 void Animal::SetHunger(bool condition) { this -> is_hungry = condition; }
 
 void Animal::SetHibernation(bool condition) {
@@ -140,7 +148,7 @@ Animal* Animal::Reproduct(void){
                                   ,DEER_CLIMB,DEER_HIBERNATION);
 
   } else if(name == rabbit) {
-    child = new Herbivore("Rabit", HERB_TOKEN, this->coordinate_x, this->coordinate_y,
+    child = new Herbivore("Rabbit", HERB_TOKEN, this->coordinate_x, this->coordinate_y,
                                   Y_RABBIT_SIZE,A_RABBIT_SIZE,Y_RABBIT_SPEED,A_RABBIT_SPEED, Y_RABBIT_NEED_FOOD, A_RABBIT_NEED_FOOD
                                   ,RABBIT_CLIMB,RABBIT_HIBERNATION);
 
@@ -244,7 +252,7 @@ void Herbivore::Eat(Plant* plant) {
   /*the animal eats only if it hasn't yeat reached the desired amount of food for the day*/
   if(!Pleased()) {
     eaten_food += eat_count;
-    hunger_count -= eat_count;
+    ResetHunger();
     plant -> EatenByAnimal(eat_count);
   }
   if(Pleased()) is_hungry = false;
@@ -348,38 +356,46 @@ void Carnivore::Eat(Animal *a){
 /*----------------------------------------------------------------------------*/
 
 /*fight between a carnivore and a herbivore*/
-void Fight(Carnivore* a1, Herbivore* a2){
+int Fight(Carnivore* a1, Herbivore* a2){
   /*if the first animal is a fox or a wolf, we apply the same food chain rules to them*/
   if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos)){
     if((a1 -> GetSize() >= a2 -> GetSize()) && (a1 -> GetSpeed() >= a2 -> GetSpeed())){
       if(! (a2->GetName().find("Salmon") != string::npos)){
         a1 -> Eat(a2);
+        return SECOND_DIED;
       }
     }
   }
   /*a bear eats every hervibore*/
   else if(a1->GetName().find("Bear")!= string::npos){
     a1 -> Eat(a2);
+    a1->ResetHunger();
+    return SECOND_DIED;
   }
 }
 
 /*if the first animal is a herbivore and the second a carnivore, then we already have a function for this*/
-void Fight(Herbivore* a1, Carnivore* a2){
-  Fight(a2,a1);
+int Fight(Herbivore* a1, Carnivore* a2){
+  int result = Fight(a2,a1);
+  if(result == FIRST_DIED) return SECOND_DIED;
+  else if(result == SECOND_DIED) return FIRST_DIED;
+  else return NOBODY_DIED;
 }
 
 /*if we have 2 herbivores, we do nothing*/
-void Fight(Herbivore* a1, Herbivore* a2){
-  return;
+int Fight(Herbivore* a1, Herbivore* a2){
+  return NOBODY_DIED;
 }
 
-void Fight(Carnivore* a1, Carnivore* a2){
+int Fight(Carnivore* a1, Carnivore* a2){
   bool eaten = false;
   /*if the first animal is a fox, a wolf, or a young bear, we apply the same food chain rules to them*/
   if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos) || (a1->GetName().find("Young Bear") != string::npos)){
     if((a1 -> GetSize() > a2 ->GetSize()) || ((a1 -> GetAttack() > a2 -> GetDefence()) && (a1 -> GetSize() > a2 ->GetSize()) ) ){
       a1 -> Eat(a2);
       eaten = true;
+      a1->ResetHunger();
+      return SECOND_DIED;
     }
   }
   /*a bear eats every hervibore, except of another bear*/
@@ -387,6 +403,8 @@ void Fight(Carnivore* a1, Carnivore* a2){
     if (! (a2->GetName().find("Bear") != string::npos)){
       a1 -> Eat(a2);
       eaten = true;
+      a1->ResetHunger();
+      return SECOND_DIED;
     }
   }
   /*if the first has not eaten the second, check if the second can eat the first*/
@@ -395,6 +413,8 @@ void Fight(Carnivore* a1, Carnivore* a2){
       if((a2 -> GetSize() > a1 ->GetSize()) || ((a2 -> GetAttack() > a1 -> GetDefence()) && (a2 -> GetSize() > a1 ->GetSize()) ) ){
         a2 -> Eat(a1);
         eaten = true;
+        a2->ResetHunger();
+        return FIRST_DIED;
       }
     }
     /*a bear eats every hervibore, except of another bear*/
@@ -402,6 +422,8 @@ void Fight(Carnivore* a1, Carnivore* a2){
       if (! (a1->GetName().find("Bear") != string::npos)){
         a2 -> Eat(a1);
         eaten = true;
+        a2->ResetHunger();
+        return FIRST_DIED;
       }
     }
   }

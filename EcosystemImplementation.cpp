@@ -575,18 +575,18 @@ void Ecosystem::RunEcosystem(int day) {
     PlantBreeding();
   } */
 
-  PrintSystem(day);
   if(day % 90 == 0) {
+    PrintSystem(day);
     ApplySeason();
   }
 
 }
 
 void Ecosystem::DailyReset(int day) {
-
+  /*we increase each animal's hunger*/
   for(int i = 0; i < max_no_of_animals; i++) {
     if(animal_array[i] != NULL) {
-      /* here */
+      animal_array[i]->IncreaseHunger();
     }
   }
 
@@ -607,7 +607,7 @@ void Ecosystem::DailyReset(int day) {
     }
   }
   /* Animal Growing */
-  if (day %growth_period_animals == 0) {
+  if (day % growth_period_animals == 0) {
     for(int i = 0; i < max_no_of_animals; i++) {
       if(animal_array[i] != NULL) {
         if(animal_array[i]->IsAdult() == false) {
@@ -1182,15 +1182,15 @@ void Ecosystem::CheckDeadEntities(void) {
           no_of_rabbit--;
         } else if(animal_array[i]->GetName() == "Young Groundhog" || animal_array[i]->GetName() == "Adult Groundhog") {
           no_of_groundhog--;
-        } else if(animal_array[i]->GetName() == "Adult Salmon") {
+        } else if(animal_array[i]->GetName() == "Young Salmon" || animal_array[i]->GetName() == "Adult Salmon") {
           no_of_salmon--;
         } else if(animal_array[i]->GetName() == "Young Fox" || animal_array[i]->GetName() == "Adult Fox") {
           no_of_fox--;
         } else if(animal_array[i]->GetName() == "Young Bear" || animal_array[i]->GetName() == "Adult Bear") {
           no_of_bear--;
-        } else {
+        } else if(animal_array[i]->GetName() == "Young Wolf" || animal_array[i]->GetName() == "Adult Wolf"){
           no_of_wolf--;
-        }
+        } else cout << animal_array[i]->GetName() << endl;
         delete animal_array[i];
         animal_array[i] = NULL;
       }
@@ -1269,11 +1269,23 @@ void Ecosystem::PrintGrid(void) {
   for(int i = 0; i < terrain_size; i++) {
     for(int j = 0; j < terrain_size; j++) {
       if(terrain_grid[i][j].GetGround() == WATER_TILE){
-        cout << BLU << terrain_grid[i][j].GetPlantToken() << " " << RESET;
+        if(terrain_grid[i][j].GetPlantToken() != '.') {
+          cout << BLU << terrain_grid[i][j].GetPlantToken() << " " << RESET;
+        } else {
+            cout << BLU << terrain_grid[i][j].GetGround() << " " << RESET;
+        }
       } else if(terrain_grid[i][j].GetGround() == HILL_TILE) {
-        cout << RED << terrain_grid[i][j].GetPlantToken() << " " << RESET;
+          if(terrain_grid[i][j].GetPlantToken() != '.') {
+            cout << RED << terrain_grid[i][j].GetPlantToken() << " " << RESET;
+          } else {
+              cout << RED << terrain_grid[i][j].GetGround() << " " << RESET;
+          }
       } else if(terrain_grid[i][j].GetGround() == MEADOW_TILE) {
-        cout << GRN << terrain_grid[i][j].GetPlantToken() << " " << RESET;
+        if(terrain_grid[i][j].GetPlantToken() != '.') {
+          cout << GRN << terrain_grid[i][j].GetPlantToken() << " " << RESET;
+        } else {
+          cout << GRN << terrain_grid[i][j].GetGround() << " " << RESET;
+        }
       }
     }
     cout << endl;

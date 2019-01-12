@@ -34,6 +34,7 @@ class Ecosystem {
     Ecosystem(int,string);
     ~Ecosystem();
     void RunEcosystem(int);
+    void PrintSystem(int);
 
   private:
     string Seasons[4];
@@ -88,7 +89,6 @@ class Ecosystem {
     void AnimalBreedingHerbivores(void);
     void PlantBreeding(void);
 
-    void PrintSystem(int);
     void PrintGrid(void);
     void PrintPlantStatistics(void);
     void PrintAnimalStatistics(void);

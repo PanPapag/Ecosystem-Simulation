@@ -44,6 +44,8 @@ class Animal {
     void SetName(string);
     void Died(void);
     void SetHeat(bool);
+    void IncreaseHunger(void);
+    void ResetHunger(void);
     void SetHunger(bool);
     void SetHibernation(bool);
 
@@ -115,7 +117,7 @@ class Carnivore : public Animal {
     int max_defence;
 };
 
-void Fight(Carnivore*, Herbivore*);
-void Fight(Herbivore*, Carnivore*);
-void Fight(Carnivore*, Carnivore*);
-void Fight(Herbivore*, Herbivore*);
+int Fight(Carnivore*, Herbivore*);
+int Fight(Herbivore*, Carnivore*);
+int Fight(Carnivore*, Carnivore*);
+int Fight(Herbivore*, Herbivore*);
