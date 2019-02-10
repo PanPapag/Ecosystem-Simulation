@@ -1071,7 +1071,7 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
       }
     }
   }
-  //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//
+  /* Check a point in the first row */
   else if(x == 0){
     if(plant_array[index]->GetName() == "Grass") {
        if(terrain_grid[x][y - 1].GetGround() == MEADOW_TILE) {
@@ -1130,6 +1130,7 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
       }
     }
   }
+  /* Check a point in the last row */
   else if(x == terrain_size - 1){
     if(plant_array[index]->GetName() == "Grass") {
       if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
@@ -1188,6 +1189,7 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
       }
     }
   }
+  /* Check a point in the first column */
   else if(y == 0){
     if(plant_array[index]->GetName() == "Grass") {
       if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
@@ -1246,7 +1248,7 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
       }
     }
   }
-
+  /* Check a point in the last column */
   else if(y == terrain_size - 1){
     if(plant_array[index]->GetName() == "Grass") {
       if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
