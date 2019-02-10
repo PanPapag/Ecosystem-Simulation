@@ -561,9 +561,11 @@ void Ecosystem::RunEcosystem(int day) {
     AnimalBreedingHerbivores();
   }
 
-  /*if (day % breeding_rep_period_plants == 0 && current_season != "Winter") {
-    PlantBreeding();
-  }*/
+  if (current_season != "Winter") {
+    if(day % breeding_rep_period_plants == 0 ) {
+      PlantBreeding();
+    }
+  }
 
   if(day % 90 == 0) {
     PrintSystem(day);
