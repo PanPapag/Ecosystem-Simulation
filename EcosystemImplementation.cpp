@@ -126,9 +126,11 @@ int Ecosystem::GenerateRiver(void) {
   unsigned int no_tiles = 0;
   bool stop = false;
   int x, y, start_y;
+  int max_y = terrain_size - 5;
+  int min_y = 5;
 
   x = 0;
-  y = (rand() % (terrain_size - 5)) + 5;
+  y = (rand() % (max_y - min_y + 1)) + min_y;
   start_y = y;
   terrain_grid[x][y].SetGround(WATER_TILE);
   no_tiles++;
@@ -218,13 +220,16 @@ int Ecosystem::GenerateHills(void) {
   int min_size = 2;
   int max_size = 4;
 
-  int hill_size = (rand() % (max_size - min_size + 1)) + min_size;
-
   int start_x;
   int start_y;
   bool stop;
 
+  int no_of_hills = (terrain_size * terrain_size) / 50;
+  int hills_created = 0;
+
   while(true) {
+    int hill_size = (rand() % (max_size - min_size + 1)) + min_size;
+
     stop = false;
 
     start_x = rand() % (terrain_size - hill_size);
@@ -242,18 +247,22 @@ int Ecosystem::GenerateHills(void) {
         break;
       }
     }
+
     if(stop == false) {
-      break;
+      hills_created++;
+      /* Everything is ok now */
+      for(int x = start_x; x <= start_x + hill_size; x++) {
+        for(int y = start_y; y <= start_y + hill_size; y++) {
+          terrain_grid[x][y].SetGround(HILL_TILE);
+          no_tiles++;
+        }
+      }
+      if(hills_created == no_of_hills) {
+        break;
+      }
     }
   }
 
-  /* Everything is ok now */
-  for(int x = start_x; x <= start_x + hill_size; x++) {
-    for(int y = start_y; y <= start_y + hill_size; y++) {
-      terrain_grid[x][y].SetGround(HILL_TILE);
-      no_tiles++;
-    }
-  }
   return no_tiles;
 }
 
@@ -551,9 +560,10 @@ void Ecosystem::RunEcosystem(int day) {
   if(day % breeding_rep_period_herb == 0) {
     AnimalBreedingHerbivores();
   }
+
   /*if (day % breeding_rep_period_plants == 0 && current_season != "Winter") {
     PlantBreeding();
-  } */
+  }*/
 
   if(day % 90 == 0) {
     PrintSystem(day);
