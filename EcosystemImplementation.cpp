@@ -848,6 +848,86 @@ void Ecosystem::AnimalMovement(void) {
           /* go up and left */
           animal_array[i]->Move(x - 1,y - 1);
         }
+        /* Check a point in the first row */
+      } else if(x == 0) {
+        /*  All possible moves are five */
+        int movement = rand() % 5;
+        if(movement == 0) {
+          /* go down */
+          animal_array[i]->Move(x + 1,y);
+        } else if(movement == 1) {
+          /* go left */
+          animal_array[i]->Move(x,y - 1);
+        } else if(movement == 2){
+          /* go right */
+          animal_array[i]->Move(x,y + 1);
+        } else if(movement == 3) {
+          /* go down and left */
+          animal_array[i]->Move(x + 1,y - 1);
+        } else {
+          /* go down and right */
+          animal_array[i]->Move(x + 1,y + 1);
+        }
+        /* check a point in the last row */
+      } else if(x == terrain_size - 1) {
+        /*  All possible moves are five */
+        int movement = rand() % 5;
+        if(movement == 0) {
+          /* go up */
+          animal_array[i]->Move(x - 1,y);
+        } else if(movement == 1) {
+          /* go left */
+          animal_array[i]->Move(x,y - 1);
+        } else if(movement == 2){
+          /* go right */
+          animal_array[i]->Move(x,y + 1);
+        } else if(movement == 3) {
+          /* go up and left */
+          animal_array[i]->Move(x - 1,y - 1);
+        } else {
+          /* go up and right */
+          animal_array[i]->Move(x - 1,y + 1);
+        }
+        /* check a point in the first column */
+      } else if(y == 0) {
+        /*  All possible moves are five */
+        int movement = rand() % 5;
+        if(movement == 0) {
+          /* go down */
+          animal_array[i]->Move(x + 1,y);
+        } else if(movement == 1) {
+          /* go up */
+          animal_array[i]->Move(x - 1,y);
+        } else if(movement == 2){
+          /* go right */
+          animal_array[i]->Move(x,y + 1);
+        } else if(movement == 3) {
+          /* go down and right */
+          animal_array[i]->Move(x + 1,y + 1);
+        } else {
+          /* go up and right */
+          animal_array[i]->Move(x - 1,y + 1);
+        }
+        /* check a point in the last column */
+      } else if(y == terrain_size - 1) {
+        /*  All possible moves are five */
+        int movement = rand() % 5;
+        if(movement == 0) {
+          /* go down */
+          animal_array[i]->Move(x + 1,y);
+        } else if(movement == 1) {
+          /* go up */
+          animal_array[i]->Move(x - 1,y);
+        } else if(movement == 2){
+          /* go left */
+          animal_array[i]->Move(x,y - 1);
+        } else if(movement == 3) {
+          /* go down and left */
+          animal_array[i]->Move(x + 1,y - 1);
+        } else {
+          /* go up and left */
+          animal_array[i]->Move(x - 1,y - 1);
+        }
         /* check a point in the middle of terrain_grid */
       } else {
         /*  All possible moves are eight */
@@ -1064,7 +1144,7 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
     }
   }
   /* Check a point in the first row */
-  else if(x == 0){
+  else if(x == 0) {
     if(plant_array[index]->GetName() == "Grass") {
        if(terrain_grid[x][y - 1].GetGround() == MEADOW_TILE) {
         temp.x = x;
@@ -1123,7 +1203,7 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
     }
   }
   /* Check a point in the last row */
-  else if(x == terrain_size - 1){
+  else if(x == terrain_size - 1) {
     if(plant_array[index]->GetName() == "Grass") {
       if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
         temp.x = x - 1;
@@ -1182,7 +1262,7 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
     }
   }
   /* Check a point in the first column */
-  else if(y == 0){
+  else if(y == 0) {
     if(plant_array[index]->GetName() == "Grass") {
       if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
         temp.x = x - 1;
@@ -1241,7 +1321,7 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
     }
   }
   /* Check a point in the last column */
-  else if(y == terrain_size - 1){
+  else if(y == terrain_size - 1) {
     if(plant_array[index]->GetName() == "Grass") {
       if(terrain_grid[x - 1][y].GetGround() == MEADOW_TILE) {
         temp.x = x - 1;
