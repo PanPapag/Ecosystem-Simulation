@@ -1513,10 +1513,18 @@ void Ecosystem::PrintSystem(int day) {
 
   cout << "Day: " << day << endl;
   cout << "Season: " << current_season << endl;
+  cout << endl;
+  
   cout << "Total number of plants: " << TotalPlants() << endl;
+  PrintPlantStatistics();
+  cout << endl;
+
   cout << "Total number of animals: " << TotalAnimals() << endl;
   cout << "Total number of carnivores: " << TotalCarnivores() << endl;
   cout << "Total number of herbivores: " << TotalHerbivores() << endl;
+  PrintAnimalStatistics();
+  cout << endl;
+
 }
 
 int Ecosystem::TotalAnimals(void) {
@@ -1537,6 +1545,7 @@ int Ecosystem::TotalPlants(void) {
 
 void Ecosystem::PrintPlantStatistics(void) {
   cout << endl;
+  cout << "Plant Statistics" << endl;
   cout << "Total number of grasses: " << no_of_grass << endl;
   cout << "Total number of algaes: " << no_of_algae << endl;
   cout << "Total number of maples: " << no_of_maple << endl;
@@ -1546,6 +1555,7 @@ void Ecosystem::PrintPlantStatistics(void) {
 
 void Ecosystem::PrintAnimalStatistics(void) {
   cout << endl;
+  cout << "Animal Statistics" << endl;
   cout << "Total number of deers: " << no_of_deer << endl;
   cout << "Total number of rabbits: " << no_of_rabbit << endl;
   cout << "Total number of groundhogs: " << no_of_groundhog << endl;
