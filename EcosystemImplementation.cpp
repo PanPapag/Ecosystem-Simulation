@@ -600,7 +600,13 @@ void Ecosystem::DailyReset(int day) {
   /*we increase each animal's hunger*/
   for(int i = 0; i < max_no_of_animals; i++) {
     if(animal_array[i] != NULL) {
-
+      if(animal_array[i]->Hibernates() == false) {
+          animal_array[i]->ResetHunger();
+      } else {
+        if(animal_array[i]->IsInHibernation() == false) {
+          animal_array[i]->ResetHunger();
+        }
+      }
     }
   }
 
@@ -1489,6 +1495,17 @@ void Ecosystem::CheckHunger(void) {
         }
         if(animal_array[i]->GetHunger() > 10 ) {
           animal_array[i]->SetAlive(false);
+        }
+      } else {
+        if(animal_array[i]->IsInHibernation() == false) {
+          if(!animal_array[i]->Pleased()) {
+            animal_array[i]->IncreaseHunger();
+          } else {
+            animal_array[i]->ResetHunger();
+          }
+          if(animal_array[i]->GetHunger() > 10 ) {
+            animal_array[i]->SetAlive(false);
+          }
         }
       }
     }

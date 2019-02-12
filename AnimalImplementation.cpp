@@ -120,7 +120,7 @@ void Animal::IncreaseHunger(void) {
 
 void Animal::SetAlive(bool condition) { this -> is_alive = condition; }
 
-void Animal::ResetHunger(void) { hunger_count = 0; is_hungry = false; }
+void Animal::ResetHunger(void) { eaten_food = 0; hunger_count = 0; is_hungry = false; }
 
 void Animal::SetHunger(bool condition) { this -> is_hungry = condition; }
 
