@@ -1552,7 +1552,7 @@ void Ecosystem::CheckDeadEntities(void) {
         int x = plant_array[i]->GetCoordinateX();
         int y = plant_array[i]->GetCoordinateY();
         terrain_grid[x][y].SetPlantToken(EMPTY);
-        terrain_grid[x][y].SetPlantIndex(i);
+        terrain_grid[x][y].SetPlantIndex(NONE);
 
         delete plant_array[i];
         plant_array[i] = NULL;
