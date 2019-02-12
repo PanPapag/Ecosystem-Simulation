@@ -1499,6 +1499,7 @@ void Ecosystem::CheckDeadEntities(void) {
         } else if(animal_array[i]->GetName() == "Young Wolf" || animal_array[i]->GetName() == "Adult Wolf"){
           no_of_wolf--;
         } else cout << animal_array[i]->GetName() << endl;
+
         delete animal_array[i];
         animal_array[i] = NULL;
       }
@@ -1514,7 +1515,7 @@ void Ecosystem::PrintSystem(int day) {
   cout << "Day: " << day << endl;
   cout << "Season: " << current_season << endl;
   cout << endl;
-  
+
   cout << "Total number of plants: " << TotalPlants() << endl;
   PrintPlantStatistics();
   cout << endl;
