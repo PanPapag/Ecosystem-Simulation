@@ -597,7 +597,7 @@ void Ecosystem::RunEcosystem(int day) {
 }
 
 void Ecosystem::DailyReset(int day) {
-  /*we increase each animal's hunger*/
+
   for(int i = 0; i < max_no_of_animals; i++) {
     if(animal_array[i] != NULL) {
       if(animal_array[i]->Hibernates() == false) {

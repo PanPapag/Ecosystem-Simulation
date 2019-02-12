@@ -21,7 +21,7 @@ Animal::Animal(string nam, char token, int x, int y, int size, int speed, int ne
      eat_count = 0;
      is_alive = true;
      is_adult = true;
-     is_hungry = false;
+     is_hungry = true;
      in_heat = false;
      in_hibernation = false;
      //cout << "I just constructed an animal" << endl;
@@ -41,9 +41,13 @@ Animal::Animal(string nam, char token, int x, int y, int current_size, int max_s
      eaten_food = 0;
      eat_count = 0;
      is_alive = true;
-     if(nam == "Salmon") is_adult = true;
-     else {is_adult = false;}
-     is_hungry = false;
+     if(nam == "Salmon") {
+       is_adult = true;
+     }
+     else {
+       is_adult = false;
+     }
+     is_hungry = true;
      in_heat = false;
      in_hibernation = false;
      //cout << "I just constructed an animal" << endl;
@@ -121,7 +125,7 @@ void Animal::SetAlive(bool condition) { this -> is_alive = condition; }
 void Animal::ResetHunger(void) {
   eaten_food = 0;
   hunger_count = 0;
-  SetHunger(false);
+  SetHunger(true);
 }
 
 void Animal::SetHunger(bool condition) { this -> is_hungry = condition; }
