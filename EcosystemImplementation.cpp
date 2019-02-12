@@ -320,6 +320,9 @@ void Ecosystem::PlacePlants(void) {
       plant_array[plant_index] = new Seedless("Grass",x,y,GRASS_TOKEN,GRASS_BREEDING,GRASS_ILLNESS,
         ALIVE,GRASS_LIFE_FACTOR,GRASS_LIFE);
       terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+
+      terrain_grid[x][y].SetPlantIndex(plant_index);
+
       plant_index++;
     }
   }
@@ -344,6 +347,9 @@ void Ecosystem::PlacePlants(void) {
       plant_array[plant_index] = new Seedless("Algae",x,y,ALGAE_TOKEN,ALGAE_BREEDING,
         ALGAE_ILLNESS,ALIVE,ALGAE_LIFE_FACTOR,ALGAE_LIFE);
       terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+
+      terrain_grid[x][y].SetPlantIndex(plant_index);
+
       plant_index++;
     }
   }
@@ -368,6 +374,9 @@ void Ecosystem::PlacePlants(void) {
       plant_array[plant_index] = new Seeded("Maple",x,y,MAPLE_TOKEN,MAPLE_BREEDING,MAPLE_ILLNESS,
         ALIVE,MAPLE_LIFE_FACTOR,MAPLE_FOLIAGE,MAPLE_SEEDS,MAPLE_SIZE);
       terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+
+      terrain_grid[x][y].SetPlantIndex(plant_index);
+
       plant_index++;
     }
   }
@@ -392,6 +401,9 @@ void Ecosystem::PlacePlants(void) {
       plant_array[plant_index] = new Seeded("Oak",x,y,OAK_TOKEN,OAK_BREEDING,OAK_ILLNESS,ALIVE,
         OAK_LIFE_FACTOR,OAK_FOLIAGE,OAK_SEEDS,OAK_SIZE);
       terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+
+      terrain_grid[x][y].SetPlantIndex(plant_index);
+
       plant_index++;
     }
   }
@@ -416,6 +428,9 @@ void Ecosystem::PlacePlants(void) {
       plant_array[plant_index] = new Seeded("Pine",x,y,PINE_TOKEN,PINE_BREEDING,PINE_ILLNESS,ALIVE,
         PINE_LIFE_FACTOR,PINE_FOLIAGE,PINE_SEEDS,PINE_SIZE);
       terrain_grid[x][y].SetPlantToken(plant_array[plant_index]->GetToken());
+
+      terrain_grid[x][y].SetPlantIndex(plant_index);
+
       plant_index++;
     }
   }
@@ -1533,9 +1548,12 @@ void Ecosystem::CheckDeadEntities(void) {
         } else {
           no_of_pine--;
         }
+
         int x = plant_array[i]->GetCoordinateX();
         int y = plant_array[i]->GetCoordinateY();
         terrain_grid[x][y].SetPlantToken(EMPTY);
+        terrain_grid[x][y].SetPlantIndex(i);
+
         delete plant_array[i];
         plant_array[i] = NULL;
       }
@@ -1560,6 +1578,10 @@ void Ecosystem::CheckDeadEntities(void) {
         } else if(animal_array[i]->GetName() == "Young Wolf" || animal_array[i]->GetName() == "Adult Wolf"){
           no_of_wolf--;
         } else cout << animal_array[i]->GetName() << endl;
+
+        int x = animal_array[i]->GetCoordinateX();
+        int y = animal_array[i]->GetCoordinateY();
+        terrain_grid[x][y].RemoveAnimalIndex(i);
 
         delete animal_array[i];
         animal_array[i] = NULL;
