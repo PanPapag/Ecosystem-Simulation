@@ -244,7 +244,7 @@ int Ecosystem::GenerateHills(void) {
     /* Check not to overlay a water tile */
     for(int x = start_x; x <= start_x + hill_size; x++) {
       for(int y = start_y; y <= start_y + hill_size; y++) {
-        if(terrain_grid[x][y].GetGround() == WATER_TILE) {
+        if(terrain_grid[x][y].GetGround() == WATER_TILE || terrain_grid[x][y].GetGround() == HILL_TILE ) {
           stop = true;
           break;
         }
