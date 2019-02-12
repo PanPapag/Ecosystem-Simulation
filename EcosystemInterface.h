@@ -17,13 +17,16 @@ class Tile {
     ~Tile();
     void SetGround(char);
     void SetPlantToken(char);
+    void AddAnimalIndex(int);
     char GetGround(void);
     char GetPlantToken(void);
     bool ExistPlant(void);
+    list <int> & GetAnimalList(void);
 
   private:
     char ground;
     char plant_token;
+    list <int> animal_index_list;
 
 };
 
@@ -67,8 +70,6 @@ class Ecosystem {
     class Tile **terrain_grid;
     class Plant **plant_array;
     class Animal **animal_array;
-
-    list <int> animal_index;
 
     void DailyReset(int);
     void CheckDeadEntities(void);

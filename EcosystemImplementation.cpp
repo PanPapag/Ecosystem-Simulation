@@ -4,7 +4,6 @@
 #include <ctime>
 #include <list>
 #include <iterator>
-#include <map>
 #include <utility>
 
 #include "EcosystemInterface.h"
@@ -27,9 +26,13 @@ char Tile::GetPlantToken(void) { return plant_token; }
 
 bool Tile::ExistPlant(void) { return plant_token; }
 
+list<int> & Tile::GetAnimalList(void) { return animal_index_list; }
+
 void Tile::SetGround(char category) { ground = category; }
 
 void Tile::SetPlantToken(char category) { plant_token = category; }
+
+void Tile::AddAnimalIndex(int index) { animal_index_list.push_front(index); }
 
 /* ----------------------------------- class Ecosystem Implementation ----------------------------------- */
 
@@ -432,6 +435,8 @@ void Ecosystem::PlaceAnimals(void) {
     animal_array[animal_index] = new Herbivore("Deer",HERB_TOKEN,x,y,A_DEER_SIZE,A_DEER_SPEED,A_DEER_NEED_FOOD,
       DEER_CLIMB,DEER_HIBERNATION);
 
+    terrain_grid[x][y].AddAnimalIndex(animal_index);
+
     animal_index++;
   }
   /* Place Rabbit */
@@ -449,6 +454,8 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Herbivore("Rabbit",HERB_TOKEN,x,y,A_RABBIT_SIZE,A_RABBIT_SPEED,
       A_RABBIT_NEED_FOOD,RABBIT_CLIMB,RABBIT_HIBERNATION);
+
+    terrain_grid[x][y].AddAnimalIndex(animal_index);
 
     animal_index++;
   }
@@ -468,6 +475,8 @@ void Ecosystem::PlaceAnimals(void) {
     animal_array[animal_index] = new Herbivore("Groundhog",HERB_TOKEN,x,y,A_GROUNDHOG_SIZE,A_GROUNDHOG_SPEED,
       A_GROUNDHOG_NEED_FOOD,GROUNDHOG_CLIMB,GROUNDHOG_HIBERNATION);
 
+    terrain_grid[x][y].AddAnimalIndex(animal_index);
+
     animal_index++;
   }
   /* Place Salmon */
@@ -485,6 +494,8 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Herbivore("Salmon",HERB_TOKEN,x,y,A_SALMON_SIZE,A_SALMON_SPEED,
       A_SALMON_NEED_FOOD,SALMON_CLIMB,SALMON_HIBERNATION);
+
+    terrain_grid[x][y].AddAnimalIndex(animal_index);
 
     animal_index++;
   }
@@ -504,6 +515,8 @@ void Ecosystem::PlaceAnimals(void) {
     animal_array[animal_index] = new Carnivore("Fox",CARN_TOKEN,x,y,A_FOX_SIZE,A_FOX_SPEED,
       A_FOX_NEED_FOOD,FOX_HIBERNATION,A_FOX_ATTACK,A_FOX_DEFENCE);
 
+    terrain_grid[x][y].AddAnimalIndex(animal_index);
+
     animal_index++;
   }
   /* Place Bear */
@@ -522,6 +535,8 @@ void Ecosystem::PlaceAnimals(void) {
     animal_array[animal_index] = new Carnivore("Bear",CARN_TOKEN,x,y,A_BEAR_SIZE,A_BEAR_SPEED,
       A_BEAR_NEED_FOOD,BEAR_HIBERNATION,A_BEAR_ATTACK,A_BEAR_DEFENCE);
 
+    terrain_grid[x][y].AddAnimalIndex(animal_index);
+
     animal_index++;
   }
   /* Place Wolf */
@@ -539,6 +554,8 @@ void Ecosystem::PlaceAnimals(void) {
 
     animal_array[animal_index] = new Carnivore("Wolf",CARN_TOKEN,x,y,A_WOLF_SIZE,A_WOLF_SPEED,
       A_WOLF_NEED_FOOD,WOLF_HIBERNATION,A_WOLF_ATTACK,A_WOLF_DEFENCE);
+
+    terrain_grid[x][y].AddAnimalIndex(animal_index);
 
     animal_index++;
   }
