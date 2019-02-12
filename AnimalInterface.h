@@ -28,7 +28,6 @@ class Animal {
     int GetCoordinateY(void);
     bool IsAlive(void);
     bool Hungry(void);
-    bool IsStarving(void);
     bool IsInHeat(void);
     bool Hibernates(void);
     bool IsInHibernation(void);

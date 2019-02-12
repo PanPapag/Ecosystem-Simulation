@@ -77,8 +77,6 @@ bool Animal::IsAlive(void) { return is_alive; }
 
 bool Animal::Hungry(void) { return is_hungry; }
 
-bool Animal::IsStarving(void) { return (hunger_count == 10); }
-
 bool Animal::IsInHeat(void) { return in_heat; }
 
 bool Animal::Hibernates(void) { return hibernates; }
@@ -120,7 +118,11 @@ void Animal::IncreaseHunger(void) {
 
 void Animal::SetAlive(bool condition) { this -> is_alive = condition; }
 
-void Animal::ResetHunger(void) { eaten_food = 0; hunger_count = 0; is_hungry = false; }
+void Animal::ResetHunger(void) {
+  eaten_food = 0;
+  hunger_count = 0;
+  SetHunger(false);
+}
 
 void Animal::SetHunger(bool condition) { this -> is_hungry = condition; }
 
