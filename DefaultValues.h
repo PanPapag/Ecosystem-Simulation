@@ -126,6 +126,8 @@
 #define LEFT 0
 #define RIGHT 1
 
+#define NONE -1
+
 /*------------------------- Default values for colors ------------------------*/
 
 #define RED   "\x1B[31m"

@@ -14,6 +14,7 @@
 Tile::Tile() {
   ground = EMPTY;
   plant_token = EMPTY;
+  plant_index = NONE;
 }
 
 Tile::~Tile() {
@@ -29,11 +30,15 @@ bool Tile::ExistPlant(void) { return plant_token; }
 
 list<int> & Tile::GetAnimalList(void) { return animal_index_list; }
 
+int Tile::GetPlantIndex(void) { return plant_index; }
+
 void Tile::SetGround(char category) { ground = category; }
 
 void Tile::SetPlantToken(char category) { plant_token = category; }
 
 void Tile::AddAnimalIndex(int index) { animal_index_list.push_front(index); }
+
+void Tile::SetPlantIndex(int index) { plant_index = index; }
 
 void Tile::RemoveAnimalIndex(int index) { animal_index_list.remove(index); }
 
