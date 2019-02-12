@@ -112,15 +112,13 @@ void Animal::SetName(string name) {
   this -> name = name;
 }
 
-void Animal::Died(void) { this -> is_alive = false; }
-
 void Animal::SetHeat(bool condition) { this -> in_heat = condition; }
 
 void Animal::IncreaseHunger(void) {
-  if(++hunger_count == 10){
-    Died();
-  }
+  hunger_count++;
 }
+
+void Animal::SetAlive(bool condition) { this -> is_alive = condition; }
 
 void Animal::ResetHunger(void) { hunger_count = 0; is_hungry = false; }
 
@@ -249,7 +247,7 @@ void Herbivore::Raise(void){
 }
 
 void Herbivore::Eat(Plant* plant) {
-  /*the animal eats only if it hasn't yeat reached the desired amount of food for the day*/
+  /* a herbivore eats only if it hasn't yeat reached the desired amount of food for the day */
   if(!Pleased()) {
     eaten_food += eat_count;
     ResetHunger();
@@ -346,11 +344,12 @@ void Carnivore::Raise(void){
     }
   }
 }
+
 void Carnivore::Eat(Animal *a){
   this -> is_hungry = false;
   eaten_food = current_needed_food;
 
-  a -> Died();
+  a -> SetAlive(false);
 }
 
 /*----------------------------------------------------------------------------*/

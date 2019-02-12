@@ -35,23 +35,24 @@ class Animal {
     bool Pleased(void);
     bool IsHerbivore(void);
     bool IsCarnivore(void);
-    virtual bool CheckIfAdult(void) = 0;
     bool IsAdult();
 
     void IncreaseSize(int);
     void IncreaseSpeed(int);
     void IncreaseNeededFood(int);
     void SetName(string);
-    void Died(void);
     void SetHeat(bool);
+    void SetAlive(bool);
     void IncreaseHunger(void);
     void ResetHunger(void);
     void SetHunger(bool);
     void SetHibernation(bool);
 
     void Move(int, int);
+    virtual bool CheckIfAdult(void) = 0;
     virtual void Raise(void) = 0;
     Animal* Reproduct(void);
+
   protected:
 
     string name;
@@ -86,7 +87,6 @@ class Herbivore : public Animal {
     void Raise(void);
     void Eat(Plant*);
     bool CheckIfAdult(void);
-
 
   private:
     bool can_climb;

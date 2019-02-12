@@ -17,7 +17,7 @@ Tile::Tile() {
 }
 
 Tile::~Tile() {
-  
+
   //cout << "Tile destructed" << endl;
 }
 
@@ -569,10 +569,12 @@ void Ecosystem::RunEcosystem(int day) {
   DailyReset(day);
 
   for(int i = 0; i < 24; i++){
+    CheckHunger();
+    CheckDeadEntities();
     AnimalMovement();
     //AnimalEating();
-    CheckDeadEntities();
   }
+
   if(day % breeding_rep_period_carn == 0) {
     AnimalBreedingCarnivores();
   }
@@ -598,7 +600,7 @@ void Ecosystem::DailyReset(int day) {
   /*we increase each animal's hunger*/
   for(int i = 0; i < max_no_of_animals; i++) {
     if(animal_array[i] != NULL) {
-      animal_array[i]->IncreaseHunger();
+
     }
   }
 
@@ -1474,6 +1476,23 @@ coordinates Ecosystem::FindFreeTile(int x, int y, int index) {
     }
   }
   return temp;
+}
+
+void Ecosystem::CheckHunger(void) {
+  for(int i = 0; i < max_no_of_animals; i++) {
+    if(animal_array[i] != NULL) {
+      if(animal_array[i]->Hibernates() == false) {
+        if(!animal_array[i]->Pleased()) {
+          animal_array[i]->IncreaseHunger();
+        } else {
+          animal_array[i]->ResetHunger();
+        }
+        if(animal_array[i]->GetHunger() > 10 ) {
+          animal_array[i]->SetAlive(false);
+        }
+      }
+    }
+  }
 }
 
 void Ecosystem::CheckDeadEntities(void) {

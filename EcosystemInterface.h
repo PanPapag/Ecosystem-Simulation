@@ -74,6 +74,7 @@ class Ecosystem {
 
     void DailyReset(int);
     void CheckDeadEntities(void);
+    void CheckHunger(void);
     void AnimalMovement(void);
     void AnimalEating(void);
     coordinates FindFreeTile(int,int,int);
