@@ -18,6 +18,7 @@ class Tile {
     void SetGround(char);
     void SetPlantToken(char);
     void AddAnimalIndex(int);
+    void RemoveAnimalIndex(int);
     char GetGround(void);
     char GetPlantToken(void);
     bool ExistPlant(void);

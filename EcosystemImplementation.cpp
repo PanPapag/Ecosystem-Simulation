@@ -17,6 +17,7 @@ Tile::Tile() {
 }
 
 Tile::~Tile() {
+  
   //cout << "Tile destructed" << endl;
 }
 
@@ -33,6 +34,8 @@ void Tile::SetGround(char category) { ground = category; }
 void Tile::SetPlantToken(char category) { plant_token = category; }
 
 void Tile::AddAnimalIndex(int index) { animal_index_list.push_front(index); }
+
+void Tile::RemoveAnimalIndex(int index) { animal_index_list.remove(index); }
 
 /* ----------------------------------- class Ecosystem Implementation ----------------------------------- */
 
