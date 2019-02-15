@@ -18,7 +18,6 @@ Tile::Tile() {
 }
 
 Tile::~Tile() {
-
   //cout << "Tile destructed" << endl;
 }
 
@@ -617,7 +616,7 @@ void Ecosystem::RunEcosystem(int day) {
 }
 
 void Ecosystem::DailyReset(int day) {
-
+  //TODO herbivore exception
   for(int i = 0; i < max_no_of_animals; i++) {
     if(animal_array[i] != NULL) {
       if(animal_array[i]->Hibernates() == false) {
