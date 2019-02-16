@@ -297,9 +297,12 @@ void Ecosystem::PlacePlants(void) {
   int points_index;
   int x,y;
   int total_points = terrain_size * terrain_size;
-
+  //NOTE it is important to shuffle points array every time we wanna place a different animal, so
+  // as to have a better distribution of animals over terrain_grid
+  
   /* Place Grass */
   for(int i = 0; i < no_of_grass; i++) {
+    ShufflePoints(points,0,total_points);
     flag = true;
     points_index = 0;
     x = points[points_index].x;
@@ -327,6 +330,7 @@ void Ecosystem::PlacePlants(void) {
   }
   /* Place Algae */
   for(int i = 0; i < no_of_algae; i++) {
+    ShufflePoints(points,0,total_points);
     flag = true;
     points_index = 0;
     x = points[points_index].x;
@@ -354,6 +358,7 @@ void Ecosystem::PlacePlants(void) {
   }
   /* Place Maple */
   for(int i = 0; i < no_of_maple; i++) {
+    ShufflePoints(points,0,total_points);
     flag = true;
     points_index = 0;
     x = points[points_index].x;
@@ -381,6 +386,7 @@ void Ecosystem::PlacePlants(void) {
   }
   /* Place Oak */
   for(int i = 0; i < no_of_oak; i++) {
+    ShufflePoints(points,0,total_points);
     flag = true;
     points_index = 0;
     x = points[points_index].x;
@@ -408,6 +414,7 @@ void Ecosystem::PlacePlants(void) {
   }
   /* Place Pine */
   for(int i = 0; i < no_of_pine; i++) {
+    ShufflePoints(points,0,total_points);
     flag = true;
     points_index = 0;
     x = points[points_index].x;
@@ -441,8 +448,12 @@ void Ecosystem::PlaceAnimals(void) {
   int points_index;
   int x,y;
   int total_points = terrain_size * terrain_size;
+  //NOTE it is important to shuffle points array every time we wanna place a different animal, so
+  // as to have a better distribution of animals over terrain_grid
+
   /* Place Deer */
   for(int i = 0; i < no_of_deer; i++) {
+    ShufflePoints(points,0,total_points);
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -463,6 +474,7 @@ void Ecosystem::PlaceAnimals(void) {
   }
   /* Place Rabbit */
   for(int i = 0; i < no_of_rabbit; i++) {
+    ShufflePoints(points,0,total_points);
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -483,6 +495,7 @@ void Ecosystem::PlaceAnimals(void) {
   }
   /* Place Groundhog */
   for(int i = 0; i < no_of_groundhog; i++) {
+    ShufflePoints(points,0,total_points);
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -503,6 +516,7 @@ void Ecosystem::PlaceAnimals(void) {
   }
   /* Place Salmon */
   for(int i = 0; i < no_of_salmon; i++) {
+    ShufflePoints(points,0,total_points);
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -523,6 +537,7 @@ void Ecosystem::PlaceAnimals(void) {
   }
   /* Place Fox */
   for(int i = 0; i < no_of_fox; i++) {
+    ShufflePoints(points,0,total_points);
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -543,6 +558,7 @@ void Ecosystem::PlaceAnimals(void) {
   }
   /* Place Bear */
   for(int i = 0; i < no_of_bear; i++) {
+    ShufflePoints(points,0,total_points);
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -563,6 +579,7 @@ void Ecosystem::PlaceAnimals(void) {
   }
   /* Place Wolf */
   for(int i = 0; i < no_of_wolf; i++) {
+    ShufflePoints(points,0,total_points);
     points_index = 0;
     x = points[points_index].x;
     y = points[points_index].y;
@@ -591,7 +608,7 @@ void Ecosystem::RunEcosystem(int day) {
     CheckHunger();
     CheckDeadEntities();
     AnimalMovement();
-    //AnimalEating();
+    AnimalEating();
   }
 
   if(day % breeding_rep_period_carn == 0) {
@@ -830,6 +847,17 @@ void Ecosystem::PlantBreeding(void) {
     }
   }
 
+}
+
+void Ecosystem::AnimalEating(void) {
+  for(int x = 0; x < terrain_size; x++) {
+    for(int y = 0; y < terrain_size; y++) {
+      list <int> list_of_animal_indexes = terrain_grid[x][y].GetAnimalList();
+      cout << "ANIMALS IN (" << x << "," << y << ")" << endl;
+      for (list<int>::iterator i = list_of_animal_indexes.begin(); i != list_of_animal_indexes.end(); ++i)
+        cout << *i << endl;
+    }
+  }
 }
 
 void Ecosystem::AnimalMovement(void) {
