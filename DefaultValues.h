@@ -141,6 +141,6 @@
 
 /*------------------ Default values for animal fighting ---------------------*/
 
-#define NOBODY_DIED 0
-#define FIRST_DIED 1
-#define SECOND_DIED 2
+#define NOBODY_WON 0
+#define FIRST_WON 1
+#define SECOND_WON 2
