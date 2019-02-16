@@ -23,7 +23,6 @@ class Animal {
     int GetNeededFood(void);
     int GetMaxNeededFood(void);
     int GetHunger(void);
-    int GetEatCount(void);
     int GetCoordinateX(void);
     int GetCoordinateY(void);
     bool IsAlive(void);
@@ -64,7 +63,6 @@ class Animal {
     int max_needed_food;
     int hunger_count;
     int eaten_food;
-    int eat_count;
     int coordinate_x;
     int coordinate_y;
     bool is_alive;
@@ -84,11 +82,15 @@ class Herbivore : public Animal {
 
     bool CanClimb(void);
     void Raise(void);
-    void Eat(Plant*);
+    void Eat(int);
     bool CheckIfAdult(void);
+    int GetDaysNotHungry(void);
+    void IncreaseDaysNotHungry(void);
+    void ResetDaysNotHungry(void);
 
   private:
     bool can_climb;
+    int days_not_hungry;
 };
 
 class Carnivore : public Animal {
@@ -107,7 +109,7 @@ class Carnivore : public Animal {
     bool CheckIfAdult(void);
 
     void Raise(void);
-    void Eat(Animal*);
+    void Eat();
 
   private:
     int current_attack;

@@ -18,7 +18,6 @@ Animal::Animal(string nam, char token, int x, int y, int size, int speed, int ne
      /* initialize the remaining data members */
      hunger_count = 0;
      eaten_food = 0;
-     eat_count = 0;
      is_alive = true;
      is_adult = true;
      is_hungry = true;
@@ -39,7 +38,6 @@ Animal::Animal(string nam, char token, int x, int y, int current_size, int max_s
      /* initialize the remaining data members */
      hunger_count = 0;
      eaten_food = 0;
-     eat_count = 0;
      is_alive = true;
      if(nam == "Salmon") {
        is_adult = true;
@@ -70,8 +68,6 @@ int Animal::GetNeededFood(void) { return current_needed_food; }
 int Animal::GetMaxNeededFood(void) { return max_needed_food; }
 
 int Animal::GetHunger(void) { return hunger_count; }
-
-int Animal::GetEatCount(void) { return eat_count; }
 
 int Animal::GetCoordinateX(void) { return coordinate_x; }
 
@@ -123,9 +119,11 @@ void Animal::IncreaseHunger(void) {
 void Animal::SetAlive(bool condition) { this -> is_alive = condition; }
 
 void Animal::ResetHunger(void) {
-  eaten_food = 0;
-  hunger_count = 0;
+  IncreaseHunger();
   SetHunger(true);
+  if(hunger_count > 10) {
+    SetAlive(false);
+  }
 }
 
 void Animal::SetHunger(bool condition) { this -> is_hungry = condition; }
@@ -208,6 +206,12 @@ Herbivore::~Herbivore() {
 
 bool Herbivore::CanClimb(void) { return can_climb; }
 
+int Herbivore::GetDaysNotHungry(void) { return days_not_hungry; }
+
+void Herbivore::IncreaseDaysNotHungry(void) { days_not_hungry++; }
+
+void Herbivore::ResetDaysNotHungry(void) { days_not_hungry = 0; }
+
 bool Herbivore::CheckIfAdult(void) {
   if(((current_size == max_size) && (current_speed == max_speed) && (current_needed_food == max_needed_food))) {
     is_adult = true;
@@ -252,14 +256,12 @@ void Herbivore::Raise(void){
   }
 }
 
-void Herbivore::Eat(Plant* plant) {
-  /* a herbivore eats only if it hasn't yeat reached the desired amount of food for the day */
-  if(!Pleased()) {
-    eaten_food += eat_count;
-    ResetHunger();
-    plant -> EatenByAnimal(eat_count);
+void Herbivore::Eat(int eat_count) {
+  eaten_food += eat_count;
+  if (eaten_food >= current_needed_food){
+    this -> is_hungry = false;
+    this -> eaten_food = 0;
   }
-  if(Pleased()) is_hungry = false;
 }
 
 /*-----------------------Class Carnivores functions---------------------------*/
@@ -351,11 +353,8 @@ void Carnivore::Raise(void){
   }
 }
 
-void Carnivore::Eat(Animal *a){
+void Carnivore::Eat() {
   this -> is_hungry = false;
-  eaten_food = current_needed_food;
-
-  a -> SetAlive(false);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -366,15 +365,12 @@ int Fight(Carnivore* a1, Herbivore* a2){
   if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos)){
     if((a1 -> GetSize() >= a2 -> GetSize()) && (a1 -> GetSpeed() >= a2 -> GetSpeed())){
       if(! (a2->GetName().find("Salmon") != string::npos)){
-        a1 -> Eat(a2);
         return FIRST_WON;
       }
     }
   }
   /*a bear eats every hervibore*/
   else if(a1->GetName().find("Bear")!= string::npos){
-    a1 -> Eat(a2);
-    a1->ResetHunger();
     return FIRST_WON;
   }
   return NOBODY_WON;

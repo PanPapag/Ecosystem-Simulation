@@ -299,7 +299,7 @@ void Ecosystem::PlacePlants(void) {
   int total_points = terrain_size * terrain_size;
   //NOTE it is important to shuffle points array every time we wanna place a different animal, so
   // as to have a better distribution of animals over terrain_grid
-  
+
   /* Place Grass */
   for(int i = 0; i < no_of_grass; i++) {
     ShufflePoints(points,0,total_points);
@@ -605,7 +605,7 @@ void Ecosystem::RunEcosystem(int day) {
   DailyReset(day);
 
   for(int i = 0; i < 24; i++){
-    CheckHunger();
+    //CheckHunger();
     CheckDeadEntities();
     AnimalMovement();
     AnimalEating();
@@ -853,9 +853,22 @@ void Ecosystem::AnimalEating(void) {
   for(int x = 0; x < terrain_size; x++) {
     for(int y = 0; y < terrain_size; y++) {
       list <int> list_of_animal_indexes = terrain_grid[x][y].GetAnimalList();
-      cout << "ANIMALS IN (" << x << "," << y << ")" << endl;
-      for (list<int>::iterator i = list_of_animal_indexes.begin(); i != list_of_animal_indexes.end(); ++i)
-        cout << *i << endl;
+      for(list <int>::iterator it = list_of_animal_indexes.begin(); it != list_of_animal_indexes.end(); ++it) {
+        if(animal_array[*it]->IsAlive() == true) {
+          if(animal_array[*it]->Hibernates() == false) {
+            if(animal_array[*it]->Hungry() == true) {
+              /* Herbivores eating */
+              if(animal_array[*it]->IsHerbivore() == true) {
+                if(animal_array[*it]->GetName() == "Young Deer" || animal_array[*it]->GetName() == "Young Deer") {
+                  //TODO conitnue
+                }
+              }
+            }
+          } else if(animal_array[*it]->IsInHibernation() == false) {
+            
+          }
+        }
+      }
     }
   }
 }
