@@ -119,6 +119,4 @@ class Carnivore : public Animal {
 };
 
 int Fight(Carnivore*, Herbivore*);
-int Fight(Herbivore*, Carnivore*);
 int Fight(Carnivore*, Carnivore*);
-int Fight(Herbivore*, Herbivore*);

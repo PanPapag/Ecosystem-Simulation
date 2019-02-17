@@ -141,6 +141,5 @@
 
 /*------------------ Default values for animal fighting ---------------------*/
 
-#define NOBODY_WON 0
-#define FIRST_WON 1
-#define SECOND_WON 2
+#define CANNOT_EAT 0
+#define CAN_EAT 1

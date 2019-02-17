@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <list>
+#include <vector>
 #include <iterator>
 #include <utility>
 
@@ -853,6 +854,17 @@ void Ecosystem::AnimalEating(void) {
   for(int x = 0; x < terrain_size; x++) {
     for(int y = 0; y < terrain_size; y++) {
       list <int> list_of_animal_indexes = terrain_grid[x][y].GetAnimalList();
+      vector <int> only_herb_indexes;
+      vector <int> all_animal_indexes;
+      /* We will use vectors in case of carnivores eating */
+      for(list <int>::iterator temp_it = list_of_animal_indexes.begin(); temp_it != list_of_animal_indexes.end(); ++temp_it) {
+        if(animal_array[*temp_it] != NULL) {
+          if(animal_array[*temp_it]->IsHerbivore()) {
+            only_herb_indexes.push_back(*temp_it);
+          }
+          all_animal_indexes.push_back(*temp_it);
+        }
+      }
       for(list <int>::iterator it = list_of_animal_indexes.begin(); it != list_of_animal_indexes.end(); ++it) {
         if(animal_array[*it] != NULL) {
           if(animal_array[*it]->IsAlive() == true) {
@@ -929,9 +941,12 @@ void Ecosystem::AnimalEating(void) {
                       }
                     }
                   }
+                  /* Carnivores eating */
                 } else if(animal_array[*it]->IsCarnivore() == true) {
                   /* Upcasting to herbivore */
                   Carnivore *carn = (Carnivore *) animal_array[*it];
+                  /* Suffle both vectors for randomized results */
+                  
                 }
               }
             } else if(animal_array[*it]->IsInHibernation() == false) {

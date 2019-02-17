@@ -358,66 +358,36 @@ void Carnivore::Eat() {
 /*----------------------------------------------------------------------------*/
 
 /*fight between a carnivore and a herbivore*/
-int Fight(Carnivore* a1, Herbivore* a2){
+int Fight(Carnivore* a1, Herbivore* a2) {
   /*if the first animal is a fox or a wolf, we apply the same food chain rules to them*/
-  if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos)){
-    if((a1 -> GetSize() >= a2 -> GetSize()) && (a1 -> GetSpeed() >= a2 -> GetSpeed())){
-      if(! (a2->GetName().find("Salmon") != string::npos)){
-        return FIRST_WON;
+  if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos)) {
+    if((a1->GetSize() >= a2->GetSize()) && (a1->GetSpeed() >= a2->GetSpeed())) {
+      if(!(a2->GetName().find("Salmon") != string::npos)) {
+        return CAN_EAT;
       }
     }
   }
-  /*a bear eats every hervibore*/
-  else if(a1->GetName().find("Bear")!= string::npos){
-    return FIRST_WON;
+  /* Α bear eats every hervibore*/
+  else if(a1->GetName().find("Bear")!= string::npos) {
+    return CAN_EAT;
   }
-  return NOBODY_WON;
+
+  return CANNOT_EAT;
 }
 
-/*if the first animal is a herbivore and the second a carnivore, then we already have a function for this*/
-int Fight(Herbivore* a1, Carnivore* a2){
-  int result = Fight(a2,a1);
-  if(result == SECOND_WON) return FIRST_WON;
-  else if(result == FIRST_WON) return SECOND_WON;
-  else return NOBODY_WON;
-}
-
-/*if we have 2 herbivores, we do nothing*/
-int Fight(Herbivore* a1, Herbivore* a2){
-  return NOBODY_WON;
-}
-
-int Fight(Carnivore* a1, Carnivore* a2){
+int Fight(Carnivore* a1, Carnivore* a2) {
   bool eaten = false;
   /*if the first animal is a fox, a wolf, or a young bear, we apply the same food chain rules to them*/
-  if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos) || (a1->GetName().find("Young Bear") != string::npos)){
-    if((a1 -> GetSize() > a2 ->GetSize()) || ((a1 -> GetAttack() > a2 -> GetDefence()) && (a1 -> GetSize() > a2 ->GetSize()) ) ){
-      eaten = true;
-      return FIRST_WON;
+  if((a1->GetName().find("Fox") != string::npos) || (a1->GetName().find("Wolf") != string::npos) || (a1->GetName().find("Young Bear") != string::npos)) {
+    if((a1->GetSize() > a2->GetSize()) || ((a1->GetAttack() > a2->GetDefence()) && (a1 -> GetSize() == a2 ->GetSize()))) {
+      return CAN_EAT;
     }
   }
   /*a bear eats every hervibore, except of another bear*/
   else {
-    if (! (a2->GetName().find("Bear") != string::npos)){
-      eaten = true;
-      return FIRST_WON;
+    if (!(a2->GetName().find("Bear") != string::npos)) {
+      return CAN_EAT;
     }
   }
-  /*if the first has not eaten the second, check if the second can eat the first*/
-  if(eaten == false) {
-    if((a2->GetName().find("Fox") != string::npos) || (a2->GetName().find("Wolf") != string::npos) || (a2->GetName().find("Young Bear") != string::npos)){
-      if((a2 -> GetSize() > a1 ->GetSize()) || ((a2 -> GetAttack() > a1 -> GetDefence()) && (a2 -> GetSize() > a1 ->GetSize()) ) ){
-        eaten = true;
-        return SECOND_WON;
-      }
-    }
-    /*a bear eats every hervibore, except of another bear*/
-    else {
-      if (! (a1->GetName().find("Bear") != string::npos)){
-        eaten = true;
-        return SECOND_WON;
-      }
-    }
-  }
-  return NOBODY_WON;
+  return CANNOT_EAT;
 }
