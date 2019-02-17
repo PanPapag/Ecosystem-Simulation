@@ -41,7 +41,7 @@ class Seedless : public Plant {
   public:
     Seedless(string, int, int, char, int, int, bool, int, int);
     ~Seedless();
-    void LoseLife(void);
+    void LoseLife(int);
     void EatenByAnimal(int);
     void Grow(void);
     bool Reproduced(void);

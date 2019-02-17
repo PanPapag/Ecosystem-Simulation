@@ -44,7 +44,7 @@ Seedless::~Seedless() {
   //cout << "Destructed a seedless plant" << endl;
 }
 
-void Seedless::LoseLife(void) { life -= life_factor; }
+void Seedless::LoseLife(int quantity) { life -= quantity; }
 
 void Seedless::EatenByAnimal(int quantity) {
   if(quantity < life) {
