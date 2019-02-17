@@ -847,7 +847,6 @@ void Ecosystem::PlantBreeding(void) {
       }
     }
   }
-
 }
 
 void Ecosystem::AnimalEating(void) {
@@ -866,7 +865,7 @@ void Ecosystem::AnimalEating(void) {
 
                   int plant_index = terrain_grid[x][y].GetPlantIndex();
                   if(plant_index != NONE) {
-                    if(animal_array[*it]->GetName() == "Young Deer" || animal_array[*it]->GetName() == "Young Deer") {
+                    if(animal_array[*it]->GetName() == "Young Deer" || animal_array[*it]->GetName() == "Adult Deer") {
                       if(plant_array[plant_index]->IsAlive() == true) {
                         if(plant_array[plant_index]->IsSeeded() == true) {
                           /* Upcasting to seeded */
@@ -882,7 +881,7 @@ void Ecosystem::AnimalEating(void) {
                           herb->Eat(2);
                         }
                       }
-                    } else if(animal_array[*it]->GetName() == "Young Rabbit" || animal_array[*it]->GetName() == "Young Rabbit") {
+                    } else if(animal_array[*it]->GetName() == "Young Rabbit" || animal_array[*it]->GetName() == "Adult Rabbit") {
                       /* Rabbits cannot eat oak */
                       if(plant_array[plant_index]->IsAlive() == true && plant_array[plant_index]->GetName() != "Oak" ) {
                         if(plant_array[plant_index]->IsSeeded() == true) {
