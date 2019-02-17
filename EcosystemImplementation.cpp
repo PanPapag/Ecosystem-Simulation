@@ -6,6 +6,9 @@
 #include <vector>
 #include <iterator>
 #include <utility>
+#include <algorithm>
+#include <random>
+#include <chrono>
 
 #include "EcosystemInterface.h"
 #include "AnimalInterface.h"
@@ -946,11 +949,220 @@ void Ecosystem::AnimalEating(void) {
                   /* Upcasting to herbivore */
                   Carnivore *carn = (Carnivore *) animal_array[*it];
                   /* Suffle both vectors for randomized results */
-                  
+                  unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+                  shuffle (only_herb_indexes.begin(), only_herb_indexes.end(), default_random_engine(seed));
+                  shuffle (all_animal_indexes.begin(), all_animal_indexes.end(), default_random_engine(seed));
+                  /* Search in correspodent container */
+                  if(animal_array[*it]->GetHunger() < 8) {
+                    for(auto temp : only_herb_indexes) {
+                      if(animal_array[temp] != NULL && *it != temp) {
+                        if(animal_array[temp]->IsAlive() == true) {
+                          Herbivore *herb = (Herbivore *) animal_array[temp];
+                          if(animal_array[temp]->Hibernates() == false) {
+                            if(Fight(carn,herb) == CAN_EAT) {
+                              carn->Eat();
+                              animal_array[temp]->SetAlive(false);
+                              break;
+                            }
+                          } else if(animal_array[temp]->IsInHibernation() == false) {
+                            if(Fight(carn,herb) == CAN_EAT) {
+                              carn->Eat();
+                              animal_array[temp]->SetAlive(false);
+                              break;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  } else {
+                    for(auto temp : all_animal_indexes) {
+                      if(animal_array[temp] != NULL && *it != temp) {
+                        if(animal_array[temp]->IsAlive() == true) {
+                          if(animal_array[temp]->Hibernates() == false) {
+                            if(animal_array[temp]->IsHerbivore()) {
+                              Herbivore *herb = (Herbivore *) animal_array[temp];
+                              if(Fight(carn,herb) == CAN_EAT) {
+                                carn->Eat();
+                                animal_array[temp]->SetAlive(false);
+                                break;
+                              }
+                            } else if(animal_array[temp]->IsCarnivore()) {
+                              Carnivore *temp_carn = (Carnivore *) animal_array[temp];
+                              if(Fight(carn,carn) == CAN_EAT) {
+                                carn->Eat();
+                                animal_array[temp]->SetAlive(false);
+                                break;
+                              }
+                            }
+                          } else if(animal_array[temp]->IsInHibernation() == false) {
+                            if(animal_array[temp]->IsHerbivore()) {
+                              Herbivore *herb = (Herbivore *) animal_array[temp];
+                              if(Fight(carn,herb) == CAN_EAT) {
+                                carn->Eat();
+                                animal_array[temp]->SetAlive(false);
+                                break;
+                              }
+                            } else if(animal_array[temp]->IsCarnivore()) {
+                              Carnivore *temp_carn = (Carnivore *) animal_array[temp];
+                              if(Fight(carn,carn) == CAN_EAT) {
+                                carn->Eat();
+                                animal_array[temp]->SetAlive(false);
+                                break;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             } else if(animal_array[*it]->IsInHibernation() == false) {
-              //TODO copy paste above
+              if(animal_array[*it]->IsHungry() == true) {
+                /* Herbivores eating */
+                if(animal_array[*it]->IsHerbivore() == true) {
+                  /* Upcasting to herbivore */
+                  Herbivore *herb = (Herbivore *) animal_array[*it];
+
+                  int plant_index = terrain_grid[x][y].GetPlantIndex();
+                  if(plant_index != NONE) {
+                    if(animal_array[*it]->GetName() == "Young Deer" || animal_array[*it]->GetName() == "Adult Deer") {
+                      if(plant_array[plant_index]->IsAlive() == true) {
+                        if(plant_array[plant_index]->IsSeeded() == true) {
+                          /* Upcasting to seeded */
+                          Seeded *sd = (Seeded *) plant_array[plant_index];
+                          if(animal_array[*it]->GetSize() <= sd->GetFoliageSize() + 4) {
+                            sd->EatenByAnimal(2);
+                            herb->Eat(2);
+                          }
+                        } else {
+                          /* Upcasting to seedless */
+                          Seedless *sl = (Seedless *) plant_array[plant_index];
+                          sl->EatenByAnimal(2);
+                          herb->Eat(2);
+                        }
+                      }
+                    } else if(animal_array[*it]->GetName() == "Young Rabbit" || animal_array[*it]->GetName() == "Adult Rabbit") {
+                      /* Rabbits cannot eat oak */
+                      if(plant_array[plant_index]->IsAlive() == true && plant_array[plant_index]->GetName() != "Oak" ) {
+                        if(plant_array[plant_index]->IsSeeded() == true) {
+                          /* Upcasting to seeded */
+                          Seeded *sd = (Seeded *) plant_array[plant_index];
+                          if(animal_array[*it]->GetSize() >= sd->GetFoliageSize()) {
+                            sd->EatenByAnimal(1);
+                            herb->Eat(1);
+                          }
+                        } else {
+                          /* Upcasting to seedless */
+                          Seedless *sl = (Seedless *) plant_array[plant_index];
+                          sl->EatenByAnimal(1);
+                          herb->Eat(1);
+                        }
+                      }
+                    } else if(animal_array[*it]->GetName() == "Young Groundhog" || animal_array[*it]->GetName() == "Adult Groundhog") {
+                      /* Groundhogs cannot eat oak */
+                      if(plant_array[plant_index]->IsAlive() == true && plant_array[plant_index]->GetName() != "Oak" ) {
+                        if(plant_array[plant_index]->IsSeeded() == true) {
+                          /* Upcasting to seeded */
+                          Seeded *sd = (Seeded *) plant_array[plant_index];
+                          if(sd->GetFoliageSize() <= animal_array[*it]->GetSize() || sd->GetFoliageSize() <= 3 * animal_array[*it]->GetSize()) {
+                            sd->EatenByAnimal(1);
+                            herb->Eat(1);
+                          }
+                        } else {
+                          /* Upcasting to seedless */
+                          Seedless *sl = (Seedless *) plant_array[plant_index];
+                          if(sl->GetLife() >= 1) {
+                            sl->EatenByAnimal(1);
+                            herb->Eat(1);
+                          }
+                        }
+                      }
+                    } else if(animal_array[*it]->GetName() == "Salmon") {
+                      /* Salmons eat only oak */
+                      if(plant_array[plant_index]->IsAlive() == true && plant_array[plant_index]->GetName() == "Oak" ) {
+                        /* Upcasting to seedless */
+                        Seedless *sl = (Seedless *) plant_array[plant_index];
+                        if(sl->GetLife() >= 1) {
+                          sl->EatenByAnimal(1);
+                          herb->Eat(1);
+                        }
+                      }
+                    }
+                  }
+                  /* Carnivores eating */
+                } else if(animal_array[*it]->IsCarnivore() == true) {
+                  /* Upcasting to herbivore */
+                  Carnivore *carn = (Carnivore *) animal_array[*it];
+                  /* Suffle both vectors for randomized results */
+                  unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+                  shuffle (only_herb_indexes.begin(), only_herb_indexes.end(), default_random_engine(seed));
+                  shuffle (all_animal_indexes.begin(), all_animal_indexes.end(), default_random_engine(seed));
+                  /* Search in correspodent container */
+                  if(animal_array[*it]->GetHunger() < 8) {
+                    for(auto temp : only_herb_indexes) {
+                      if(animal_array[temp] != NULL && *it != temp) {
+                        if(animal_array[temp]->IsAlive() == true) {
+                          Herbivore *herb = (Herbivore *) animal_array[temp];
+                          if(animal_array[temp]->Hibernates() == false) {
+                            if(Fight(carn,herb) == CAN_EAT) {
+                              carn->Eat();
+                              animal_array[temp]->SetAlive(false);
+                              break;
+                            }
+                          } else if(animal_array[temp]->IsInHibernation() == false) {
+                            if(Fight(carn,herb) == CAN_EAT) {
+                              carn->Eat();
+                              animal_array[temp]->SetAlive(false);
+                              break;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  } else {
+                    for(auto temp : all_animal_indexes) {
+                      if(animal_array[temp] != NULL && *it != temp) {
+                        if(animal_array[temp]->IsAlive() == true) {
+                          if(animal_array[temp]->Hibernates() == false) {
+                            if(animal_array[temp]->IsHerbivore()) {
+                              Herbivore *herb = (Herbivore *) animal_array[temp];
+                              if(Fight(carn,herb) == CAN_EAT) {
+                                carn->Eat();
+                                animal_array[temp]->SetAlive(false);
+                                break;
+                              }
+                            } else if(animal_array[temp]->IsCarnivore()) {
+                              Carnivore *temp_carn = (Carnivore *) animal_array[temp];
+                              if(Fight(carn,carn) == CAN_EAT) {
+                                carn->Eat();
+                                animal_array[temp]->SetAlive(false);
+                                break;
+                              }
+                            }
+                          } else if(animal_array[temp]->IsInHibernation() == false) {
+                            if(animal_array[temp]->IsHerbivore()) {
+                              Herbivore *herb = (Herbivore *) animal_array[temp];
+                              if(Fight(carn,herb) == CAN_EAT) {
+                                carn->Eat();
+                                animal_array[temp]->SetAlive(false);
+                                break;
+                              }
+                            } else if(animal_array[temp]->IsCarnivore()) {
+                              Carnivore *temp_carn = (Carnivore *) animal_array[temp];
+                              if(Fight(carn,carn) == CAN_EAT) {
+                                carn->Eat();
+                                animal_array[temp]->SetAlive(false);
+                                break;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
