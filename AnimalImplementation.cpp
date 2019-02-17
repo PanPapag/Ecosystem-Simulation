@@ -83,8 +83,6 @@ bool Animal::Hibernates(void) { return hibernates; }
 
 bool Animal::IsInHibernation(void){  return in_hibernation; }
 
-bool Animal::Pleased(void) { return (eaten_food >= current_needed_food); }
-
 bool Animal::IsHerbivore(void) { return (this -> token == HERB_TOKEN); }
 
 bool Animal::IsCarnivore(void) { return (this -> token == CARN_TOKEN); }

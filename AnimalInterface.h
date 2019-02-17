@@ -30,7 +30,6 @@ class Animal {
     bool IsInHeat(void);
     bool Hibernates(void);
     bool IsInHibernation(void);
-    bool Pleased(void);
     bool IsHerbivore(void);
     bool IsCarnivore(void);
     bool IsAdult();

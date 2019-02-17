@@ -638,14 +638,37 @@ void Ecosystem::RunEcosystem(int day) {
 }
 
 void Ecosystem::DailyReset(int day) {
-  //TODO herbivore exception
   for(int i = 0; i < max_no_of_animals; i++) {
     if(animal_array[i] != NULL) {
       if(animal_array[i]->Hibernates() == false) {
+        if(animal_array[i]->IsCarnivore()) {
           animal_array[i]->ResetHunger();
+        } else if(animal_array[i]->IsHerbivore()) {
+          Herbivore *herb = (Herbivore *) animal_array[i];
+          if(animal_array[i]->IsHungry() == false ) {
+            if(herb->GetDaysNotHungry() == 7) {
+              herb->ResetDaysNotHungry();
+              animal_array[i]->ResetHunger();
+            } else {
+              herb->IncreaseDaysNotHungry();
+            }
+          }
+        }
       } else {
         if(animal_array[i]->IsInHibernation() == false) {
-          animal_array[i]->ResetHunger();
+          if(animal_array[i]->IsCarnivore()) {
+            animal_array[i]->ResetHunger();
+          } else if(animal_array[i]->IsHerbivore()) {
+            Herbivore *herb = (Herbivore *) animal_array[i];
+            if(animal_array[i]->IsHungry() == false ) {
+              if(herb->GetDaysNotHungry() == 7) {
+                herb->ResetDaysNotHungry();
+                animal_array[i]->ResetHunger();
+              } else {
+                herb->IncreaseDaysNotHungry();
+              }
+            }
+          }
         }
       }
     }
@@ -1846,20 +1869,16 @@ void Ecosystem::CheckHunger(void) {
   for(int i = 0; i < max_no_of_animals; i++) {
     if(animal_array[i] != NULL) {
       if(animal_array[i]->Hibernates() == false) {
-        if(!animal_array[i]->Pleased()) {
+        if(animal_array[i]->IsHungry() == true) {
           animal_array[i]->IncreaseHunger();
-        } else {
-          animal_array[i]->ResetHunger();
         }
         if(animal_array[i]->GetHunger() > 10 ) {
           animal_array[i]->SetAlive(false);
         }
       } else {
         if(animal_array[i]->IsInHibernation() == false) {
-          if(!animal_array[i]->Pleased()) {
+          if(animal_array[i]->IsHungry() == true) {
             animal_array[i]->IncreaseHunger();
-          } else {
-            animal_array[i]->ResetHunger();
           }
           if(animal_array[i]->GetHunger() > 10 ) {
             animal_array[i]->SetAlive(false);
