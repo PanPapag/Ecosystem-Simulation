@@ -75,7 +75,7 @@ int Animal::GetCoordinateY(void) { return coordinate_y; }
 
 bool Animal::IsAlive(void) { return is_alive; }
 
-bool Animal::Hungry(void) { return is_hungry; }
+bool Animal::IsHungry(void) { return is_hungry; }
 
 bool Animal::IsInHeat(void) { return in_heat; }
 
@@ -119,11 +119,8 @@ void Animal::IncreaseHunger(void) {
 void Animal::SetAlive(bool condition) { this -> is_alive = condition; }
 
 void Animal::ResetHunger(void) {
-  IncreaseHunger();
+  this -> eaten_food = 0;
   SetHunger(true);
-  if(hunger_count > 10) {
-    SetAlive(false);
-  }
 }
 
 void Animal::SetHunger(bool condition) { this -> is_hungry = condition; }
@@ -259,8 +256,8 @@ void Herbivore::Raise(void){
 void Herbivore::Eat(int eat_count) {
   eaten_food += eat_count;
   if (eaten_food >= current_needed_food){
+    this -> hunger_count = 0;
     this -> is_hungry = false;
-    this -> eaten_food = 0;
   }
 }
 
@@ -354,6 +351,7 @@ void Carnivore::Raise(void){
 }
 
 void Carnivore::Eat() {
+  this -> hunger_count = 0;
   this -> is_hungry = false;
 }
 

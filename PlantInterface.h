@@ -77,6 +77,7 @@ class Seeded : public Plant{
     void Grow(void);
     bool Reproduced(void);
     int GetSeeds(void);
+    Leaves GetFoliage(void);
 
   private:
     Leaves foliage;

@@ -107,6 +107,8 @@ Seeded::~Seeded() {
 
 int Seeded::GetSeeds(void) { return seeds; }
 
+Leaves Seeded::GetFoliage(void) { return foliage; }
+
 void Seeded::EatenByAnimal(int quantity) {
 
   if (quantity < seeds ) {

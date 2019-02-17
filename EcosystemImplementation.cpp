@@ -605,11 +605,12 @@ void Ecosystem::RunEcosystem(int day) {
   DailyReset(day);
 
   for(int i = 0; i < 24; i++){
-    //CheckHunger();
-    CheckDeadEntities();
     AnimalMovement();
     AnimalEating();
   }
+
+  CheckHunger();
+  CheckDeadEntities();
 
   if(day % breeding_rep_period_carn == 0) {
     AnimalBreedingCarnivores();
@@ -856,16 +857,80 @@ void Ecosystem::AnimalEating(void) {
       for(list <int>::iterator it = list_of_animal_indexes.begin(); it != list_of_animal_indexes.end(); ++it) {
         if(animal_array[*it]->IsAlive() == true) {
           if(animal_array[*it]->Hibernates() == false) {
-            if(animal_array[*it]->Hungry() == true) {
+            if(animal_array[*it]->IsHungry() == true) {
               /* Herbivores eating */
               if(animal_array[*it]->IsHerbivore() == true) {
+                /* Upcasting to herbivore */
+                Herbivore *herb = (Herbivore *) animal_array[*it];
+                int plant_index = terrain_grid[x][y].GetPlantIndex();
                 if(animal_array[*it]->GetName() == "Young Deer" || animal_array[*it]->GetName() == "Young Deer") {
-                  //TODO conitnue
+                  if(plant_array[plant_index]->IsAlive() == true) {
+                    if(plant_array[plant_index]->IsSeeded() == true) {
+                      /* Upcasting to seeded */
+                      Seeded *sd = (Seeded *) plant_array[plant_index];
+                      //TODO SEEDED
+                    } else {
+                      /* Upcasting to seedless */
+                      Seedless *sl = (Seedless *) plant_array[plant_index];
+                      if(sl->GetLife() >= 2) {
+                        sl->LoseLife(2);
+                        herb->Eat(2);
+                      } else if(sl->GetLife() == 1) {
+                        sl->LoseLife(1);
+                        herb->Eat(1);
+                      }
+                    }
+                  }
+                } else if(animal_array[*it]->GetName() == "Young Rabbit" || animal_array[*it]->GetName() == "Young Rabbit") {
+                  /* Rabbits cannot eat oak */
+                  if(plant_array[plant_index]->IsAlive() == true && plant_array[plant_index]->GetName() != "Oak" ) {
+                    if(plant_array[plant_index]->IsSeeded() == true) {
+                      /* Upcasting to seeded */
+                      Seeded *sd = (Seeded *) plant_array[plant_index];
+                      //TODO SEEDED
+                    } else {
+                      /* Upcasting to seedless */
+                      Seedless *sl = (Seedless *) plant_array[plant_index];
+                      if(sl->GetLife() >= 1) {
+                        sl->LoseLife(1);
+                        herb->Eat(1);
+                      }
+                    }
+                  }
+                } else if(animal_array[*it]->GetName() == "Young Groundhog" || animal_array[*it]->GetName() == "Adult Groundhog") {
+                  /* Groundhogs cannot eat oak */
+                  if(plant_array[plant_index]->IsAlive() == true && plant_array[plant_index]->GetName() != "Oak" ) {
+                    if(plant_array[plant_index]->IsSeeded() == true) {
+                      /* Upcasting to seeded */
+                      Seeded *sd = (Seeded *) plant_array[plant_index];
+                      //TODO SEEDED
+                    } else {
+                      /* Upcasting to seedless */
+                      Seedless *sl = (Seedless *) plant_array[plant_index];
+                      if(sl->GetLife() >= 1) {
+                        sl->LoseLife(1);
+                        herb->Eat(1);
+                      }
+                    }
+                  }
+                } else if(animal_array[*it]->GetName() == "Salmon") {
+                  /* Salmons eat only oak */
+                  if(plant_array[plant_index]->IsAlive() == true && plant_array[plant_index]->GetName() == "Oak" ) {
+                    /* Upcasting to seedless */
+                    Seedless *sl = (Seedless *) plant_array[plant_index];
+                    if(sl->GetLife() >= 1) {
+                      sl->LoseLife(1);
+                      herb->Eat(1);
+                    }
+                  }
                 }
+              } else if(animal_array[*it]->IsCarnivore() == true) {
+                /* Upcasting to herbivore */
+                Carnivore *carn = (Carnivore *) animal_array[*it];
               }
             }
           } else if(animal_array[*it]->IsInHibernation() == false) {
-            
+            //TODO copy paste above
           }
         }
       }
