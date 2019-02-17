@@ -871,17 +871,15 @@ void Ecosystem::AnimalEating(void) {
                         if(plant_array[plant_index]->IsSeeded() == true) {
                           /* Upcasting to seeded */
                           Seeded *sd = (Seeded *) plant_array[plant_index];
-                          //TODO SEEDED
+                          if(animal_array[*it]->GetSize() <= sd->GetFoliageSize() + 4) {
+                            sd->EatenByAnimal(2);
+                            herb->Eat(2);
+                          }
                         } else {
                           /* Upcasting to seedless */
                           Seedless *sl = (Seedless *) plant_array[plant_index];
-                          if(sl->GetLife() >= 2) {
-                            sl->EatenByAnimal(2);
-                            herb->Eat(2);
-                          } else if(sl->GetLife() == 1) {
-                            sl->EatenByAnimal(1);
-                            herb->Eat(1);
-                          }
+                          sl->EatenByAnimal(2);
+                          herb->Eat(2);
                         }
                       }
                     } else if(animal_array[*it]->GetName() == "Young Rabbit" || animal_array[*it]->GetName() == "Young Rabbit") {
@@ -890,14 +888,15 @@ void Ecosystem::AnimalEating(void) {
                         if(plant_array[plant_index]->IsSeeded() == true) {
                           /* Upcasting to seeded */
                           Seeded *sd = (Seeded *) plant_array[plant_index];
-                          //TODO SEEDED
+                          if(animal_array[*it]->GetSize() >= sd->GetFoliageSize()) {
+                            sd->EatenByAnimal(1);
+                            herb->Eat(1);
+                          }
                         } else {
                           /* Upcasting to seedless */
                           Seedless *sl = (Seedless *) plant_array[plant_index];
-                          if(sl->GetLife() >= 1) {
-                            sl->EatenByAnimal(1);
-                            herb->Eat(1);
-                          }
+                          sl->EatenByAnimal(1);
+                          herb->Eat(1);
                         }
                       }
                     } else if(animal_array[*it]->GetName() == "Young Groundhog" || animal_array[*it]->GetName() == "Adult Groundhog") {
@@ -906,7 +905,10 @@ void Ecosystem::AnimalEating(void) {
                         if(plant_array[plant_index]->IsSeeded() == true) {
                           /* Upcasting to seeded */
                           Seeded *sd = (Seeded *) plant_array[plant_index];
-                          //TODO SEEDED
+                          if(sd->GetFoliageSize() <= animal_array[*it]->GetSize() || sd->GetFoliageSize() <= 3 * animal_array[*it]->GetSize()) {
+                            sd->EatenByAnimal(1);
+                            herb->Eat(1);
+                          }
                         } else {
                           /* Upcasting to seedless */
                           Seedless *sl = (Seedless *) plant_array[plant_index];

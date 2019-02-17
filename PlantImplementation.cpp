@@ -107,7 +107,7 @@ Seeded::~Seeded() {
 
 int Seeded::GetSeeds(void) { return seeds; }
 
-Leaves Seeded::GetFoliage(void) { return foliage; }
+int Seeded::GetFoliageSize(void) { return foliage.GetSize(); }
 
 void Seeded::EatenByAnimal(int quantity) {
 
