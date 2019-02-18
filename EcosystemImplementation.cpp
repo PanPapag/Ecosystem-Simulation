@@ -1583,7 +1583,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x,y - 1);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x][y + 1].GetGround() != HILL_TILE) {
                         animal_array[i]->Move(x,y + 1);
                         break;
@@ -1613,7 +1613,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x,y - 1);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
                         animal_array[i]->Move(x,y + 1);
                         break;
@@ -1643,7 +1643,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x,y - 1);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
                         animal_array[i]->Move(x,y + 1);
                         break;
@@ -1705,7 +1705,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x - 1,y);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x][y + 1].GetGround() != HILL_TILE) {
                         animal_array[i]->Move(x,y + 1);
                         break;
@@ -1735,7 +1735,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x - 1,y);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
                         animal_array[i]->Move(x,y + 1);
                         break;
@@ -1765,7 +1765,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x - 1,y);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
                         animal_array[i]->Move(x,y + 1);
                         break;
@@ -1827,7 +1827,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x - 1][y + 1].GetGround() != HILL_TILE) {
                         animal_array[i]->Move(x - 1,y + 1);
                         break;
@@ -1857,7 +1857,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x - 1][y + 1].GetGround() != WATER_TILE) {
                         animal_array[i]->Move(x - 1,y + 1);
                         break;
@@ -1887,7 +1887,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x - 1][y + 1].GetGround() != WATER_TILE) {
                         animal_array[i]->Move(x - 1,y + 1);
                         break;
@@ -1907,7 +1907,7 @@ void Ecosystem::AnimalMovement(void) {
                   }
                 }
               }
-          }else if(y == terrain_size - 1) {
+          } else if(y == terrain_size - 1) {
             /* You have three choices to go either up or left. Alternatevily go up and left */
             if(animal_array[i]->IsCarnivore() == true || animal_array[i]->GetName() == "Young Deer"
                 || animal_array[i]->GetName() == "Adult Deer") {
@@ -1949,7 +1949,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x][y - 1].GetGround() != HILL_TILE) {
                         animal_array[i]->Move(x ,y - 1);
                         break;
@@ -1979,7 +1979,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x][y - 1].GetGround() != WATER_TILE) {
                         animal_array[i]->Move(x ,y - 1);
                         break;
@@ -2009,7 +2009,7 @@ void Ecosystem::AnimalMovement(void) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
-                    }else if(it == 2) {
+                    } else if(it == 2) {
                       if(terrain_grid[x][y - 1].GetGround() != WATER_TILE) {
                         animal_array[i]->Move(x ,y - 1);
                         break;
