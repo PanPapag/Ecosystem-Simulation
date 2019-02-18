@@ -1202,7 +1202,7 @@ void Ecosystem::AnimalMovement(void) {
   for(int i = 0; i < max_no_of_animals; i++) {
     if(animal_array[i] != NULL) {
       if(animal_array[i]->IsAlive() == true) {
-        if(animal_array[i]->Hibernates() == false) {
+        if(animal_array[i]->IsInHibernation() == false) {
           x = animal_array[i]->GetCoordinateX();
           y = animal_array[i]->GetCoordinateY();
           /* Check the upper left corner (x = 0, y = 0) */
@@ -1651,8 +1651,6 @@ void Ecosystem::AnimalMovement(void) {
               animal_array[i]->Move(x + 1,y + 1);
             }
           }
-        } else if(animal_array[i]->IsInHibernation() == false) {
-          //TODO copy paste
         }
       }
     }
