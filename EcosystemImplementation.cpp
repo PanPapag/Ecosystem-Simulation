@@ -1543,7 +1543,24 @@ void Ecosystem::AnimalMovement(void) {
               }
             /* check a point in the first row */
           } else if(x == 0) {
-            //TODO kapws svistike
+            /*  All possible moves are five */
+            int movement = rand() % 5;
+            if(movement == 0) {
+              /* go down */
+              animal_array[i]->Move(x + 1,y);
+            } else if(movement == 1) {
+              /* go left */
+              animal_array[i]->Move(x,y - 1);
+            } else if(movement == 2){
+              /* go right */
+              animal_array[i]->Move(x,y + 1);
+            } else if(movement == 3) {
+              /* go down and left */
+              animal_array[i]->Move(x + 1,y - 1);
+            } else {
+              /* go down and right */
+              animal_array[i]->Move(x + 1,y + 1);
+            }
             /* check a point in the last row */
           } else if(x == terrain_size - 1) {
             /*  All possible moves are five */
