@@ -185,12 +185,14 @@ Animal* Animal::Reproduct(void){
 /*constructor for adult herbivores*/
 Herbivore::Herbivore(string name, char token, int x, int y, int size, int speed, int needed_food, bool can_climb, bool hibernates)
         :Animal(name, token, x, y, size, speed, needed_food, hibernates), can_climb(can_climb) {
+          this -> days_not_hungry = 0;
           //cout << "I just constructed an adult  herbivore" << endl;
         }
 
 /*constructor for young herbivores*/
 Herbivore::Herbivore(string name, char token, int x, int y, int current_size, int max_size, int current_speed, int max_speed, int current_needed_food, int max_needed_food, bool can_climb, bool hibernates)
-        :Animal(name, token, x, y, current_size, max_size, current_speed, max_speed, current_needed_food, max_needed_food, hibernates), can_climb(can_climb){
+        :Animal(name, token, x, y, current_size, max_size, current_speed, max_speed, current_needed_food, max_needed_food, hibernates), can_climb(can_climb) {
+          this -> days_not_hungry = 0;
           //cout << "I just constructed a young herbivore" << endl;
         }
 

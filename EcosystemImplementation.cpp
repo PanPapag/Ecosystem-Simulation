@@ -126,9 +126,9 @@ void Ecosystem::MapGenerator(void) {
   no_of_deer = meadow_tiles / 6;
   no_of_rabbit = meadow_tiles / 6;
   no_of_groundhog = meadow_tiles / 6;
-  no_of_salmon = (river_tiles + lake_tiles) / 4;
+  no_of_salmon = (river_tiles + lake_tiles) / 2;
   no_of_fox = meadow_tiles / 6;
-  no_of_bear = hill_tiles / 4;
+  no_of_bear = hill_tiles / 2;
   no_of_wolf = (hill_tiles + meadow_tiles) / 6;
 
   PlacePlants();
