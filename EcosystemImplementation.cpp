@@ -1299,10 +1299,10 @@ void Ecosystem::AnimalMovement(void) {
                 /* go down */
                 animal_array[i]->Move(x + 1,y);
               } else if(movement == 1) {
-                /* go right */
+                /* go left */
                 animal_array[i]->Move(x,y - 1);
               } else {
-                /* go down and right */
+                /* go down and left */
                 animal_array[i]->Move(x + 1,y - 1);
               }
             } else {
@@ -1373,6 +1373,90 @@ void Ecosystem::AnimalMovement(void) {
                 }
               }
             }
+            /* Check the lower left corner (x = terrain_size - 1, y = 0) */
+          } else if(x == terrain_size - 1 && y == 0) {
+            /* You have three choices to go either up or right. Alternatevily go up and right */
+            if(animal_array[i]->IsCarnivore() == true || animal_array[i]->GetName() == "Young Deer"
+                || animal_array[i]->GetName() == "Adult Deer") {
+                int movement = rand() % 3;
+                if(movement == 0) {
+                  /* go up */
+                  animal_array[i]->Move(x - 1,y);
+                } else if(movement == 1) {
+                  /* go right */
+                  animal_array[i]->Move(x,y + 1);
+                } else {
+                  /* go up and right */
+                  animal_array[i]->Move(x - 1,y + 1);
+                }
+              } else {
+                /* Create vector of random outcomes */
+                vector <int> moves;
+                for(int mv_in = 0; mv_in < 3; mv_in++) {
+                  moves.push_back(mv_in);
+                }
+                unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+                shuffle (moves.begin(), moves.end(), default_random_engine(seed));
+                /* Examine each animal seperately */
+                if(animal_array[i]->GetName() == "Young Rabbit" || animal_array[i]->GetName() == "Adult Rabbit") {
+                  for(auto it : moves) {
+                    if(it == 0) {
+                      if(terrain_grid[x - 1][y].GetGround() != HILL_TILE) {
+                        animal_array[i]->Move(x - 1,y);
+                        break;
+                      }
+                    } else if(it == 1) {
+                      if(terrain_grid[x][y + 1].GetGround() != HILL_TILE) {
+                        animal_array[i]->Move(x,y + 1);
+                        break;
+                      }
+                    } else {
+                      if(terrain_grid[x - 1][y + 1].GetGround() != HILL_TILE) {
+                        animal_array[i]->Move(x - 1,y + 1);
+                        break;
+                      }
+                    }
+                  }
+                } else if(animal_array[i]->GetName() == "Young Groundhog" || animal_array[i]->GetName() == "Adult Groundhog") {
+                  for(auto it : moves) {
+                    if(it == 0) {
+                      if(terrain_grid[x - 1][y].GetGround() != WATER_TILE) {
+                        animal_array[i]->Move(x - 1,y);
+                        break;
+                      }
+                    } else if(it == 1) {
+                      if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
+                        animal_array[i]->Move(x,y + 1);
+                        break;
+                      }
+                    } else {
+                      if(terrain_grid[x - 1][y + 1].GetGround() != WATER_TILE) {
+                        animal_array[i]->Move(x - 1,y + 1);
+                        break;
+                      }
+                    }
+                  }
+                } else if(animal_array[i]->GetName() == "Salmon") {
+                  for(auto it : moves) {
+                    if(it == 0) {
+                      if(terrain_grid[x - 1][y].GetGround() == WATER_TILE) {
+                        animal_array[i]->Move(x - 1,y);
+                        break;
+                      }
+                    } else if(it == 1) {
+                      if(terrain_grid[x][y + 1].GetGround() == WATER_TILE) {
+                        animal_array[i]->Move(x,y + 1);
+                        break;
+                      }
+                    } else {
+                      if(terrain_grid[x - 1][y + 1].GetGround() == WATER_TILE) {
+                        animal_array[i]->Move(x - 1,y + 1);
+                        break;
+                      }
+                    }
+                  }
+                }
+              }
             /* Check the lower right corner (x = terrain_size - 1, y = terrain_size - 1) */
           } else if(x == terrain_size - 1 && y == terrain_size - 1) {
             /* You have three choices to go either up or left. Alternatevily go up and left */
@@ -1380,13 +1464,13 @@ void Ecosystem::AnimalMovement(void) {
                 || animal_array[i]->GetName() == "Adult Deer") {
                 int movement = rand() % 3;
                 if(movement == 0) {
-                  /* go down */
+                  /* go up */
                   animal_array[i]->Move(x - 1,y);
                 } else if(movement == 1) {
-                  /* go right */
+                  /* go left */
                   animal_array[i]->Move(x,y - 1);
                 } else {
-                  /* go down and right */
+                  /* go up and left */
                   animal_array[i]->Move(x - 1,y - 1);
                 }
               } else {
@@ -1457,6 +1541,9 @@ void Ecosystem::AnimalMovement(void) {
                   }
                 }
               }
+            /* check a point in the first row */
+          } else if(x == 0) {
+            //TODO kapws svistike
             /* check a point in the last row */
           } else if(x == terrain_size - 1) {
             /*  All possible moves are five */
