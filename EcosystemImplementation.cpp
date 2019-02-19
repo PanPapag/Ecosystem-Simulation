@@ -1634,28 +1634,28 @@ void Ecosystem::AnimalMovement(void) {
                 } else if(animal_array[i]->GetName() == "Salmon") {
                   for(auto it : moves) {
                     if(it == 0) {
-                      if(terrain_grid[x + 1][y].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x + 1,y);
                         break;
                       }
                     } else if(it == 1) {
-                      if(terrain_grid[x][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x,y - 1);
                         break;
                       }
                     } else if(it == 2) {
-                      if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x,y + 1);
                         break;
                       }
                     } else if(it == 3) {
-                      if(terrain_grid[x + 1][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x + 1,y - 1);
                         break;
                       }
                     }
                     else {
-                      if(terrain_grid[x + 1][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x + 1,y + 1);
                         break;
                       }
@@ -1756,28 +1756,28 @@ void Ecosystem::AnimalMovement(void) {
                 } else if(animal_array[i]->GetName() == "Salmon") {
                   for(auto it : moves) {
                     if(it == 0) {
-                      if(terrain_grid[x + 1][y].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x + 1,y);
                         break;
                       }
                     } else if(it == 1) {
-                      if(terrain_grid[x - 1][y].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x - 1][y].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y);
                         break;
                       }
                     } else if(it == 2) {
-                      if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x,y + 1);
                         break;
                       }
                     } else if(it == 3) {
-                      if(terrain_grid[x + 1][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x + 1,y + 1);
                         break;
                       }
                     }
                     else {
-                      if(terrain_grid[x - 1][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x - 1][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y + 1);
                         break;
                       }
@@ -1878,28 +1878,28 @@ void Ecosystem::AnimalMovement(void) {
                 } else if(animal_array[i]->GetName() == "Salmon") {
                   for(auto it : moves) {
                     if(it == 0) {
-                      if(terrain_grid[x - 1][y].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x - 1][y].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y);
                         break;
                       }
                     } else if(it == 1) {
-                      if(terrain_grid[x - 1][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x - 1][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
                     } else if(it == 2) {
-                      if(terrain_grid[x - 1][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x - 1][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y + 1);
                         break;
                       }
                     } else if(it == 3) {
-                      if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x,y + 1);
                         break;
                       }
                     }
                     else {
-                      if(terrain_grid[x][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x,y - 1);
                         break;
                       }
@@ -2000,28 +2000,28 @@ void Ecosystem::AnimalMovement(void) {
                 } else if(animal_array[i]->GetName() == "Salmon") {
                   for(auto it : moves) {
                     if(it == 0) {
-                      if(terrain_grid[x - 1][y].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x - 1][y].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y);
                         break;
                       }
                     } else if(it == 1) {
-                      if(terrain_grid[x - 1][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x - 1][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
                     } else if(it == 2) {
-                      if(terrain_grid[x][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x ,y - 1);
                         break;
                       }
                     } else if(it == 3) {
-                      if(terrain_grid[x + 1][y].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x + 1,y);
                         break;
                       }
                     }
                     else {
-                      if(terrain_grid[x + 1][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
@@ -2161,43 +2161,43 @@ void Ecosystem::AnimalMovement(void) {
                 } else if(animal_array[i]->GetName() == "Salmon") {
                   for(auto it : moves) {
                     if(it == 0) {
-                      if(terrain_grid[x - 1][y].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x - 1][y].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y);
                         break;
                       }
                     } else if(it == 1) {
-                      if(terrain_grid[x - 1][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x - 1][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1,y - 1);
                         break;
                       }
                     } else if(it == 2) {
-                      if(terrain_grid[x -1][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x -1][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x - 1 ,y + 1);
                         break;
                       }
                     } else if(it == 3) {
-                      if(terrain_grid[x][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x ,y + 1);
                         break;
                       }
                     } else if(it == 4) {
-                      if(terrain_grid[x][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x ,y - 1);
                         break;
                       }
                     } else if(it == 5) {
-                      if(terrain_grid[x + 1][y - 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y - 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x + 1 ,y - 1);
                         break;
                       }
                     } else if(it == 6) {
-                      if(terrain_grid[x + 1][y].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x + 1 ,y);
                         break;
                       }
                     }
                     else {
-                      if(terrain_grid[x + 1][y + 1].GetGround() != WATER_TILE) {
+                      if(terrain_grid[x + 1][y + 1].GetGround() == WATER_TILE) {
                         animal_array[i]->Move(x + 1,y + 1);
                         break;
                       }
