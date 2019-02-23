@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
 
-#include "AnimalInterface.h"
+#include "../headers/AnimalInterface.h"
 
 using namespace std;
 

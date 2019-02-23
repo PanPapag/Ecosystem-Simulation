@@ -10,9 +10,9 @@
 #include <random>
 #include <chrono>
 
-#include "EcosystemInterface.h"
-#include "AnimalInterface.h"
-#include "PlantInterface.h"
+#include "../headers/EcosystemInterface.h"
+#include "../headers/AnimalInterface.h"
+#include "../headers/PlantInterface.h"
 
 /* -------------------------------------- class Tile Implementation ------------------------------------- */
 Tile::Tile() {

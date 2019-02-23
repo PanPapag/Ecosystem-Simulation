@@ -1,20 +1,32 @@
-# Declaration of variables
+TARGET_EXEC ?= Ecosystem
+
 CC = g++
 CC_FLAGS = -w -std=c++11
 
-# File names
-EXEC = Ecosystem
-SOURCES = $(wildcard *.cpp)
-OBJECTS = $(SOURCES:.cpp=.o)
+BUILD_DIR ?= ./build
+SRC_DIRS ?= ./src
 
-# Main target
-$(EXEC): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $(EXEC) -lm
+SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
 
-# To obtain object files
-%.o: %.cpp
+INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+
+$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+
+# c++ source
+$(BUILD_DIR)/%.cpp.o: %.cpp
+	$(MKDIR_P) $(dir $@)
 	$(CC) -c $(CC_FLAGS) $< -o $@
 
-# To remove generated files
+
+.PHONY: clean
+
 clean:
-	rm -f $(EXEC) $(OBJECTS)
+	$(RM) -r $(BUILD_DIR)
+
+-include $(DEPS)
+
+MKDIR_P ?= mkdir -p

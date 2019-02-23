@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
 
-#include "PlantInterface.h"
+#include "../headers/PlantInterface.h"
 
 /* -------------------------------------- class Plant Implementation ------------------------------------- */
 

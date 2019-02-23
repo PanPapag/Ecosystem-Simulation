@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "EcosystemInterface.h"
+#include "../headers/EcosystemInterface.h"
 
 #define MIN_TERRAIN 10
 
@@ -37,7 +37,7 @@ int main(void) {
   for(int day = 1; day <= cycles; day++) {
     ecosystem->RunEcosystem(day);
   }
-  
+
   ecosystem->PrintSystem(cycles);
 
   delete ecosystem;
