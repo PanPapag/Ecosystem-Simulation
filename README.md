@@ -19,6 +19,16 @@ make
 
 ## Running 
 
+A new directory [build] has been created
+
+### Clean
+
+While being in project directory, delete all objects files and executable by typing:   
+
+```
+make clean
+```
+
 ## Contributors
 
 [Pantelis Papageorgiou](https://github.com/PanPapag) .
