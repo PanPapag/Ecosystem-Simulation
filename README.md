@@ -19,7 +19,11 @@ make
 
 ## Running 
 
-A new directory 'build' has been created
+A new directory `build` has been created. Cd to build by typing `cd build` . After that, run ecosystem simulation simply by typing:
+
+```
+./Ecosystem
+```
 
 ### Clean
 
