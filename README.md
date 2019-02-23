@@ -19,7 +19,7 @@ make
 
 ## Running 
 
-A new directory [build] has been created
+A new directory 'build' has been created
 
 ### Clean
 
