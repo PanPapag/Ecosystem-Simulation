@@ -21,7 +21,9 @@ make
 
 ## Contributors
 
-@PanPapag
+[Pantelis Papageorgiou](https://github.com/PanPapag) .
+
+[Nikos Galanis](https://github.com/nikosgalanis) .
 
 ## License
 
